@@ -16,12 +16,10 @@ window.addEventListener("resize", setPageWrapperPadding);
 
 
 $(function() {
-  // Single overlay, hidden by default
   const $overlay = $('<div class="dropdown-overlay" aria-hidden="true"></div>')
     .appendTo('body')
-    .hide(); // start hidden
+    .hide();
 
-  // Position overlay behind dropdown menu
   function positionOverlay($menu) {
     if (!$menu || !$menu.length) return;
     const rect = $menu[0].getBoundingClientRect();
@@ -33,67 +31,61 @@ $(function() {
     });
   }
 
-  // Show dropdown with slideDown and overlay (only for dropdowns under #header)
-  $('.dropdown').on('show.bs.dropdown', function() {
-    const $dropdown = $(this);
-    const $menu = $dropdown.find('.dropdown-menu').first();
-
-    // Determine whether this dropdown is inside #header
-    const usesOverlay = $dropdown.closest('#header').length > 0;
-
-    // store this so hide handler knows whether to remove overlay
-    $menu.data('uses-overlay', usesOverlay);
-
-    setTimeout(function() {
-      if (usesOverlay) {
-        positionOverlay($menu);
-        $overlay.show().addClass('is-visible');
-      }
-
-      $menu
-        .stop(true, true)
-        .css({ display: 'none' })
-        .addClass('show')
-        .slideDown(400);
-    }, 10);
+  // Only apply custom slideDown/slideUp to #header dropdowns
+  $('#header .dropdown').on('show.bs.dropdown', function() {
+    var $menu = $(this).find('.dropdown-menu').first();
+    positionOverlay($menu);
+    $overlay.show().addClass('is-visible');
+    $menu.stop(true, true).css({ display: 'none' }).slideDown(400);
   });
 
-  // Hide dropdown with slideUp and remove overlay only if it was used
-  $('.dropdown').on('hide.bs.dropdown', function(e) {
-    // prevent default immediate hide by bootstrap
+  $('#header .dropdown').on('hide.bs.dropdown', function(e) {
     e.preventDefault();
-
-    const $dropdown = $(this);
-    const $menu = $dropdown.find('.dropdown-menu').first();
-    const usesOverlay = !!$menu.data('uses-overlay');
-
+    var $dropdown = $(this);
+    var $menu = $dropdown.find('.dropdown-menu').first();
     $menu.stop(true, true).slideUp(180, function() {
       $menu.removeClass('show').css('display', '');
-      if (usesOverlay) {
-        $overlay.removeClass('is-visible').hide();
-      }
-      // clear stored flag
-      $menu.removeData('uses-overlay');
-      // let Bootstrap know hide completed
-      $dropdown.trigger('hidden.bs.dropdown');
+      $overlay.removeClass('is-visible').hide();
+      $dropdown.removeClass('show');
+      $dropdown.find('.dropdown-toggle').attr('aria-expanded', 'false');
     });
   });
 
-  // Clicking the overlay should close the open header dropdown (optional)
   $overlay.on('click', function() {
-    const $openHeaderDropdown = $('#header .dropdown.show').first();
+    var $openHeaderDropdown = $('#header .dropdown.show').first();
     if ($openHeaderDropdown.length) {
       $openHeaderDropdown.find('[data-bs-toggle="dropdown"]').trigger('click');
-      // Alternatively trigger hide: $openHeaderDropdown.trigger('hide.bs.dropdown');
     }
   });
 
-  // Reposition overlay on scroll/resize only if header dropdown menu is open & visible
   $(window).on('resize scroll', function() {
-    const $openMenu = $('#header .dropdown-menu.show').first();
+    var $openMenu = $('#header .dropdown-menu.show').first();
     if ($openMenu.length && $openMenu.is(':visible')) {
       positionOverlay($openMenu);
     }
+  });
+
+  // Smooth slideDown/slideUp for non-header dropdowns (#your-ally, #embedded-ally)
+  var $contentDropdowns = $('.dropdown-container .dropdown').not('#header .dropdown');
+
+  $contentDropdowns.on('show.bs.dropdown', function() {
+    var $toggle = $(this).find('.dropdown-toggle').first();
+    var $menu = $(this).find('.dropdown-menu').first();
+    $toggle.css('border-radius', '15px 15px 0 0');
+    $menu.stop(true, true).css('display', 'none').slideDown(300);
+  });
+
+  $contentDropdowns.on('hide.bs.dropdown', function(e) {
+    e.preventDefault();
+    var $dropdown = $(this);
+    var $toggle = $dropdown.find('.dropdown-toggle').first();
+    var $menu = $dropdown.find('.dropdown-menu').first();
+    $menu.stop(true, true).slideUp(200, function() {
+      $toggle.css('border-radius', '15px');
+      $menu.removeClass('show').css('display', '');
+      $dropdown.removeClass('show');
+      $dropdown.find('.dropdown-toggle').attr('aria-expanded', 'false');
+    });
   });
 });
 

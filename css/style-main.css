@@ -1,6 +1,6 @@
 /**------CUSTOM CSS----*/
 
-@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,700;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,700;1,700&family=Instrument+Serif:ital@0;1&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Quintessential&display=swap');
 @font-face {
     font-family: 'Druk';
     src: url('../fonts/Druk-Medium-Web.woff2')format("woff2"), url('../fonts/Druk-Medium-Web.woff')format("woff");
@@ -426,8 +426,18 @@ ul.dropdown-menu.custom-dropdown-desg li:last-child .dropdown-item {
     top: 0px;
 }
 #header .navbar-brand {
-    height: 4vw;
+    width: 65px;
+    height: 25px;
     display: flex;
+    padding: 0;
+}
+#header .navbar-brand img {
+    width: 65px;
+    height: 25px;
+    object-fit: contain;
+}
+#header nav.navbar {
+    min-height: 60px;
 }
 
 
@@ -484,104 +494,113 @@ ul.dropdown-menu.custom-dropdown-desg li:last-child .dropdown-item {
 /*------BANNER SECTION---*/
 
 #banner {
-    /*min-height: calc(100vh - 80px);*/
-    min-height: 65vh;
-    display: flex;
-    align-items: flex-end;
-    align-items: center;
     position: relative;
+    padding: 50px 0 40px;
 }
-.banner_image {
-    width: 90%;
-    max-width: 885px;
-    background: #000;
-    padding: 15px;
-    display: block;
+#banner .banner-slider {
+    width: 100%;
     margin: 0 auto;
 }
-h1.main-page-heading {
-    font-size: 16vw;
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 0.9;
-    overflow: hidden;
-    width: 100%;
+#banner .banner-slide-inner {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-#banner .banner_content {
-    padding-top: 26vw;
-    position: relative;
-}
-#banner .banner-subhead-block {
-    display: flex;
-    justify-content: space-between;
-    gap: 3vw;
+    flex-direction: column;
+    gap: 12px;
     align-items: center;
 }
-/*#banner .banner-subhead-block .banner-small-head {
-    position: absolute;
-    top: 75%;
-    left: 0px;
-    transform: translateY(-50%);
-}
-#banner .banner-subhead-block .banner-small-head.banner-head-right {
-    left: auto;
-    right: 0px;
-} */
-#banner .banner-subhead-block span {
-    font-weight: 500;
-    /* text-transform: uppercase; */
-    font-size: 0.8vw;
-    white-space: nowrap;
-}
-#banner_bottom .ban_btm_cont {
-    font-size: clamp(14px, 1vw, 22px);
-}
-#banner .main_center_img {
+#banner .banner-slide-header {
     display: flex;
-    max-width: 35%;
+    justify-content: space-between;
+    width: 82%;
+    max-width: 1068px;
+    margin: 0 auto;
+}
+#banner .banner-slide-header span {
+    font-weight: 600;
+    font-size: clamp(10px, 0.9vw, 14px);
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+}
+#banner .banner-slide-img {
+    width: 82%;
+    max-width: 1068px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    max-height: 35vw;
+}
+#banner .banner-slide-img > img {
+    width: 100%;
+    height: 35vw;
+    display: block;
+    object-fit: cover;
+    object-position: center 25%;
+}
+#banner .banner-slide-img > img.banner-svg-img {
+    object-fit: contain;
+    height: calc(35vw + 3.5vw);
+    object-position: center center;
+    padding: 40px 30px;
+}
+#banner .banner-slide-img-svg {
+    max-height: calc(35vw + 3.5vw);
+}
+#banner .banner-watermark {
     position: absolute;
-    max-height: 100%;
-    top: 0px;
+    bottom: 12px;
+    right: 12px;
+    z-index: 1;
+}
+#banner .banner-watermark img {
+    width: clamp(90px, 9vw, 130px);
+    height: auto;
+    display: block;
+}
+#banner .banner-slide-caption {
+    width: 82%;
+    max-width: 1068px;
+    margin: 0 auto;
+    font-family: 'Quintessential', cursive;
+    font-size: clamp(14px, 1.25vw, 18px);
+    text-align: center;
+    letter-spacing: -1.44px;
+    line-height: 1.45;
+    color: #000;
+    padding: 0;
+}
+#banner .banner-slide-desc {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 10px 0 0;
+}
+#banner .banner-slide-desc .desc-line {
+    flex: 1;
+    height: 1px;
+    background: #000;
+}
+#banner .banner-slide-desc p {
+    flex-shrink: 0;
+    max-width: 45%;
+    font-size: clamp(14px, 1vw, 20px);
+    text-align: center;
+    line-height: 1.15;
+    margin: 0;
+}
+#banner .banner-slider .owl-dots {
+    position: absolute;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: -1;
+    z-index: 2;
 }
-#banner .main_center_img img {
-    /* height: 100%; */
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    object-fit: contain;
+#banner .banner-slider .owl-dot span {
+    width: 8px;
+    height: 8px;
+    background: rgba(0,0,0,0.3);
 }
-#banner_bottom {
-    position: relative;
-}
-#banner_bottom::before, #banner_bottom::after {
-    content: "";
-    position: absolute;
+#banner .banner-slider .owl-dot.active span {
     background: #000;
-    width: 35%;
-    height: 1px;
-    left: 15px;
-    top: 0px;
-}
-#banner_bottom::after {
-    left: auto;
-    right: 15px;
-}
-#banner_bottom .ban_btm_cont {
-    max-width: 650px;
-    margin: 0 auto;
-}
-#banner_bottom::before, #banner_bottom::after {
-    width: 25%;
-    top: 30px;
-}
-#banner_bottom .ban_btm_cont {
-    max-width: 45%;
 }
 #deep-section .deep-featured_client {
     display: flex;
@@ -856,12 +875,61 @@ h1.main-page-heading {
     line-height: 0.85;
 }
 .normal-text {
-    font-size: clamp(16px, 1.8vw, 28px);
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(20px, 2.5vw, 36px);
     font-weight: 400;
+    letter-spacing: -1.44px;
+    line-height: 1.38;
 }
 .dropdown-container .dropdown .dropdown-toggle {
-    font-size: clamp(20px, 2.7vw, 48px);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(16px, 1.6vw, 24px);
+    letter-spacing: 0;
 }
+
+/* Homepage #your-ally dropdown - pill button styling (same as service pages) */
+#your-ally .dropdown-container .dropdown .dropdown-toggle {
+    background: #000;
+    color: #e3dfdc;
+    border: 1px solid #bdbdbd;
+    border-radius: 15px;
+    padding: 12px 25px;
+    min-width: 280px;
+    justify-content: space-between;
+}
+#your-ally .dropdown-container .dropdown .dropdown-toggle .dropdown_btn {
+    background: transparent;
+    width: auto;
+    height: auto;
+    color: #e3dfdc;
+    border-radius: 0;
+    font-size: 14px;
+    pointer-events: none;
+}
+#your-ally .dropdown-container .dropdown .dropdown-toggle i {
+    pointer-events: none;
+}
+#your-ally .dropdown-container .dropdown button.dropdown-toggle {
+    border: 1px solid #bdbdbd;
+    outline: none;
+    cursor: pointer;
+}
+#your-ally .dropdown-container .dropdown {
+    position: relative;
+}
+#your-ally .dropdown-container .dropdown-menu {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    transform: none !important;
+    margin-top: 0;
+    border-radius: 0px 0px 15px 15px;
+    border-top: none;
+    width: 100%;
+}
+
 #your-ally {
     padding-top: clamp(40px, 12vw, 160px);
     padding-bottom: clamp(40px, 12vw, 160px);
@@ -1145,10 +1213,6 @@ h1.main-page-heading {
     .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
         margin-bottom: 1vw;
     }
-    #banner_bottom .ban_btm_cont {
-        max-width: 40vw;
-        margin: 0 auto;
-    }
 }
 
 @media (max-width: 1025px) {
@@ -1272,7 +1336,8 @@ h1.main-page-heading {
         white-space: nowrap;
     }
     #header .navbar-brand {
-        height: 55px;
+        width: 65px;
+        height: 25px;
     }
     #header .navbar-nav .dropdown-menu a {
         font-size: 14px;
@@ -1298,19 +1363,8 @@ h1.main-page-heading {
 
 
 
-    #banner .banner-subhead-block span {
-        font-size: inherit;
-    }
-    #banner .banner-subhead-block .banner-small-head {
-        position: relative;
-        top: 0px;
-        transform: none;
-    }
-    #banner .banner-subhead-block {
-        flex-direction: column;
-    }
-    #banner .banner-subhead-block .middle-logo {
-        width: 100%;
+    #banner .banner-slider {
+        width: 90%;
     }
     #deep-section .deep-heading .deep-title {
         font-size: 100px;
@@ -1423,7 +1477,8 @@ h1.main-page-heading {
         font-size: 75px;
     }
     #header .navbar-brand {
-        height: 75px;
+        width: 65px;
+        height: 25px;
     }
     #header nav.navbar .header_right_block button.navbar-toggler {
         display: block;

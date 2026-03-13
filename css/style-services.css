@@ -1,3 +1,100 @@
+/* Service page: Your Ally dropdown section */
+#your-ally .normal-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(22px, 2.5vw, 36px);
+    font-weight: 400;
+    letter-spacing: -1.44px;
+    line-height: 1.38;
+    color: #000;
+}
+#your-ally .dropdown-container .dropdown .dropdown-toggle {
+    background: #000;
+    color: #e3dfdc;
+    border: 1px solid #bdbdbd;
+    border-radius: 15px;
+    padding: 12px 25px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(16px, 1.6vw, 24px);
+    gap: 10px;
+    min-width: 280px;
+    justify-content: space-between;
+}
+#your-ally .dropdown-container .dropdown .dropdown-toggle .dropdown_btn {
+    background: transparent;
+    width: auto;
+    height: auto;
+    color: #e3dfdc;
+    border-radius: 0;
+    font-size: 14px;
+    pointer-events: none;
+}
+#your-ally .dropdown-container .dropdown .dropdown-toggle i {
+    pointer-events: none;
+}
+#your-ally .dropdown-container .dropdown button.dropdown-toggle {
+    border: 1px solid #bdbdbd;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Position dropdown menu below the toggle button (Popper disabled via data-bs-display="static") */
+#your-ally .dropdown-container .dropdown {
+    position: relative;
+}
+#your-ally .dropdown-container .dropdown-menu {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    transform: none !important;
+    margin-top: 0;
+    border-radius: 0px 0px 15px 15px;
+    border-top: none;
+    width: 100%;
+}
+#embedded-ally .dropdown-container .dropdown {
+    position: relative;
+}
+#embedded-ally .dropdown-container .dropdown-menu {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    transform: none !important;
+    margin-top: 0;
+    border-radius: 0px 0px 15px 15px;
+    border-top: none;
+    width: 100%;
+}
+
+/* Service page: Hero section */
+.service-hero {
+    background-color: #111;
+    color: #e3dfdc;
+}
+.service-hero .service-heading h3 {
+    font-size: clamp(40px, 7vw, 105px);
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: #e3dfdc;
+}
+.service-hero .service-description {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.service-hero .service-description p {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.42;
+    color: #e3dfdc;
+    text-align: center;
+    letter-spacing: -0.32px;
+}
+.service-hero .service-hero-image {
+    border-left: 1px solid rgba(227,223,220,0.2);
+    border-right: 1px solid rgba(227,223,220,0.2);
+}
+
 .full-section {
     margin-left: -1.1vw;
     margin-right: -1.1vw;

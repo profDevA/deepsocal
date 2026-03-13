@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>DeepSoCal</title>
+	<title>About | DeepSoCal</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/x-icon" href="img/DeepSoCal-Favicon.png">
@@ -15,7 +15,7 @@
 <body>
   	<header id="header" class="fixed-top">
 	  	<div class="container-fluid px-15">
-			<nav class="navbar navbar-expand-lg border-right-cust border-left-cust border-bottom-cust px-15">
+			<nav class="navbar navbar-expand-md border-right-cust border-left-cust border-bottom-cust px-15">
 				<div class="col logo_side">
 					<a class="navbar-brand" href="/"><img src="img/logo.svg" alt="logo" /></a>
 				</div>
@@ -36,13 +36,11 @@
 							  	<div class="dropdown-menu">
 							  		<!-- <span class="dropdown-overlay"></span> -->
 							  		<ul class="">
-									    <li><a class="dropdown-item" href="#">Marketing</a></li>
-									    <li><a class="dropdown-item" href="#">Deep Research</a></li>
-									    <li><a class="dropdown-item" href="#">Branding</a></li>
-									    <li><a class="dropdown-item" href="#">Design</a></li>
-									    <li><a class="dropdown-item" href="#">Development</a></li>
-									    <li><a class="dropdown-item" href="#">AI Strategy + Integration</a></li>
-									    <li><a class="dropdown-item" href="#">Training & Education </a></li>
+									    <li><a class="dropdown-item" href="/services/strategy-inetgration.html">Marketing + Branding</a></li>
+									    <li><a class="dropdown-item" href="/services/research.html">Research</a></li>
+									    <li><a class="dropdown-item" href="/services/design.html">Design</a></li>
+									    <li><a class="dropdown-item" href="/services/ai-strategy.html">AI Strategy + Integration</a></li>
+									    <li><a class="dropdown-item" href="/services/training-education.html">Training &amp; Education</a></li>
 									</ul>
 							  	</div>
 							</li>
@@ -50,7 +48,7 @@
 								<a class="nav-link" href="javascript:void(0)">Shop</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link btn-menu-item" href="javascript:void(0)">Work With Us</a>
+								<a class="nav-link btn-menu-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#partner-modal">Work With Us</a>
 							</li>
 						</ul>
 					</div>
@@ -87,11 +85,28 @@
             </div>    
         </section>
 
+        <section id="about-founder" class="box-horz-border about-founder dark-bg py-5">
+            <div class="container-fluid px-0 sect-border-top">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <div class="content-block px-4">
+                            <p class="small" style="color: #e3dfdc; font-style: italic;">"When my family immigrated to San Clemente at age 12, Southern California became the foundation that taught me how to navigate America. I left to pursue my education — learning systems thinking, design and research at the highest levels. But I always knew I'd come back. Now, I'm using everything I learned to serve the place that gave me everything. This isn't just business for us — it's personal. Orange County shaped who I am, and I'm committed to using these skills to strengthen the communities, business, and systems that make this region thrive."</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="content-block px-4">
+                            <p class="small" style="color: #e3dfdc;">We're not a remote agency — we're your neighbors. Our deep understanding of Orange County's economic, social, and operational landscape allows us to design solutions grounded in regional reality.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="about-2" class="box-horz-border about-2">
             <div class="container-fluid px-0 sect-border-top">
                 <div class="row">
                     <div class="content-block text-center">
-                        <h2 class="font-druk text-uppercase">Why Southern California companies choose us as embedded allies</h2>
+                        <h2 class="font-druk text-uppercase">We're SoCal-local. Why the community chooses us as embedded allies</h2>
                         <p>Our proprietary TriVision Approach demystifies and activates strategic digital success. Uniting three robust solution portfolios, TriVision charts a roadmap to influence opinions, shape purchase decisions, and enhance brand affinity.</p>
                     </div>
                 </div>
@@ -148,7 +163,7 @@
                     <div class="col-md-4">
                         <div class="content-block">
                            <h2 class="font-druk text-uppercase">We Measure Our Impact With Numbers. Big Ones. Huge.</h2>
-                           <p class="small">Guided by a 360° strategy, we grow high-value online audiences using emotionally resonant storytelling and culturally relevant content. Forget vanity metrics—Social House tracks the KPIs that actually move your brand forward.</p>
+                           <p class="small">Guided by a 360° strategy, we grow high-value online audiences using emotionally resonant storytelling and culturally relevant content. Forget vanity metrics—DeepSoCal tracks the KPIs that actually move your brand forward.</p>
                         </div>
                     </div>
                 </div>
@@ -161,7 +176,7 @@
 					<div class="row">
 						<div class="col-lg-7 col-md-7">
 							<div class="content-left">
-								<h2 class="font-druk text-uppercase">Meet your future allies</h2>
+								<h2 class="font-druk text-uppercase">We are designers and researchers shaping Southern California's future through community and impact</h2>
 								<p>Based in Southern California, our multidisciplinary team of researchers, designers, engineers, and systems thinkers helps businesses grow with purpose. We design strategies that strengthen communities and bring creativity and technology together to drive systemic change.</p>
 							</div>
 						</div>
@@ -375,71 +390,61 @@
 							<div class="faq-item">
 								<h4>What services does DeepSoCal offer? <span>[+]</span></h4>
 								<div class="faq-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-									<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+									<p>We offer five integrated service areas: Marketing + Branding, Research, Design, AI Strategy + Integration, and Training &amp; Education. Each service draws on deep cultural research and systems thinking to deliver strategies rooted in the lived reality of Southern California communities.</p>
 								</div>
 							</div>
 							<div class="faq-item">
 								<h4>What separates DeepSoCal from other agencies? <span>[+]</span></h4>
 								<div class="faq-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-									<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+									<p>We're not a remote agency parachuting in with generic playbooks. We're embedded in Southern California — we live here, we understand the culture, the neighborhoods, and the economic landscape. Our approach combines Ph.D.-level research methodologies with practical AI tools and transition design to create strategies that are genuinely rooted in this region.</p>
 								</div>
 							</div>
 							<div class="faq-item">
 								<h4>What does it cost to work with DeepSoCal? <span>[+]</span></h4>
 								<div class="faq-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-									<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+									<p>Our pricing varies based on the scope and complexity of each engagement. We offer everything from focused consulting sprints to full-service partnerships. Every engagement begins with a free scoping workshop where we clarify your goals and outline a tailored approach — so you'll always know what to expect before committing.</p>
 								</div>
 							</div>
 							<div class="faq-item">
 								<h4>What industries do you specialize in? <span>[+]</span></h4>
 								<div class="faq-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-									<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+									<p>We work across a range of Southern California industries including action sports, lifestyle brands, e-commerce, real estate, healthcare, education, and community organizations. Our strength lies in adapting our research-driven approach to any sector that values authentic connection with SoCal audiences.</p>
 								</div>
 							</div>
 							<div class="faq-item">
 								<h4>What's the process for working together? <span>[+]</span></h4>
 								<div class="faq-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-									<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+									<p>It starts with a free scoping workshop where we understand your goals, challenges, and market context. From there, we develop a strategic roadmap tailored to your needs. Throughout the engagement, we work as your embedded allies — collaborating closely with your team rather than operating at arm's length.</p>
 								</div>
 							</div>
 							<div class="faq-item">
 								<h4>Do you work with businesses outside of Southern California? <span>[+]</span></h4>
 								<div class="faq-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-									<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+									<p>Our expertise is deeply rooted in Southern California, and that's where we deliver the most impact. However, we do work with brands outside the region that want to establish or strengthen their presence in SoCal markets. Our deep local knowledge becomes your competitive advantage.</p>
 								</div>
 							</div>
 							<div class="faq-item">
 								<h4>How do your AI-powered solutions work? <span>[+]</span></h4>
 								<div class="faq-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-									<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+									<p>We identify high-impact AI opportunities tailored to your operations, then build phased roadmaps to integrate tools like automation agents, generative AI for content, and predictive analytics — all without disrupting your day-to-day. We focus on practical outcomes, not hype, ensuring AI delivers measurable business value.</p>
 								</div>
 							</div>
 							<div class="faq-item">
 								<h4>Who are your services best suited for? <span>[+]</span></h4>
 								<div class="faq-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-									<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+									<p>Our services are ideal for mid-size to enterprise brands operating in or targeting Southern California. Whether you're a lifestyle brand looking to deepen community ties, a healthcare organization seeking better regional engagement, or a business ready to integrate AI into your operations — we're built for you.</p>
 								</div>
 							</div>
 							<div class="faq-item">
 								<h4>Can your services be customized to specific industry needs? <span>[+]</span></h4>
 								<div class="faq-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-									<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+									<p>Absolutely. Every engagement is tailored to your industry, audience, and regional context. We don't use cookie-cutter frameworks. Our research-first approach means we start by understanding your specific ecosystem before designing any solution.</p>
 								</div>
 							</div>
 							<div class="faq-item">
-								<h4>How do I get started with Social House? <span>[+]</span></h4>
+								<h4>How do I get started with DeepSoCal? <span>[+]</span></h4>
 								<div class="faq-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-									<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+									<p>The easiest way is to book a free scoping workshop through our website. In this session, we'll clarify your goals, answer your questions, and outline potential next steps. You can also reach us directly at create@deepsocal.com.</p>
 								</div>
 							</div>
 						</div>
@@ -473,35 +478,123 @@
 		<div id="footer_main" class="bg-black pt-30 pb-30 full-width-sect px-5">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-5 footer-widget logo-widget">
+					<div class="col-md-4 footer-widget logo-widget">
 						<div class="main_block">
 							<img src="img/your_ally.svg" alt="img">
 						</div>
 					</div>
-					<div class="col-md footer-widget widget-2">
-						<div class="main_block">
-							<h3 class="widget-title">Quick Links</h3>
-							<ul class="footer-menu">
-							  <li><a href="/about-us.html">About</a></li>
-							  <li><a href="/works.html">Work</a></li>
-							  <li><a href="javascript:void(0)">Services</a></li>
-							  <li><a href="javascript:void(0)">Shop</a></li>
-						  </ul>
-						</div>
-					</div>
-					<div class="col-md footer-widget widget-3">
+					<div class="col-md footer-widget">
 						<div class="main_block">
 							<h3 class="widget-title">Contact Us</h3>
 							<ul class="footer-menu">
-							  <li><a href="javascript:void(0)">create@deepsocal.com</a></li>
-							  <li><a href="javascript:void(0)">careers@deepsocal.com</a></li>
-						  </ul>
+								<li><a href="mailto:create@deepsocal.com">create@deepsocal.com</a></li>
+								<li><a href="mailto:careers@deepsocal.com">careers@deepsocal.com</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md footer-widget">
+						<div class="main_block">
+							<h3 class="widget-title">Visit Us</h3>
+							<ul class="footer-menu">
+								<li>Southern California</li>
+								<li>Orange County, CA</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md footer-widget">
+						<div class="main_block">
+							<h3 class="widget-title">Follow Us</h3>
+							<ul class="footer-menu">
+								<li><a href="javascript:void(0)">Instagram</a></li>
+								<li><a href="javascript:void(0)">LinkedIn</a></li>
+							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</footer>
+
+	<div class="modal fade side-modal" id="partner-modal" tabindex="-1" aria-hidden="true">
+	   	<div class="modal-dialog">
+	      	<div class="modal-content">
+	         	<div class="modal-header flex-column">
+	         		<a type="button" class="btn-close" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></a>
+	            	<h4 class="modal-title w-100">How do you want to begin your partnership with us.</h4>
+	         	</div>
+	         	<div class="modal-footer">
+	            	<ul>
+	            		<li><a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#scoping-modal">Free Scoping Workshop</a></li>
+	            		<li><a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#contact-modal">Contact us directly</a></li>
+	            	</ul>
+	         	</div>
+	      	</div>
+	   	</div>
+	</div>
+
+	<div class="modal fade side-modal" id="contact-modal" tabindex="-1" aria-hidden="true">
+	   	<div class="modal-dialog">
+	      	<div class="modal-content">
+	         	<div class="modal-header flex-column">
+	         		<a type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#partner-modal"><i class="fa-solid fa-xmark"></i></a>
+	            	<h4 class="modal-title w-100 pb-15">Contact us</h4>
+	            	<p>Start a direct conversation with your embedded ally. Tell us about your business goals and the challenges you're facing. Our team will get back to you with ways we can move forward.</p>
+	         	</div>
+	         	<div class="modal-footer w-100 d-block p-0">
+	            	<form action="/action_page.php">
+						<div class="main_block">
+						  	<label for="name">Name:</label>
+						  	<input type="text" class="form-control" id="name" placeholder="Enter your name" name="name">
+						</div>
+						<div class="main_block">
+						  	<label for="email">Email:</label>
+						  	<input type="email" class="form-control" id="email" placeholder="Enter your email" name="email">
+						</div>
+						<div class="main_block">
+						  	<label for="message">Message:</label>
+						  	<textarea class="form-control" rows="5" id="message" name="text" placeholder="Enter your message"></textarea>
+						</div>
+						<div class="main_block">
+							<button type="submit" class="btn btn-cust-desg cust-width-165 mw-auto">Send Message</button>
+						</div>
+					</form>
+	         	</div>
+	      	</div>
+	   	</div>
+	</div>
+
+	<div class="modal fade side-modal" id="scoping-modal" tabindex="-1" aria-hidden="true">
+	   	<div class="modal-dialog">
+	      	<div class="modal-content">
+	         	<div class="modal-header flex-column">
+	         		<a type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#partner-modal"><i class="fa-solid fa-xmark"></i></a>
+	            	<h4 class="modal-title w-100 pb-15">Free scoping workshop</h4>
+	            	<p>A Free Scoping Workshop is your first step with DeepSoCal. In this session, we'll clarify your goals and answer your questions. You'll leave with clarity, a fresh perspective, and actionable next steps tailored to your business</p>
+	         	</div>
+	         	<div class="modal-footer w-100 d-block p-0">
+	         		<div class="main_block popup-video">
+	         			<video class="custom-video w-100" controls="" loop="" muted="">
+							<source src="img/963030996.mp4" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
+	         		</div>
+	            	<form action="/action_page.php">
+						<div class="main_block">
+						  	<label for="name">Name:</label>
+						  	<input type="text" class="form-control" id="name" placeholder="Enter your name" name="name">
+						</div>
+						<div class="main_block">
+						  	<label for="email">Email:</label>
+						  	<input type="email" class="form-control" id="email" placeholder="Enter your email" name="email">
+						</div>
+						<div class="main_block">
+							<button type="submit" class="btn btn-cust-desg">Book Your Free Workshop</button>
+						</div>
+					</form>
+	         	</div>
+	      	</div>
+	   	</div>
+	</div>
 
     <script src="js/jquery.js"></script>
   	<script src="js/bootstrap.bundle.min.js"></script>
