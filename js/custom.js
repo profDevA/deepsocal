@@ -136,11 +136,9 @@ $(document).ready(function() {
     // Filter work items
     filterWorkItems(filterId);
     if(filterId == "all") {
-      $('.services-section').hide();
       $('.home-section').show();
       $('#deep-section .wrapper').addClass('border-bottom-cust');
     } else {
-      $('.services-section').show();
       $('.home-section').hide();
       $('#deep-section .wrapper').removeClass('border-bottom-cust');
     }
