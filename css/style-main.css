@@ -69,10 +69,12 @@ body {
     color: #fff;
     text-transform: uppercase;
     border-radius: 0px;
-    font-family: 'ES Allianz', sans-serif;
-    font-size: 1vw;
-    font-weight: 500;
-    padding: 0.4vw 0.8vw;
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: -0.44px;
+    padding: 12px 24px;
+    min-height: 43px;
 }
 .btn-cust-desg:focus, .btn-cust-desg:hover {
     background: #000;
@@ -233,26 +235,26 @@ ul.dropdown-menu.custom-dropdown-desg li:last-child .dropdown-item {
     right: 0;
     margin: 0;
     height: 100%;
-    width: 28vw;
+    width: 453px;
     max-width: 100%;
     padding: 0px;
     background: #e3dfdc;
-    border-radius: 4vw 0vw 0vw 4vw;
+    border-radius: 62px 0 0 62px;
     overflow-y: auto;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.25);
 }
 .side-modal .modal-content {
-    height: 100%;
     border-radius: 0;
     border: none;
     background: transparent;
-    padding: 1.5vw 3vw;
-    height: auto;
+    padding: 88px 34px 50px 46px;
     min-height: 100%;
-    padding-bottom: 3.5vw;
+    display: flex;
+    flex-direction: column;
 }
 .modal .modal-header .btn-close {
-    width: 2vw;
-    height: 2vw;
+    width: 40px;
+    height: 40px;
     background: #000;
     color: #fff;
     opacity: 1;
@@ -261,7 +263,11 @@ ul.dropdown-menu.custom-dropdown-desg li:last-child .dropdown-item {
     text-decoration: none;
     align-items: center;
     justify-content: center;
-    font-size: 1.8vw;
+    font-size: 22px;
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    z-index: 2;
 }
 
 .modal .modal-header {
@@ -269,26 +275,28 @@ ul.dropdown-menu.custom-dropdown-desg li:last-child .dropdown-item {
     padding: 0px;
 }
 .modal .modal-header .modal-title {
-    font-size: 3.8vw;
-    margin-top: 1.5vw;
     font-family: 'Druk', sans-serif;
-    letter-spacing: 0.3vw;
+    font-size: 58px;
+    line-height: 0.9;
+    letter-spacing: 0;
     text-transform: uppercase;
-    line-height: 1.25;
+    color: #000;
+}
+.side-modal .modal-header p {
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    line-height: 1.44;
+    letter-spacing: -0.54px;
+    color: #000;
+    margin-top: 28px;
 }
 
 
-#partner-modal.side-modal .modal-dialog {
-    padding-bottom: 0vw;
-}
 #partner-modal.side-modal .modal-content {
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    gap: 3vw;
 }
 #partner-modal.side-modal .modal-content .modal-footer {
-    padding: 0px;
+    padding: 0px 0 50px;
     border: none;
     width: 100%;
     min-width: 100%;
@@ -301,36 +309,153 @@ ul.dropdown-menu.custom-dropdown-desg li:last-child .dropdown-item {
     margin: 0px;
     display: flex;
     flex-direction: column;
-    gap: 1vw;
-    width: 100%;
+    gap: 24px;
+    width: 345px;
+}
+#partner-modal.side-modal .modal-content .modal-footer ul li {
+    border-bottom: 1.135px solid #C8C8C8;
 }
 #partner-modal.side-modal .modal-content .modal-footer ul a {
-    font-size: 1.5vw;
+    font-family: 'Druk', sans-serif;
+    font-size: 25px;
     text-decoration: none;
-    color: inherit;
-    padding: 1vw 0vw;
-    border-bottom: 1px solid #C8C8C8;
+    color: #1F1C06;
+    padding: 20px 0;
     display: flex;
     width: 100%;
+    letter-spacing: 1px;
+    line-height: 1.96;
 }
 .side-modal .modal-content label {
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    letter-spacing: -0.2px;
     line-height: 1;
-    margin-bottom: 0.5vw;
+    margin-bottom: 10px;
+    color: #000;
+}
+.side-modal .modal-content .main_block {
+    margin-bottom: 18px;
 }
 .side-modal .modal-content .form-control {
-    font-size: 85%;
-    padding: 0.6vw 0.8vw;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    padding: 12px 16px;
     background: #E6E6E6;
+    border: none;
+    border-radius: 0;
     resize: none;
+    color: #000;
+    width: 345px;
+    height: 43px;
+}
+.side-modal .modal-content textarea.form-control {
+    height: 120px;
+}
+.side-modal .modal-content .form-control::placeholder {
+    color: #A9A9A9;
+    font-size: 14px;
 }
 .side-modal .modal-content .form-control:focus {
     border-color: rgba(0,0,0,0.6);
+}
+.side-modal .modal-content .modal-footer.w-100 {
+    border: none;
+    margin-top: 33px;
 }
 .side-modal .modal-content form {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    gap: 1.2vw;
+    gap: 0;
+}
+
+/* Confirmation modals */
+.confirmation-modal .modal-dialog {
+    max-width: 1134px;
+}
+.confirmation-modal .modal-content {
+    background: #E3DFDC;
+    border: none;
+    border-radius: 0;
+    min-height: 829px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.confirmation-modal .btn-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    background: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 22px;
+    z-index: 2;
+    text-decoration: none;
+    opacity: 1;
+}
+.confirmation-body {
+    text-align: center;
+    padding: 60px 40px;
+    max-width: 723px;
+    margin: 0 auto;
+}
+.confirmation-title {
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: clamp(48px, 4.7vw, 68px);
+    line-height: 1.17;
+    letter-spacing: -1.37px;
+    text-transform: uppercase;
+    margin-bottom: 44px;
+    color: #000;
+}
+.confirmation-text {
+    font-family: 'Arial', sans-serif;
+    font-weight: 400;
+    font-size: clamp(22px, 2.4vw, 35px);
+    line-height: 1.44;
+    letter-spacing: -1.05px;
+    max-width: 723px;
+    margin: 0 auto 44px;
+    color: #000;
+}
+.confirmation-actions {
+    display: flex;
+    gap: 38px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.confirmation-actions .btn {
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: -0.58px;
+    width: 190px;
+    height: 57px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    padding: 0;
+}
+.btn-cust-outline {
+    background: transparent;
+    border: 1.3px solid #000;
+    color: #000;
+}
+.btn-cust-outline:hover {
+    background: #000;
+    color: #E3DFDC;
 }
 
 /*----- HEADER ------*/
@@ -1169,35 +1294,15 @@ ul.dropdown-menu.custom-dropdown-desg li:last-child .dropdown-item {
         font-size: inherit;
         padding: 10px 30px;
     }
-    .side-modal .modal-content {
-        padding: 40px 30px 60px;
-    }
     .side-modal .modal-dialog {
-        width: 450px;
+        width: 453px;
         max-width: 90%;
     }
-    .modal .modal-header .btn-close {
-        width: 40px;
-        height: 40px;
-        font-size: 30px;
-    }
-    .modal .modal-header .modal-title {
-        font-size: 75px;
-        line-height: 1.1;
-        margin-top: 30px;
-    }
     .side-modal .modal-content .form-control {
-        padding: 10px 15px;
+        width: 100%;
     }
-    .side-modal .modal-content form {
-        gap: 20px;
-    }
-    .side-modal .modal-content label {
-        margin-bottom: 15px;
-    }
-    #partner-modal.side-modal .modal-content .modal-footer ul a {
-        font-size: 30px;
-        padding: 15px 0px;
+    #partner-modal.side-modal .modal-content .modal-footer ul {
+        width: 100%;
     }
     ul.dropdown-menu.custom-dropdown-desg .dropdown-item {
         padding: 10px 20px;

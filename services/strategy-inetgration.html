@@ -464,92 +464,117 @@
   		</div>
   	</footer>
 
-  	<div class="modal fade side-modal" id="partner-modal" tabindex="-1" aria-hidden="true">
-	   	<div class="modal-dialog">
-	      	<div class="modal-content">
-	         <!-- Modal Header -->
-	         	<div class="modal-header flex-column">
-	         		<a type="button" class="btn-close" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></a>
-	            	<h4 class="modal-title w-100">How do you want to begin your partnership with us.</h4>
-	         	</div>
-	         	<!-- Modal body -->
-	         	<div class="modal-footer">
-	            	<ul>
-	            		<li><a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#scoping-modal">Free Scoping Workshop</a></li>
-	            		<li><a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#contact-modal">Contact us directly</a></li>
-	            	</ul>
-	         	</div>
-	      	</div>
-	   	</div>
-	</div>
+  	    <!-- MODAL 1: Partner choice -->
+    <div class="modal fade side-modal" id="partner-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header flex-column">
+            <a type="button" class="btn-close" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></a>
+            <h4 class="modal-title w-100">Partner with us and build your brand!</h4>
+          </div>
+          <div class="modal-footer">
+            <ul>
+              <li><a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#scoping-modal">Free Scoping Workshop</a></li>
+              <li><a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#contact-modal">Start Building</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
-	<div class="modal fade side-modal" id="contact-modal" tabindex="-1" aria-hidden="true">
-	   	<div class="modal-dialog">
-	      	<div class="modal-content">
-	         <!-- Modal Header -->
-	         	<div class="modal-header flex-column">
-	         		<a type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#partner-modal"><i class="fa-solid fa-xmark"></i></a>
-	            	<h4 class="modal-title w-100 pb-15">Contact us</h4>
-	            	<p>Start a direct conversation with your embedded ally. Tell us about your business goals and the challenges you’re facing. Our team will get back to you with ways we can move forward.</p>
-	         	</div>
-	         	<!-- Modal body -->
-	         	<div class="modal-footer w-100 d-block p-0">
-	            	<form action="/action_page.php">
-						<div class="main_block">
-						  	<label for="name">Name:</label>
-						  	<input type="text" class="form-control" id="name" placeholder="Enter your name" name="name">
-						</div>
-						<div class="main_block">
-						  	<label for="email">Email:</label>
-						  	<input type="email" class="form-control" id="email" placeholder="Enter your email" name="email">
-						</div>
-						<div class="main_block">
-						  	<label for="message">Message:</label>
-						  	<textarea class="form-control" rows="5" id="message" name="text" placeholder="Enter your message"></textarea>
-						</div>
-						<div class="main_block">
-							<button type="submit" class="btn btn-cust-desg cust-width-165 mw-auto">Send Message</button>
-						</div>
-					</form>
-	         	</div>
-	      	</div>
-	   	</div>
-	</div>
+    <!-- MODAL 2: Contact Us form -->
+    <div class="modal fade side-modal" id="contact-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header flex-column">
+            <a type="button" class="btn-close" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></a>
+            <h4 class="modal-title w-100 pb-15">Contact us</h4>
+            <p>Start building your brand through a direct conversation with your embedded ally. Tell us about your business goals and the challenges you're facing. Our team will get back to you with ways we can move forward.</p>
+          </div>
+          <div class="modal-footer w-100 d-block p-0">
+            <form id="contact-form">
+              <div class="main_block">
+                <label for="contact-name">Name:</label>
+                <input type="text" class="form-control" id="contact-name" placeholder="Enter your name" name="name" required />
+              </div>
+              <div class="main_block">
+                <label for="contact-email">Email:</label>
+                <input type="email" class="form-control" id="contact-email" placeholder="Enter your email" name="email" required />
+              </div>
+              <div class="main_block">
+                <label for="contact-message">Message:</label>
+                <textarea class="form-control" rows="5" id="contact-message" name="message" placeholder="Enter your message"></textarea>
+              </div>
+              <div class="main_block">
+                <button type="submit" class="btn btn-cust-desg">Send Message</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
-	<div class="modal fade side-modal" id="scoping-modal" tabindex="-1" aria-hidden="true">
-	   	<div class="modal-dialog">
-	      	<div class="modal-content">
-	         <!-- Modal Header -->
-	         	<div class="modal-header flex-column">
-	         		<a type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#partner-modal"><i class="fa-solid fa-xmark"></i></a>
-	            	<h4 class="modal-title w-100 pb-15">Free scoping workshop</h4>
-	            	<p>A Free Scoping Workshop is your first step with DeepSoCal. In this session, we’ll clarify your goals and answer your questions. You’ll leave with clarity, a fresh perspective, and actionable next steps tailored to your business</p>
-	         	</div>
-	         	<!-- Modal body -->
-	         	<div class="modal-footer w-100 d-block p-0">
-	         		<div class="main_block popup-video">
-	         			<video class="custom-video w-100" controls="" loop="" muted="">
-							<source src="../img/963030996.mp4" type="video/mp4">
-							Your browser does not support the video tag.
-						</video>
-	         		</div>
-	            	<form action="/action_page.php">
-						<div class="main_block">
-						  	<label for="name">Name:</label>
-						  	<input type="text" class="form-control" id="name" placeholder="Enter your name" name="name">
-						</div>
-						<div class="main_block">
-						  	<label for="email">Email:</label>
-						  	<input type="email" class="form-control" id="email" placeholder="Enter your email" name="email">
-						</div>
-						<div class="main_block">
-							<button type="submit" class="btn btn-cust-desg">Book Your Free Workshop</button>
-						</div>
-					</form>
-	         	</div>
-	      	</div>
-	   	</div>
-	</div>
+    <!-- MODAL 3: Free Scoping Workshop form -->
+    <div class="modal fade side-modal" id="scoping-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header flex-column">
+            <a type="button" class="btn-close" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></a>
+            <h4 class="modal-title w-100 pb-15">Free scoping workshop</h4>
+            <p>A Free Scoping Workshop is your first step with DeepSoCal. In this session, we'll clarify your goals and answer your questions. You'll leave with clarity, a fresh perspective, and actionable next steps tailored to your business</p>
+          </div>
+          <div class="modal-footer w-100 d-block p-0">
+            <form id="scoping-form">
+              <div class="main_block">
+                <label for="scoping-name">Name:</label>
+                <input type="text" class="form-control" id="scoping-name" placeholder="Enter your name" name="name" required />
+              </div>
+              <div class="main_block">
+                <label for="scoping-email">Email:</label>
+                <input type="email" class="form-control" id="scoping-email" placeholder="Enter your email" name="email" required />
+              </div>
+              <div class="main_block">
+                <button type="submit" class="btn btn-cust-desg">Book Your Free Workshop</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 4: You're All Set (after scoping workshop) -->
+    <div class="modal fade confirmation-modal" id="allset-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <a type="button" class="btn-close" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></a>
+          <div class="confirmation-body">
+            <h2 class="confirmation-title">You're All Set!</h2>
+            <p class="confirmation-text">You've successfully registered for our free scoping workshop.</p>
+            <div class="confirmation-actions">
+              <button class="btn btn-cust-desg" data-bs-dismiss="modal">Got it, thanks</button>
+              <button class="btn btn-outline-dark btn-cust-outline" onclick="window.open('https://calendar.google.com','_blank')">Add to calender</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 5: Thank You (after contact form) -->
+    <div class="modal fade confirmation-modal" id="thankyou-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <a type="button" class="btn-close" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></a>
+          <div class="confirmation-body">
+            <h2 class="confirmation-title">Thank You!</h2>
+            <p class="confirmation-text">Your message has been successfully submitted. We appreciate you reaching out to us!</p>
+            <div class="confirmation-actions">
+              <button class="btn btn-cust-desg" data-bs-dismiss="modal">Got it, thanks</button>
+              <a href="strategy-inetgration.html" class="btn btn-outline-dark btn-cust-outline">Browse Services</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   	<script src="../js/jquery.js"></script>
   	<script src="../js/bootstrap.bundle.min.js"></script>
@@ -626,7 +651,84 @@
 
 
 		   
-		})
+		
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          var form = this;
+          var btn = form.querySelector('button[type="submit"]');
+          var originalText = btn.textContent;
+          btn.disabled = true;
+          btn.textContent = 'SENDING...';
+
+          fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: form.querySelector('[name="name"]').value,
+              email: form.querySelector('[name="email"]').value,
+              message: form.querySelector('[name="message"]').value
+            })
+          })
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            btn.disabled = false;
+            btn.textContent = originalText;
+            if (data.success) {
+              var modal = bootstrap.Modal.getInstance(document.getElementById('contact-modal'));
+              if (modal) modal.hide();
+              setTimeout(function() {
+                new bootstrap.Modal(document.getElementById('thankyou-modal')).show();
+                form.reset();
+              }, 400);
+            } else {
+              alert('Something went wrong. Please try again.');
+            }
+          })
+          .catch(function() {
+            btn.disabled = false;
+            btn.textContent = originalText;
+            alert('Something went wrong. Please try again.');
+          });
+        });
+
+        document.getElementById('scoping-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          var form = this;
+          var btn = form.querySelector('button[type="submit"]');
+          var originalText = btn.textContent;
+          btn.disabled = true;
+          btn.textContent = 'SENDING...';
+
+          fetch('/api/scoping', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: form.querySelector('[name="name"]').value,
+              email: form.querySelector('[name="email"]').value
+            })
+          })
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            btn.disabled = false;
+            btn.textContent = originalText;
+            if (data.success) {
+              var modal = bootstrap.Modal.getInstance(document.getElementById('scoping-modal'));
+              if (modal) modal.hide();
+              setTimeout(function() {
+                new bootstrap.Modal(document.getElementById('allset-modal')).show();
+                form.reset();
+              }, 400);
+            } else {
+              alert('Something went wrong. Please try again.');
+            }
+          })
+          .catch(function() {
+            btn.disabled = false;
+            btn.textContent = originalText;
+            alert('Something went wrong. Please try again.');
+          });
+        });
+      })
 	</script>
 </body>
 </html>
