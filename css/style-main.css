@@ -169,19 +169,7 @@ h2.sect-title.sect-title-lg {
     line-height: 115%;
 }
 .dropdown-overlay {
-    position: fixed;
-    left: 50% !important;
-    transform: translateX(-50%);
-    width: calc(100vw - 80px) !important;
-    z-index: 9998;
-    background: #e3dfdc;
-    border-radius: 0px;
-    border-bottom: 1px solid #000;
-    transition: opacity 0.3s ease;
-    opacity: 0;
-}
-.dropdown-overlay.is-visible {
-  opacity: 1;
+    display: none;
 }
 .dropdown-menu {
   z-index: 1060;
@@ -481,35 +469,47 @@ ul.dropdown-menu.custom-dropdown-desg li:last-child .dropdown-item {
     margin-right: 0px;
 }
 #header .navbar-nav .dropdown-menu {
-    top: calc(100% + 0.6vw);
-    border: none;
-    border-radius: 0px;
-    margin: 0px;
-    background: transparent;
+    top: 100%;
+    border: 1px solid #111;
+    border-top: none;
+    border-radius: 0;
+    margin: 0;
+    background: #e3dfdc;
     z-index: 99999;
-    padding: 0px;
+    padding: 0;
     transform: none !important;
     transform-origin: top center !important;
+    min-width: 240px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 #header .navbar-nav .dropdown-menu ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.8vw;
-    padding-left: 2vw;
-    border-left: 1px solid #000;
-    margin: 1vw 0px 1.5vw;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+}
+#header .navbar-nav .dropdown-menu li + li {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 #header .navbar-nav .dropdown-menu a {
-    letter-spacing: -.02em;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: .85vw;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.01em;
+    font-size: clamp(12px, 0.82vw, 13px);
     font-weight: 400;
-    line-height: 140%;
+    line-height: 1;
     text-decoration: none;
-    padding: 0px;
+    padding: 14px 24px;
+    color: #111;
     background: transparent;
+    display: block;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+#header .navbar-nav .dropdown-menu a:hover {
+    background: #111;
+    color: #e3dfdc;
 }
 #header nav.navbar {
     display: flex;
@@ -1318,10 +1318,11 @@ ul.dropdown-menu.custom-dropdown-desg li:last-child .dropdown-item {
         height: 25px;
     }
     #header .navbar-nav .dropdown-menu a {
-        font-size: 14px;
+        font-size: 13px;
+        padding: 12px 20px;
     }
     #header .navbar-nav .dropdown-menu {
-        top: calc(100% + 12px);
+        min-width: 220px;
     }
     #header .navbar-nav .nav-link.btn-menu-item {
         padding: 8px 15px;

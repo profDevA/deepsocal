@@ -11,7 +11,7 @@
 	<link href="../css/style-main.css" rel="stylesheet">
 	<link href="../css/style-services.css" rel="stylesheet">
 </head>
-<body>
+<body class="service-page">
   	<header id="header" class="fixed-top">
 	  	<div class="container-fluid px-15">
 			<nav class="navbar navbar-expand-md border-right-cust border-left-cust border-bottom-cust px-15">
@@ -67,13 +67,13 @@
 		  					<div class="main_block position-relative">
 		  						<div class="banner_content pt-0">
 			  						<div class="banner-subhead-block justify-content-center">
-			  							<div class="main_block d-inline-block middle-logo col-8">
-			  								<div class="d-flex mb-2" style="justify-content: space-between;">
+			  							<div class="main_block middle-logo">
+			  								<div class="d-flex mb-2 w-100 align-items-end" style="justify-content: space-between;">
 			  									<div class="main_block d-inline-block banner-small-head banner-head-left">
-					  								<span>Generate #soCal-Local</span>
+					  								<span>Solving Challenges</span>
 					  							</div>
 					  							<div class="main_block d-inline-block banner-small-head banner-head-right text-end">
-					  								<span>DeepSoCal®</span>
+					  								<span>driving innovation</span>
 					  							</div>
 			  								</div>
                                             <img src="../img/DeepSoCal-banner.svg" class="w-100 bg-black px-15 py-15">
@@ -87,18 +87,14 @@
 		  	</div>
 	  	</section>
 
-	  	<section id="banner_bottom" class="box-horz-border">
-	  		<div class="w-100">
-		  		<div class="container-fluid">
-		  			<div class="row">
-		  				<div class="col-12">
-		  					<div class="ban_btm_cont w-100 text-center">
-			  					<p>Specialists in deep research blending AI, design, technology, strategy, and training to drive sustainable growth for SoCal's brands</p>
-			  				</div>
-		  				</div>
-		  			</div>
-		  		</div>
-		  	</div>
+	  	<section id="banner_bottom" class="box-horz-border service-banner-tagline-section">
+	  		<div class="container-fluid px-15">
+	  			<div class="service-banner-tagline d-flex align-items-center justify-content-center flex-wrap">
+	  				<span class="service-banner-tagline-line" aria-hidden="true"></span>
+	  				<p class="service-banner-tagline-text mb-0">DeepSoCal is a regional strategic design agency building transformative experiences for SoCal&rsquo;s brands by blending deep research, AI &amp; technology, strategy, design, and technology.</p>
+	  				<span class="service-banner-tagline-line" aria-hidden="true"></span>
+	  			</div>
+	  		</div>
 	  	</section>
 
 	  	<section id="your-ally" class="d-flex flex-wrap align-items-center border-left-cust border-right-cust">
@@ -131,15 +127,17 @@
                         <div class="content font-druk big-heading service-heading">
 							<h3>DESIGN</h3>
 						</div>
-						<div class="content service-description mx-auto" style="max-width: 707px;">
-                            <p>Blending Ph.D.-level Deep Research with AI strategy, we build Strategic Architectures, intuitive experiences that reduce friction, ensure user adoption, and unlock sustainable growth for the region.</p>
+						<div class="content service-description mx-auto" style="max-width: 725px;">
+                            <p class="service-hero-design-lead text-center mb-0">Blending Ph.D.-level Deep Research with AI strategy, we build <span class="service-hero-em">Strategic Architectures, </span>intuitive experiences that reduce friction, ensure user adoption, and unlock sustainable growth for the region.</p>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-12">
-                        <div class="service-hero-image" style="height: 657px; overflow: hidden; position: relative;">
-                            <img src="../img/01 Free Folded T-Shirt Mockup 4.png" class="w-100" alt="Design" style="object-fit: cover; height: 100%; width: 100%;">
+                        <div class="service-hero-image">
+                            <div class="service-hero-media service-hero-media--tall">
+                                <img src="../img/services/design-hero.jpg" alt="Design" class="service-hero-media-single" decoding="async">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -218,17 +216,18 @@
 
 		<section id="embedded-ally" class="box-horz-border dark-bg py-5 full-section">
             <div class="container-fluid border-top-cust border-bottom-cust py-4 px-0">
-                <div class="row">
-					<div class="col-md-4">
+                <div class="row align-items-center">
+					<div class="col-lg-5">
 						<div class="content content-left">
 							<h3 class="font-druk heading-3 mb-0">YOUR <br> EMBEDDED ALLY</h3>
-							<p>Across Southern California</p>
-							<p class="small mt-4">Guided by Systems Thinking, we don't just build audiences; we cultivate regional ecosystems. We use Deep Context and culturally relevant storytelling to turn passive followers into active participants. See how we can help with your design needs.</p>
+							<p class="embedded-ally-location mb-0">Across Southern California</p>
+							<p class="embedded-ally-body mt-4 mb-0">Guided by Systems Thinking, we don't just build audiences; we cultivate regional ecosystems. Design shapes how people experience your brand every day. We don't just polish surfaces; we engineer systems.</p>
+							<p class="embedded-ally-body mt-3 mb-0">Ready to create interactions that flow effortlessly?</p>
 						</div>
 					</div>
-					<div class="col-md-8">
-						<div class="content content-right dropdown-container text-center">
-							<h4 class="normal-text">...I need help</h4>
+					<div class="col-lg-7">
+						<div class="content content-right dropdown-container text-center embedded-ally-cta">
+							<p class="embedded-ally-prompt mb-0">...I need help in</p>
 							<div class="dropdown">
 								<button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Creating lasting impact <span class="dropdown_btn"><i class="fa-solid fa-angle-down"></i></span></button>
 								<ul class="dropdown-menu custom-dropdown-desg">

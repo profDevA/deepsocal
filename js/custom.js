@@ -125,8 +125,15 @@ $(document).ready(function() {
 
   // Handle dropdown item clicks for work filtering
   $('#your-ally .dropdown-item').on('click', function(e) {
-    e.preventDefault();
     const filterId = $(this).attr('data-id');
+    if (!filterId) {
+      var href = $(this).attr('href');
+      if (href && href !== '#') {
+        window.location.href = href;
+      }
+      return;
+    }
+    e.preventDefault();
     const filterText = $(this).text().trim();
     
     // Update dropdown button text
