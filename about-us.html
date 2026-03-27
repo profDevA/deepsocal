@@ -114,7 +114,7 @@
                     <div class="col-12">
                         <div class="about-socal-inner">
                             <h2 class="font-druk text-uppercase text-center about-socal-title">SoCal-Local</h2>
-                            <p class="text-center about-socal-desc">Our core offerings across Social Media Management, Always-on Content, and Paid Media &amp; Analytics. This end-to-end strategy provides a holistic way to increase brand affinity, build community engagement, and reach new audiences.</p>
+                            <p class="text-center about-socal-desc">We're rooted in Southern California — its culture, communities, and creative energy. Our deep regional knowledge lets us design strategies that resonate locally and scale meaningfully. From Orange County's coastline to its neighborhoods, we understand the landscape because we live it.</p>
                             <div class="about-socal-image">
                                 <img src="img/about/img1476.jpg" alt="SoCal community silhouettes">
                             </div>
@@ -145,48 +145,48 @@
                     <div class="col-md-8">
                         <div class="about-team-grid">
                             <div class="team-item">
-                                <h6 class="text-uppercase">Design Team</h6>
+                                <h6 class="text-uppercase">Design <span class="team-toggle">[+]</span></h6>
                                 <ul>
-                                    <li>Action Sports</li>
-                                    <li>Lifestyle</li>
-                                    <li>Event Planning</li>
-                                    <li>Influencers/Personal Branding</li>
+                                    <li>Visual Identity</li>
+                                    <li>UX/UI Design</li>
+                                    <li>Campaign Creative</li>
+                                    <li>Packaging &amp; Print</li>
                                 </ul>
                             </div>
                             <div class="team-item">
-                                <h6 class="text-uppercase">Marketing</h6>
+                                <h6 class="text-uppercase">Marketing <span class="team-toggle">[+]</span></h6>
                                 <ul>
-                                    <li>Financial Planning</li>
-                                    <li>Finance &amp; Trading</li>
-                                    <li>E-Commerce</li>
-                                    <li>Retail &amp; Consumer Goods</li>
+                                    <li>Brand Strategy</li>
+                                    <li>Social Media Management</li>
+                                    <li>Content &amp; SEO</li>
+                                    <li>Paid Media &amp; Analytics</li>
                                 </ul>
                             </div>
                             <div class="team-item">
-                                <h6 class="text-uppercase">Development</h6>
+                                <h6 class="text-uppercase">Development <span class="team-toggle">[+]</span></h6>
                                 <ul>
-                                    <li>Financial Planning</li>
-                                    <li>Finance &amp; Trading</li>
-                                    <li>E-Commerce</li>
-                                    <li>Retail &amp; Consumer Goods</li>
+                                    <li>Full-Stack Web</li>
+                                    <li>E-Commerce Platforms</li>
+                                    <li>CMS &amp; Integrations</li>
+                                    <li>Performance Optimization</li>
                                 </ul>
                             </div>
                             <div class="team-item">
-                                <h6 class="text-uppercase">Research</h6>
+                                <h6 class="text-uppercase">Research <span class="team-toggle">[+]</span></h6>
                                 <ul>
-                                    <li>Action Sports</li>
-                                    <li>Lifestyle</li>
-                                    <li>Event Planning</li>
-                                    <li>Influencers/Personal Branding</li>
+                                    <li>Ethnographic Studies</li>
+                                    <li>Community Impact Analysis</li>
+                                    <li>Market &amp; Audience Insights</li>
+                                    <li>Future Scenario Planning</li>
                                 </ul>
                             </div>
                             <div class="team-item">
-                                <h6 class="text-uppercase">Branding</h6>
+                                <h6 class="text-uppercase">AI Strategy <span class="team-toggle">[+]</span></h6>
                                 <ul>
-                                    <li>Financial Planning</li>
-                                    <li>Finance &amp; Trading</li>
-                                    <li>E-Commerce</li>
-                                    <li>Retail &amp; Consumer Goods</li>
+                                    <li>AI Roadmapping</li>
+                                    <li>Automation &amp; Agents</li>
+                                    <li>Generative Content</li>
+                                    <li>Predictive Analytics</li>
                                 </ul>
                             </div>
                         </div>
@@ -219,6 +219,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="about-community-header text-center">
+                            <h2 class="font-druk text-uppercase about-socal-local-title">We're SoCal-Local.</h2>
                             <h2 class="font-druk text-uppercase">Why the community chooses us as embedded allies</h2>
                             <p>We're not a remote agency — we're your neighbors. Our social media shows our deep understanding of Orange County's economic, social, and operational landscape allows us to design solutions grounded in regional reality.</p>
                             <p>Our work helps your brand build:</p>
@@ -500,7 +501,7 @@
             <p class="confirmation-text">You've successfully registered for our free scoping workshop.</p>
             <div class="confirmation-actions">
               <button class="btn btn-cust-desg" data-bs-dismiss="modal">Got it, thanks</button>
-              <button class="btn btn-outline-dark btn-cust-outline" onclick="window.open('https://calendar.google.com','_blank')">Add to calender</button>
+              <button class="btn btn-outline-dark btn-cust-outline" onclick="window.open('https://calendar.google.com','_blank')">Add to calendar</button>
             </div>
           </div>
         </div>
@@ -543,6 +544,12 @@
 
 			$('.faq-item h4').click(function() {
 				$(this).parent().find('.faq-content').slideToggle();
+			});
+
+			$('.about-team-grid .team-item h6').click(function() {
+				$(this).parent().find('ul').slideToggle();
+				var toggle = $(this).find('.team-toggle');
+				toggle.text(toggle.text() === '[+]' ? '[-]' : '[+]');
 			});
         
         document.getElementById('contact-form').addEventListener('submit', function(e) {
