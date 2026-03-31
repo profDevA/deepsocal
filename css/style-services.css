@@ -399,6 +399,51 @@
     width: 100%;
 }
 
+/* Design page: hero — taller aspect ratio so faces are visible */
+.design-hero-composite {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1396 / 860 !important;
+}
+.design-hero-composite .service-hero-media-single {
+    object-position: center 28%;
+}
+.design-overlay {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+}
+.design-overlay--logo {
+    top: 6%;
+    right: 2%;
+    width: clamp(120px, 14vw, 210px);
+    height: auto;
+}
+.design-overlay--app {
+    bottom: 8%;
+    right: 3%;
+    width: clamp(180px, 22vw, 320px);
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+@media screen and (max-width: 767.98px) {
+    .design-hero-composite {
+        aspect-ratio: 1396 / 700 !important;
+    }
+    .design-overlay--logo {
+        width: 90px;
+        top: 4%;
+        right: 3%;
+    }
+    .design-overlay--app {
+        width: 140px;
+        bottom: 3%;
+        right: 2%;
+        border-radius: 4px;
+    }
+}
+
 /* Service page: Hero section */
 .service-hero {
     background-color: #111;
