@@ -1,6 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/api/contact", "destination": "/api/contact" },
-    { "source": "/api/scoping", "destination": "/api/scoping" }
-  ]
-}

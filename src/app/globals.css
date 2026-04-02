@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@theme {
+  --default-font-family: 'ES Allianz', sans-serif;
+
+  --font-druk: 'Druk', sans-serif;
+  --font-esallianz: 'ES Allianz', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-instrument: 'Instrument Serif', serif;
+  --font-quintessential: 'Quintessential', cursive;
+  --font-zilla: 'Zilla Slab', serif;
+
+  --color-brand: #e3dfdc;
+  --color-dark: #111;
+  --color-dark-text: #1F1C06;
+
+  --animate-marquee: marquee 15s linear infinite;
+  --animate-marquee-right: marquee-right 15s linear infinite;
+  --animate-slide-in: slideIn 0.5s ease;
+}
+
+@font-face {
+  font-family: 'Druk';
+  src: url('/fonts/Druk-Medium-Web.woff2') format("woff2"),
+       url('/fonts/Druk-Medium-Web.woff') format("woff");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'ES Allianz';
+  src: url('/fonts/ESAllianz-Medium.woff2') format("woff2"),
+       url('/fonts/ESAllianz-Medium.woff') format("woff");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'ES Allianz';
+  src: url('/fonts/ESAllianz-MediumItalic.woff2') format("woff2"),
+       url('/fonts/ESAllianz-MediumItalic.woff') format("woff");
+  font-weight: 500; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'ES Allianz';
+  src: url('/fonts/ESAllianz-Regular.woff2') format("woff2"),
+       url('/fonts/ESAllianz-Regular.woff') format("woff");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'ES Allianz';
+  src: url('/fonts/ESAllianz-Italic.woff2') format("woff2"),
+       url('/fonts/ESAllianz-Italic.woff') format("woff");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+
+@layer base {
+  body {
+    font-size: 1.2vw;
+    background: #e3dfdc;
+    color: #000;
+  }
+  img { max-width: 100%; }
+
+  @media (max-width: 1025px) { body { font-size: 18px; } }
+  @media (max-width: 600px) { body { font-size: 16px; } }
+  @media (min-width: 1200px) {
+    p { margin-top: 0; margin-bottom: 1.2vw; }
+    h1, h2, h3, h4, h5, h6 { margin-bottom: 1vw; }
+  }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
