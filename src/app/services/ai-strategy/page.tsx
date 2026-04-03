@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServicePageLayout from "@/components/services/ServicePageLayout";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "AI Strategy + Integration",
@@ -12,7 +13,7 @@ export default function AIStrategyPage() {
       heading="AI Strategy + Integration"
       description="We move beyond the hype to identify high-impact AI opportunities tailored to your business. Our AI practice helps organizations navigate the rapidly evolving landscape of artificial intelligence with practical, measurable results."
       heroImages={
-        <img src="/images/services/oc-navigator.png" alt="AI Strategy" className="w-full" />
+        <Image src="/images/services/oc-navigator.png" alt="AI Strategy" className="w-full" width={1400} height={525} style={{ width: "100%", height: "auto" }} />
       }
       categories={[
         { number: "01", title: "AI READINESS<br/>ASSESSMENT", description: "Evaluating your organization's data, infrastructure, and culture for successful AI adoption." },

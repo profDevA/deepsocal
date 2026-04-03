@@ -3,6 +3,7 @@
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { useCallback, useEffect, useState } from 'react'
+import Image from 'next/image'
 
 const slides = [
   {
@@ -97,24 +98,30 @@ export default function BannerCarousel() {
                           <div
                             className={
                               slide.type === 'svg'
-                                ? 'w-[82%] max-w-[1400px] mx-auto overflow-hidden relative max-h-[calc(35vw+3.5vw)]'
-                                : 'w-[82%] max-w-[1400px] mx-auto overflow-hidden relative max-h-[35vw]'
+                                ? 'w-[82%] max-w-[1400px] mx-auto overflow-hidden relative bg-black p-[40px_30px]'
+                                : 'w-[82%] max-w-[1400px] mx-auto overflow-hidden relative'
                             }
+                            style={{ height: slide.type === 'svg' ? 'calc(35vw + 3.5vw)' : '35vw' }}
                           >
-                            <img
+                            <Image
                               src={slide.image}
                               className={
                                 slide.type === 'svg'
-                                  ? 'w-full block object-contain h-[calc(35vw+3.5vw)] object-center p-[40px_30px] bg-black'
-                                  : 'w-full h-[35vw] block object-cover object-[center_25%]'
+                                  ? 'object-contain object-center'
+                                  : 'object-cover object-[center_25%]'
                               }
                               alt={slide.alt}
+                              fill
+                              sizes="82vw"
+                              unoptimized={slide.type === 'svg'}
                             />
                             {slide.overlayType === 'logo' && (
                               <div className="absolute top-[12%] right-[5%]">
-                                <img
-                                  src={slide.overlayLogo}
+                                <Image
+                                  src={slide.overlayLogo!}
                                   alt={slide.alt}
+                                  width={220}
+                                  height={80}
                                   style={{ width: 'clamp(120px, 15vw, 220px)', height: 'auto' }}
                                 />
                               </div>
@@ -135,7 +142,7 @@ export default function BannerCarousel() {
                             )}
                             {slide.type === 'image' && (
                               <div className="absolute bottom-3 right-3 z-1">
-                                <img src="/images/banner-watermark.svg" alt="deepSoCal" className="w-[clamp(90px,9vw,130px)] h-auto block" />
+                                <Image src="/images/banner-watermark.svg" alt="deepSoCal" className="block" width={130} height={40} unoptimized style={{ width: "clamp(90px,9vw,130px)", height: "auto" }} />
                               </div>
                             )}
                           </div>

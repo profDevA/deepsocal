@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServicePageLayout from "@/components/services/ServicePageLayout";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Marketing + Branding",
@@ -12,12 +13,12 @@ export default function MarketingBrandingPage() {
       heading="MARKETING &nbsp; + Branding"
       description="Our approach unites core offerings across Social Media Management, Always-on Content, and Paid Media & Analytics. This end-to-end strategy provides a holistic way to increase brand affinity, build community engagement, and reach new audiences."
       heroImages={
-        <div className="relative w-full max-w-[1396px] mx-auto bg-brand overflow-hidden aspect-[1396/657]">
+        <div className="relative w-full max-w-[1396px] mx-auto bg-brand overflow-hidden aspect-1396/657">
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <img src="/images/services/marketing-palm.jpg" alt="" className="absolute w-[118%] h-[86%] left-1/2 top-[46%] -translate-x-1/2 -translate-y-1/2 object-cover max-w-none" width={1644} height={525} />
+            <Image src="/images/services/marketing-palm.jpg" alt="" className="absolute left-1/2 top-[46%] -translate-x-1/2 -translate-y-1/2 object-cover max-w-none" width={1644} height={525} style={{ width: "118%", height: "86%" }} />
           </div>
           <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-            <img src="/images/services/marketing-shirt.png" alt="" className="absolute w-[297.03%] h-[351.03%] left-[-97.49%] top-[-127.75%] max-w-none" />
+            <Image src="/images/services/marketing-shirt.png" alt="" className="absolute left-[-97.49%] top-[-127.75%] max-w-none" width={800} height={800} style={{ width: "297.03%", height: "351.03%" }} />
           </div>
         </div>
       }

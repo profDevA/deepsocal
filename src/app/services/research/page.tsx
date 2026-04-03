@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServicePageLayout from "@/components/services/ServicePageLayout";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Research",
@@ -12,7 +13,7 @@ export default function ResearchPage() {
       heading="Research"
       description="Our research practice combines academic rigor with real-world application. We uncover the insights that matter most to your audience and your business, informing strategies that are grounded in evidence and empathy."
       heroImages={
-        <img src="/images/services/research-composite-accent.png" alt="Research" className="w-full" />
+        <Image src="/images/services/research-composite-accent.png" alt="Research" className="w-full" width={1400} height={525} style={{ width: "100%", height: "auto" }} />
       }
       categories={[
         { number: "01", title: "USER RESEARCH", description: "Understanding your audience through interviews, surveys, and ethnographic studies that reveal unmet needs and hidden opportunities." },

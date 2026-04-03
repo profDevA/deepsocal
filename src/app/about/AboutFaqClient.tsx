@@ -41,11 +41,11 @@ export default function AboutFaqClient() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="px-[1.1vw]! max-[1025px]:px-[15px]! bg-dark text-[#E3DFDC] pt-16 pb-20">
-      <div className="w-full px-0 border-t border-[#E3DFDC] pt-8">
+    <section className="px-[1.1vw]! max-[1025px]:px-[15px]! bg-dark text-brand pt-16 pb-20">
+      <div className="w-full px-0 border-t border-brand pt-8">
         <div className="flex flex-wrap">
           <div className="w-full md:w-1/3">
-            <div className="relative h-full flex flex-col justify-between after:content-[''] after:absolute after:w-px after:h-[115%] after:right-0 after:top-0 after:bg-[#E3DFDC]">
+            <div className="relative h-full flex flex-col justify-between after:content-[''] after:absolute after:w-px after:h-[115%] after:right-0 after:top-0 after:bg-brand">
               <h2 className="font-druk uppercase text-[9vw] leading-[0.95] max-[767px]:text-[15vw]">FAQS</h2>
               <p className="text-[65%] uppercase w-1/2">Need-to-knows, nice-to-knows, and everything in between.</p>
             </div>
@@ -55,7 +55,7 @@ export default function AboutFaqClient() {
               {faqs.map((faq, i) => {
                 const isOpen = openIndex === i;
                 return (
-                  <div className="pt-3 not-last:border-b not-last:border-[#E3DFDC]" key={i}>
+                  <div className="pt-3 not-last:border-b not-last:border-brand" key={i}>
                     <h4
                       className="flex justify-between items-center font-normal mb-3 cursor-pointer pl-6"
                       onClick={() => setOpenIndex(isOpen ? null : i)}

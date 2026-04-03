@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Forever a Surfer",
@@ -12,10 +13,10 @@ export default function WorkDetailPage() {
       {/* Title */}
       <section className="pt-3 pb-2 font-druk px-[1.1vw]! max-[1025px]:px-[15px]!">
         <div className="w-full px-0">
-          <div className="flex flex-wrap border-b border-[#111] gap-0">
+          <div className="flex flex-wrap border-b border-dark gap-0">
             <div className="w-full">
               <div className="mb-[1.5vw] uppercase">
-                <h1 className="text-[5vw] relative before:content-[''] before:absolute before:w-px before:h-full before:right-[15%] before:top-0 before:bg-[#111] max-[767px]:before:content-none max-[575px]:text-[45px]">Forever a Surfer</h1>
+                <h1 className="text-[5vw] relative before:content-[''] before:absolute before:w-px before:h-full before:right-[15%] before:top-0 before:bg-dark max-[767px]:before:content-none max-[575px]:text-[45px]">Forever a Surfer</h1>
               </div>
             </div>
           </div>
@@ -24,22 +25,22 @@ export default function WorkDetailPage() {
 
       {/* Hero */}
       <section className="px-[1.1vw]! max-[1025px]:px-[15px]!">
-        <div className="w-full px-0 pb-[4vw] max-[1025px]:pb-[60px] border-b border-[#111]">
+        <div className="w-full px-0 pb-[4vw] max-[1025px]:pb-[60px] border-b border-dark">
           <div className="flex flex-wrap mb-3 items-center justify-between">
             <div className="w-[20%] flex items-center justify-between max-[991px]:w-[30%] max-[767px]:w-full max-[767px]:justify-start max-[767px]:gap-[100px]">
               <span className="text-[65%]">01</span>
               <span className="text-[65%]">Campaign Strategy</span>
             </div>
             <div className="hidden md:block w-[30%]">
-              <img src="/images/icons/arrow-down.svg" alt="" />
-              <img src="/images/icons/arrow-down.svg" alt="" />
-              <img src="/images/icons/arrow-down.svg" alt="" />
+              <Image src="/images/icons/arrow-down.svg" alt="" width={20} height={20} unoptimized />
+              <Image src="/images/icons/arrow-down.svg" alt="" width={20} height={20} unoptimized />
+              <Image src="/images/icons/arrow-down.svg" alt="" width={20} height={20} unoptimized />
             </div>
           </div>
           <div className="flex flex-wrap gap-0">
             <div className="w-full">
               <div>
-                <img src="/images/works/surfer-1.jpg" className="w-full" alt="Forever a Surfer" />
+                <Image src="/images/works/surfer-1.jpg" className="w-full" alt="Forever a Surfer" width={1400} height={700} style={{ width: "100%", height: "auto" }} />
               </div>
             </div>
           </div>
@@ -48,16 +49,16 @@ export default function WorkDetailPage() {
 
       {/* Summary */}
       <section className="px-[1.1vw]! max-[1025px]:px-[15px]! pt-3">
-        <div className="w-full px-0 border-b border-[#111]">
+        <div className="w-full px-0 border-b border-dark">
           <div className="flex flex-wrap py-4 md:py-0">
             <div className="w-full md:w-1/2">
-              <div className="relative before:content-[''] before:bg-[#111] before:absolute before:top-0 before:right-[-12px] before:w-px before:h-full max-[767px]:before:w-full max-[767px]:before:h-px max-[767px]:before:top-auto max-[767px]:before:bottom-0 max-[767px]:before:left-0 max-[767px]:before:right-auto max-[767px]:pb-6 max-[767px]:mb-10">
+              <div className="relative before:content-[''] before:bg-dark before:absolute before:top-0 before:right-[-12px] before:w-px before:h-full max-[767px]:before:w-full max-[767px]:before:h-px max-[767px]:before:top-auto max-[767px]:before:bottom-0 max-[767px]:before:left-0 max-[767px]:before:right-auto max-[767px]:pb-6 max-[767px]:mb-10">
                 <h6>Overview</h6>
                 <p>Forever a Surfer captures the spirit of Southern California&apos;s surf culture through a strategic campaign that blends storytelling, visual identity, and community engagement. Our team worked closely with local surfers, shapers, and coastal communities to create an authentic narrative that resonates with both lifelong wave riders and newcomers to the scene.</p>
               </div>
             </div>
             <div className="w-full md:w-1/2">
-              <div className="relative before:content-[''] before:bg-[#111] before:absolute before:top-0 before:right-[-12px] before:w-px before:h-full max-[767px]:before:content-none max-[767px]:mb-0 max-[767px]:pb-0">
+              <div className="relative before:content-[''] before:bg-dark before:absolute before:top-0 before:right-[-12px] before:w-px before:h-full max-[767px]:before:content-none max-[767px]:mb-0 max-[767px]:pb-0">
                 <h6>Summary</h6>
                 <p>DeepSoCal used surf culture to connect California communities with global humanitarian causes. Documentary crews captured community stories that reflected local identity. Influencer partnerships expanded their reach, while community events turned narratives into action. These efforts built advocacy systems that delivered measurable engagement and ongoing participation in global humanitarian efforts.</p>
                 <div className="mt-4">
@@ -76,13 +77,13 @@ export default function WorkDetailPage() {
 
       {/* Gallery */}
       <section className="px-[1.1vw]! max-[1025px]:px-[15px]!">
-        <div className="w-full px-0 pb-5 border-b border-[#111]">
+        <div className="w-full px-0 pb-5 border-b border-dark">
           <div className="flex flex-wrap">
             <div className="w-full">
               <div>
-                <img src="/images/works/surfer-2.jpg" className="w-full mt-3 pb-3 border-b border-dark" alt="Forever a Surfer" />
-                <img src="/images/works/surfer-3.jpg" className="w-full mt-3 border-b border-dark" alt="Forever a Surfer" />
-                <img src="/images/works/surfer-4.jpg" className="w-full mt-3" alt="Forever a Surfer" />
+                <Image src="/images/works/surfer-2.jpg" className="w-full mt-3 pb-3 border-b border-dark" alt="Forever a Surfer" width={1400} height={700} style={{ width: "100%", height: "auto" }} />
+                <Image src="/images/works/surfer-3.jpg" className="w-full mt-3 border-b border-dark" alt="Forever a Surfer" width={1400} height={700} style={{ width: "100%", height: "auto" }} />
+                <Image src="/images/works/surfer-4.jpg" className="w-full mt-3" alt="Forever a Surfer" width={1400} height={700} style={{ width: "100%", height: "auto" }} />
               </div>
             </div>
           </div>
@@ -91,15 +92,15 @@ export default function WorkDetailPage() {
 
       {/* Conclusion */}
       <section className="px-[1.1vw]! max-[1025px]:px-[15px]! pt-3">
-        <div className="w-full px-0 border-b border-[#111]">
+        <div className="w-full px-0 border-b border-dark">
           <div className="flex flex-wrap py-4 md:py-0">
             <div className="w-full md:w-1/2">
-              <div className="relative before:content-[''] before:bg-[#111] before:absolute before:top-0 before:right-[-12px] before:w-px before:h-full max-[767px]:before:w-full max-[767px]:before:h-px max-[767px]:before:top-auto max-[767px]:before:bottom-0 max-[767px]:before:left-0 max-[767px]:before:right-auto max-[767px]:pb-6 max-[767px]:mb-10">
+              <div className="relative before:content-[''] before:bg-dark before:absolute before:top-0 before:right-[-12px] before:w-px before:h-full max-[767px]:before:w-full max-[767px]:before:h-px max-[767px]:before:top-auto max-[767px]:before:bottom-0 max-[767px]:before:left-0 max-[767px]:before:right-auto max-[767px]:pb-6 max-[767px]:mb-10">
                 <h6>Conclusion</h6>
               </div>
             </div>
             <div className="w-full md:w-1/2">
-              <div className="relative before:content-[''] before:bg-[#111] before:absolute before:top-0 before:right-[-12px] before:w-px before:h-full max-[767px]:before:content-none max-[767px]:mb-0 max-[767px]:pb-0">
+              <div className="relative before:content-[''] before:bg-dark before:absolute before:top-0 before:right-[-12px] before:w-px before:h-full max-[767px]:before:content-none max-[767px]:mb-0 max-[767px]:pb-0">
                 <p>The Forever a Surfer campaign reinforced the deep connection between Southern California&apos;s identity and its surf heritage. By grounding our strategy in real community voices and local culture, we delivered a campaign that felt authentic — not manufactured. The result was increased brand awareness, stronger community ties, and a visual identity that truly represents the soul of SoCal surfing.</p>
               </div>
             </div>
@@ -118,12 +119,12 @@ export default function WorkDetailPage() {
           <div className="flex flex-wrap gap-6">
             <div className="w-full md:w-[calc(50%-12px)]">
               <Link href="/works">
-                <img src="/images/works-5.jpg" className="w-full" alt="Portfolio item" />
+                <Image src="/images/works-5.jpg" className="w-full" alt="Portfolio item" width={700} height={500} style={{ width: "100%", height: "auto" }} />
               </Link>
             </div>
             <div className="w-full md:w-[calc(50%-12px)]">
               <Link href="/works">
-                <img src="/images/works-9.jpg" className="w-full" alt="Portfolio item" />
+                <Image src="/images/works-9.jpg" className="w-full" alt="Portfolio item" width={700} height={500} style={{ width: "100%", height: "auto" }} />
               </Link>
             </div>
           </div>

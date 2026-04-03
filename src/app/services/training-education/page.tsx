@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServicePageLayout from "@/components/services/ServicePageLayout";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Training & Education",
@@ -12,7 +13,7 @@ export default function TrainingEducationPage() {
       heading="Training &amp; Education"
       description="Our training programs empower organizations and individuals with the skills they need to thrive. From design thinking workshops to AI literacy programs, we create learning experiences that drive real capability building."
       heroImages={
-        <img src="/images/services/design-screenshot.png" alt="Training & Education" className="w-full" />
+        <Image src="/images/services/design-screenshot.png" alt="Training & Education" className="w-full" width={1400} height={525} style={{ width: "100%", height: "auto" }} />
       }
       categories={[
         { number: "01", title: "DESIGN THINKING<br/>WORKSHOPS", description: "Hands-on sessions that teach teams to approach challenges with creativity and empathy." },

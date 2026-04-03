@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -56,22 +57,22 @@ export default function WorksPage() {
           <div className="flex flex-wrap">
             {columns.map((col, ci) => (
               <div className="w-full sm:w-1/3" key={ci}>
-                <div className={`uppercase relative${ci < columns.length - 1 ? " after:content-[''] after:absolute after:w-px after:h-[calc(100%-50px)] after:right-[-12px] after:bg-[#111] after:top-[40px] max-[575px]:after:content-none!" : ""}`}>
-                  <div className="border-b border-[#111] pb-[5px] text-[65%] flex justify-between">
+                <div className={`uppercase relative${ci < columns.length - 1 ? " after:content-[''] after:absolute after:w-px after:h-[calc(100%-50px)] after:right-[-12px] after:bg-dark after:top-[40px] max-[575px]:after:content-none!" : ""}`}>
+                  <div className="border-b border-dark pb-[5px] text-[65%] flex justify-between">
                     <p className="m-0">{col.header.left}</p>
                     <p className="m-0">{col.header.right}</p>
                   </div>
                   {col.items.map((item, ii) => (
-                    <div className="border-b border-[#111] pb-[25px]" key={ii}>
+                    <div className="border-b border-dark pb-[25px]" key={ii}>
                       <div className="mt-[2em] mb-[5em] max-[575px]:mt-5 max-[575px]:mb-[60px] text-center">
-                        <img src={item.logo} alt="client logo" className="max-h-[30px]" />
+                        <Image src={item.logo} alt="client logo" width={200} height={30} style={{ width: "auto", height: "auto", maxHeight: "30px" }} />
                       </div>
                       <div className="text-[65%] mb-3">
                         <p className="m-0 text-center">{item.type}</p>
                       </div>
                       <div>
                         <Link href="/works/forever-a-surfer">
-                          <img src={item.image} className="w-full" alt="project work" />
+                          <Image src={item.image} className="w-full" alt="project work" width={600} height={400} style={{ width: "100%", height: "auto" }} />
                         </Link>
                       </div>
                     </div>
@@ -84,11 +85,11 @@ export default function WorksPage() {
       </section>
 
       <section className="px-[1.1vw]! max-[1025px]:px-[15px]! pt-20 max-[767px]:pt-12">
-        <div className="border-t border-b border-[#111] pt-4 pb-24">
+        <div className="border-t border-b border-dark pt-4 pb-24">
           <div className="w-full px-0">
             <div className="flex flex-wrap">
               <div className="w-full lg:w-2/3 md:w-7/12 uppercase">
-                <div className="relative pr-6 h-full after:content-[''] after:absolute after:w-px after:h-[110%] after:right-0 after:top-0 after:bg-[#111] max-[767px]:pb-[50px] max-[767px]:after:w-full max-[767px]:after:h-px max-[767px]:after:top-auto max-[767px]:after:bottom-5">
+                <div className="relative pr-6 h-full after:content-[''] after:absolute after:w-px after:h-[110%] after:right-0 after:top-0 after:bg-dark max-[767px]:pb-[50px] max-[767px]:after:w-full max-[767px]:after:h-px max-[767px]:after:top-auto max-[767px]:after:bottom-5">
                   <p className="text-[65%] text-right">
                     <span>Get in touch</span>
                   </p>
@@ -98,7 +99,7 @@ export default function WorksPage() {
               <div className="w-full lg:w-1/3 md:w-5/12">
                 <div className="flex flex-wrap pt-14">
                   <div className="w-full sm:w-1/2">
-                    <div className="max-[575px]:pb-[5px] max-[575px]:border-t max-[575px]:border-dashed max-[575px]:border-[#111] max-[575px]:border-b max-[575px]:pt-[7px] max-[575px]:mb-2.5">
+                    <div className="max-[575px]:pb-[5px] max-[575px]:border-t max-[575px]:border-dashed max-[575px]:border-dark max-[575px]:border-b max-[575px]:pt-[7px] max-[575px]:mb-2.5">
                       <h6 className="uppercase text-[0.9rem] mb-4 max-[575px]:mb-0 max-[575px]:flex max-[575px]:justify-between max-[575px]:items-center">Culture &amp; Community <span className="hidden max-[575px]:block">[+]</span></h6>
                       <ul className="list-none pl-0 text-[70%] max-[575px]:hidden">
                         <li className="my-2">Action Sports</li>
@@ -107,7 +108,7 @@ export default function WorksPage() {
                         <li className="my-2">Health &amp; Wellness</li>
                       </ul>
                     </div>
-                    <div className="mt-5 max-[575px]:pb-[5px] max-[575px]:border-t max-[575px]:border-dashed max-[575px]:border-[#111] max-[575px]:border-b max-[575px]:pt-[7px] max-[575px]:mb-2.5">
+                    <div className="mt-5 max-[575px]:pb-[5px] max-[575px]:border-t max-[575px]:border-dashed max-[575px]:border-dark max-[575px]:border-b max-[575px]:pt-[7px] max-[575px]:mb-2.5">
                       <h6 className="uppercase text-[0.9rem] mb-4 max-[575px]:mb-0 max-[575px]:flex max-[575px]:justify-between max-[575px]:items-center">Innovation &amp; Sustainability <span className="hidden max-[575px]:block">[+]</span></h6>
                       <ul className="list-none pl-0 text-[70%] max-[575px]:hidden">
                         <li className="my-2">E-Commerce</li>
@@ -118,7 +119,7 @@ export default function WorksPage() {
                     </div>
                   </div>
                   <div className="w-full sm:w-1/2">
-                    <div className="max-[575px]:pb-[5px] max-[575px]:border-t max-[575px]:border-dashed max-[575px]:border-[#111] max-[575px]:border-b max-[575px]:pt-[7px] max-[575px]:mb-2.5">
+                    <div className="max-[575px]:pb-[5px] max-[575px]:border-t max-[575px]:border-dashed max-[575px]:border-dark max-[575px]:border-b max-[575px]:pt-[7px] max-[575px]:mb-2.5">
                       <h6 className="uppercase text-[0.9rem] mb-4 max-[575px]:mb-0 max-[575px]:flex max-[575px]:justify-between max-[575px]:items-center">Business &amp; Growth <span className="hidden max-[575px]:block">[+]</span></h6>
                       <ul className="list-none pl-0 text-[70%] max-[575px]:hidden">
                         <li className="my-2">Healthcare</li>

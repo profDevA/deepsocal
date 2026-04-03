@@ -2,7 +2,9 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
+import { FaAngleDown } from "react-icons/fa6";
 
 const categories = [
   { id: "all", label: "All Works" },
@@ -71,7 +73,7 @@ export default function WorkGrid() {
                     style={dropdownOpen ? { borderRadius: "15px 15px 0 0" } : { borderRadius: "15px" }}
                   >
                     {activeLabel}
-                    <span className="text-brand text-sm pointer-events-none"><i className="fa-solid fa-angle-down"></i></span>
+                    <span className="text-brand text-sm pointer-events-none"><FaAngleDown /></span>
                   </a>
                   <div
                     className="absolute top-full left-0 w-full z-1060 grid transition-[grid-template-rows,opacity] duration-400 ease-in-out"
@@ -118,8 +120,8 @@ export default function WorkGrid() {
                         style={{ display: visible ? "block" : "none" }}
                       >
                         <Link href={item.href} className="flex flex-col items-center no-underline text-inherit h-full p-[clamp(4px,0.5vw,8px)_clamp(6px,0.8vw,12px)] hover:text-inherit">
-                          <div className="w-full h-[clamp(140px,16vw,222px)] overflow-hidden mt-[clamp(40px,5vw,70px)]">
-                            <img src={item.image} alt={item.title} className="w-full h-full object-cover block" />
+                          <div className="w-full h-[clamp(140px,16vw,222px)] overflow-hidden mt-[clamp(40px,5vw,70px)] relative">
+                            <Image src={item.image} alt={item.title} className="w-full h-full object-cover block" fill sizes="(max-width: 600px) 100vw, (max-width: 1025px) 50vw, 25vw" />
                           </div>
                           <h3 className="font-inter font-semibold text-[clamp(16px,1.6vw,24px)] uppercase text-center tracking-[-0.66px] text-dark-text mt-[18px] mb-1">{item.title}</h3>
                           <p className="font-inter font-medium text-[clamp(10px,0.85vw,12px)] uppercase text-center text-dark mb-6">{item.category}</p>
@@ -160,7 +162,7 @@ export default function WorkGrid() {
                                   </div>
                                   <div className="flex flex-wrap gap-[2vw] items-center">
                                     <div className="w-[5vw] h-[5vw] rounded-full overflow-hidden relative max-[1025px]:w-[75px] max-[1025px]:h-[75px]">
-                                      <img src="/images/testimonial.png" alt="testimonial" className="absolute top-0 left-0 w-full h-full object-cover" />
+                                      <Image src="/images/testimonial.png" alt="testimonial" className="absolute top-0 left-0 w-full h-full object-cover" fill sizes="(max-width: 1025px) 75px, 5vw" />
                                     </div>
                                     <div className="flex flex-col gap-[0.6vw]">
                                       <h4 className="text-[1.2vw] text-white font-normal m-0 max-[1025px]:text-[125%]">{t.name}</h4>
@@ -174,10 +176,14 @@ export default function WorkGrid() {
                         </div>
                         <div className="flex flex-wrap gap-[2vw] mt-5">
                           <button onClick={scrollPrev} className="bg-transparent border-none cursor-pointer p-0">
-                            <img src="/images/nav-left.svg" alt="Previous" className="w-[1.5vw] max-[1025px]:w-[35px] inline-block brightness-0 invert" />
+                            <span className="relative block w-[1.5vw] h-[1.5vw] max-[1025px]:w-[35px] max-[1025px]:h-[35px]">
+                              <Image src="/images/nav-left.svg" alt="Previous" className="brightness-0 invert" fill sizes="(max-width: 1025px) 35px, 1.5vw" unoptimized />
+                            </span>
                           </button>
                           <button onClick={scrollNext} className="bg-transparent border-none cursor-pointer p-0">
-                            <img src="/images/nav-right.svg" alt="Next" className="w-[1.5vw] max-[1025px]:w-[35px] inline-block brightness-0 invert" />
+                            <span className="relative block w-[1.5vw] h-[1.5vw] max-[1025px]:w-[35px] max-[1025px]:h-[35px]">
+                              <Image src="/images/nav-right.svg" alt="Next" className="brightness-0 invert" fill sizes="(max-width: 1025px) 35px, 1.5vw" unoptimized />
+                            </span>
                           </button>
                         </div>
                       </div>
@@ -201,12 +207,12 @@ export default function WorkGrid() {
                     <div className="relative overflow-hidden w-full flex h-full gap-x-[5vw] py-4">
                       <ul className="flex items-center gap-x-[5vw] animate-marquee-right m-0 list-none p-0 shrink-0 min-w-max">
                         {marqueeRow1.map((img, i) => (
-                          <li key={i} className="flex items-center shrink-0"><img src={`/images/${img}`} alt="client" className="h-auto max-h-[35px] w-auto max-w-none object-contain" /></li>
+                          <li key={i} className="flex items-center shrink-0"><Image src={`/images/${img}`} alt="client" className="object-contain" width={120} height={35} unoptimized style={{ width: "auto", height: "auto", maxHeight: "35px", maxWidth: "none" }} /></li>
                         ))}
                       </ul>
                       <ul className="flex items-center gap-x-[5vw] animate-marquee-right m-0 list-none p-0 shrink-0 min-w-max" aria-hidden="true">
                         {marqueeRow1.map((img, i) => (
-                          <li key={i} className="flex items-center shrink-0"><img src={`/images/${img}`} alt="client" className="h-auto max-h-[35px] w-auto max-w-none object-contain" /></li>
+                          <li key={i} className="flex items-center shrink-0"><Image src={`/images/${img}`} alt="client" className="object-contain" width={120} height={35} unoptimized style={{ width: "auto", height: "auto", maxHeight: "35px", maxWidth: "none" }} /></li>
                         ))}
                       </ul>
                     </div>
@@ -215,12 +221,12 @@ export default function WorkGrid() {
                     <div className="relative overflow-hidden w-full flex h-full gap-x-[5vw] py-3">
                       <ul className="flex items-center gap-x-[5vw] animate-marquee m-0 list-none p-0 shrink-0 min-w-max">
                         {marqueeRow2.map((img, i) => (
-                          <li key={i} className="flex items-center shrink-0"><img src={`/images/${img}`} alt="client" className="h-auto max-h-[35px] w-auto max-w-none object-contain" /></li>
+                          <li key={i} className="flex items-center shrink-0"><Image src={`/images/${img}`} alt="client" className="object-contain" width={120} height={35} unoptimized style={{ width: "auto", height: "auto", maxHeight: "35px", maxWidth: "none" }} /></li>
                         ))}
                       </ul>
                       <ul className="flex items-center gap-x-[5vw] animate-marquee m-0 list-none p-0 shrink-0 min-w-max" aria-hidden="true">
                         {marqueeRow2.map((img, i) => (
-                          <li key={i} className="flex items-center shrink-0"><img src={`/images/${img}`} alt="client" className="h-auto max-h-[35px] w-auto max-w-none object-contain" /></li>
+                          <li key={i} className="flex items-center shrink-0"><Image src={`/images/${img}`} alt="client" className="object-contain" width={120} height={35} unoptimized style={{ width: "auto", height: "auto", maxHeight: "35px", maxWidth: "none" }} /></li>
                         ))}
                       </ul>
                     </div>

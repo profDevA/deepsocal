@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AboutFaqClient from "./AboutFaqClient";
 import StatsSlider from "./StatsSlider";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About",
@@ -45,8 +46,8 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="w-full md:w-7/12">
-              <div className="flex items-start overflow-hidden h-full">
-                <img className="w-full h-[clamp(340px,31vw,460px)] object-cover object-[center_35%] block max-[991px]:h-[320px] max-[575px]:h-[240px]" src="/images/about/img-frame.jpg" alt="Southern California community" />
+              <div className="relative overflow-hidden h-[clamp(340px,31vw,460px)] max-[991px]:h-[320px] max-[575px]:h-[240px]">
+                <Image className="object-cover object-[center_35%]" src="/images/about/img-frame.jpg" alt="Southern California community" fill sizes="(max-width: 768px) 100vw, 58vw" />
               </div>
             </div>
           </div>
@@ -54,15 +55,15 @@ export default function AboutPage() {
       </section>
 
       {/* 3. SOCAL-LOCAL banner (dark) */}
-      <section className="px-[1.1vw]! max-[1025px]:px-[15px]! bg-dark text-[#E3DFDC] pt-[2.1rem]">
-        <div className="w-full px-0 border-t border-[#E3DFDC] pt-8">
+      <section className="px-[1.1vw]! max-[1025px]:px-[15px]! bg-dark text-brand pt-[2.1rem]">
+        <div className="w-full px-0 border-t border-brand pt-8">
           <div className="flex flex-wrap gap-0">
             <div className="w-full">
               <div className="px-[2.25%]">
                 <h2 className="font-druk uppercase text-center text-[clamp(56px,5.3vw,78px)] tracking-[0.05rem] leading-none mb-4 max-[767px]:text-[10vw]">SoCal-Local</h2>
                 <p className="text-center max-w-[700px] mx-auto mb-14 text-[0.64rem] leading-[1.4] max-[767px]:max-w-full">We&apos;re rooted in Southern California — its culture, communities, and creative energy. Our deep regional knowledge lets us design strategies that resonate locally and scale meaningfully. From Orange County&apos;s coastline to its neighborhoods, we understand the landscape because we live it.</p>
-                <div className="overflow-hidden max-h-[360px] max-[575px]:max-h-[250px]">
-                  <img className="w-full h-[360px] object-cover object-[center_54%] block max-[575px]:h-[250px]" src="/images/about/img1476.jpg" alt="SoCal community silhouettes" />
+                <div className="relative overflow-hidden h-[360px] max-[575px]:h-[250px]">
+                  <Image className="object-cover object-[center_54%]" src="/images/about/img1476.jpg" alt="SoCal community silhouettes" fill sizes="100vw" />
                 </div>
               </div>
             </div>
@@ -71,11 +72,11 @@ export default function AboutPage() {
       </section>
 
       {/* 4. WE ARE DESIGNERS + TEAM */}
-      <section className="px-[1.1vw]! max-[1025px]:px-[15px]! pt-12 pb-8 max-[767px]:bg-dark max-[767px]:text-[#E3DFDC] max-[767px]:py-8">
+      <section className="px-[1.1vw]! max-[1025px]:px-[15px]! pt-12 pb-8 max-[767px]:bg-dark max-[767px]:text-brand max-[767px]:py-8">
         <div className="w-full px-0 border-t border-dark pt-8">
           <div className="flex flex-wrap gap-0">
             <div className="w-full">
-              <h2 className="font-druk uppercase text-[clamp(52px,4vw,66px)] max-w-[72%] leading-[0.98] mx-auto mb-12 px-8 max-[767px]:text-[7vw] max-[767px]:max-w-full max-[767px]:text-[#E3DFDC] text-center">We are designers and researchers shaping Southern California&apos;s future through community and impact.</h2>
+              <h2 className="font-druk uppercase text-[clamp(52px,4vw,66px)] max-w-[72%] leading-[0.98] mx-auto mb-12 px-8 max-[767px]:text-[7vw] max-[767px]:max-w-full max-[767px]:text-brand text-center">We are designers and researchers shaping Southern California&apos;s future through community and impact.</h2>
             </div>
           </div>
           <div className="flex flex-wrap border-t border-dark pt-[1.35rem] mt-5">
@@ -139,7 +140,7 @@ export default function AboutPage() {
       </section>
 
       {/* 5. FOUNDER QUOTE IMAGE STRIP */}
-      <section className="px-[1.1vw]! max-[1025px]:px-[15px]! bg-dark text-[#E3DFDC] p-0">
+      <section className="px-[1.1vw]! max-[1025px]:px-[15px]! bg-dark text-brand p-0">
         <div className="w-full px-0">
           <div className="relative min-h-[340px] bg-[url('/images/slide-4-surf.jpg')] bg-cover bg-center bg-no-repeat before:content-[''] before:absolute before:inset-0 before:bg-black/68 max-[767px]:min-h-[300px] max-[575px]:min-h-[260px]">
             <div className="relative z-1 max-w-[760px] mx-auto py-[86px] px-5 pb-[72px] text-white max-[767px]:px-4 max-[767px]:py-[54px] max-[767px]:pb-11">
@@ -187,27 +188,27 @@ export default function AboutPage() {
           </div>
           <div className="grid grid-cols-3 gap-2.5 p-0 mx-auto mb-8 max-w-[1068px] max-[991px]:grid-cols-2 max-[575px]:grid-cols-2">
             <div className="relative overflow-hidden rounded-none aspect-square">
-              <img className="w-full h-full object-cover block" src="/images/about/grid-1.jpg" alt="SoCal street scene" />
+              <Image className="w-full h-full object-cover block" src="/images/about/grid-1.jpg" alt="SoCal street scene" fill sizes="(max-width: 575px) 50vw, 33vw" />
               {igIcon("white")}
             </div>
             <div className="relative overflow-hidden rounded-none aspect-square bg-white">
-              <img className="w-full h-full object-contain object-center block" src="/images/about/grid-2.jpg" alt="Surfing magazine" />
+              <Image className="w-full h-full object-contain object-center block" src="/images/about/grid-2.jpg" alt="Surfing magazine" fill sizes="(max-width: 575px) 50vw, 33vw" />
               {igIcon("#111")}
             </div>
             <div className="relative overflow-hidden rounded-none aspect-square">
-              <img className="w-full h-full object-cover block" src="/images/about/grid-3.jpg" alt="SoCal downtown" />
+              <Image className="w-full h-full object-cover block" src="/images/about/grid-3.jpg" alt="SoCal downtown" fill sizes="(max-width: 575px) 50vw, 33vw" />
               {igIcon("white")}
             </div>
             <div className="relative overflow-hidden rounded-none aspect-square">
-              <img className="w-full h-full object-cover block" src="/images/about/grid-4.jpg" alt="SoCal lifestyle" />
+              <Image className="w-full h-full object-cover block" src="/images/about/grid-4.jpg" alt="SoCal lifestyle" fill sizes="(max-width: 575px) 50vw, 33vw" />
               {igIcon("white")}
             </div>
             <div className="relative overflow-hidden rounded-none aspect-square">
-              <img className="w-full h-full object-cover block" src="/images/about/grid-5.jpg" alt="VR experience" />
+              <Image className="w-full h-full object-cover block" src="/images/about/grid-5.jpg" alt="VR experience" fill sizes="(max-width: 575px) 50vw, 33vw" />
               {igIcon("white")}
             </div>
             <div className="relative overflow-hidden rounded-none aspect-square">
-              <img className="w-full h-full object-cover block" src="/images/about/grid-6.jpg" alt="Night market" />
+              <Image className="w-full h-full object-cover block" src="/images/about/grid-6.jpg" alt="Night market" fill sizes="(max-width: 575px) 50vw, 33vw" />
               {igIcon("white")}
             </div>
           </div>
