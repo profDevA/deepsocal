@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { FaChevronDown } from "react-icons/fa6";
 import { useModal } from "@/components/modals/ModalProvider";
 
 export default function Header() {
@@ -25,7 +27,7 @@ export default function Header() {
         <nav className="flex flex-wrap gap-[30px] border-l border-r border-b border-black px-[1.1vw] max-[1025px]:px-[15px] min-h-[60px]">
           <div className="flex items-center">
             <Link className="w-[65px] h-[25px] flex p-0" href="/">
-              <img src="/images/logo.svg" alt="logo" className="w-[65px] h-[25px] object-contain" />
+              <Image src="/images/logo.svg" alt="logo" className="w-[65px] h-[25px] object-contain" width={65} height={25} unoptimized />
             </Link>
           </div>
           <div className="flex-1 py-[0.55vw]">
@@ -59,7 +61,7 @@ export default function Header() {
                       setDropdownOpen(!dropdownOpen);
                     }}
                   >
-                    Services <i className="fa-solid fa-chevron-down text-[0.55em] ml-0.5 align-middle"></i>
+                    Services <FaChevronDown className="text-[0.55em] ml-0.5 align-middle inline-block" />
                   </a>
                   {dropdownOpen && (
                     <div className="absolute list-none top-full border border-dark border-t-0 rounded-none m-0 bg-brand z-99999 p-0 min-w-[240px] shadow-[0_8px_24px_rgba(0,0,0,0.08)] max-[1025px]:min-w-[220px]">

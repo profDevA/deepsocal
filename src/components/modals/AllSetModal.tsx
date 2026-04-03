@@ -21,7 +21,7 @@ export default function AllSetModal() {
             href="https://calendar.google.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-transparent border-[1.3px] border-black text-black inline-flex items-center justify-center uppercase font-[Arial,sans-serif] font-normal text-base tracking-[-0.58px] rounded-none p-0 w-[190px] h-[57px] cursor-pointer no-underline hover:bg-black hover:text-[#E3DFDC]"
+            className="bg-transparent border-[1.3px] border-black text-black inline-flex items-center justify-center uppercase font-[Arial,sans-serif] font-normal text-base tracking-[-0.58px] rounded-none p-0 w-[190px] h-[57px] cursor-pointer no-underline hover:bg-black hover:text-brand"
           >
             Add to calendar
           </a>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ServicePageLayout from "@/components/services/ServicePageLayout";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Design",
@@ -13,9 +14,9 @@ export default function DesignPage() {
       description="We design experiences that move people. From digital products to physical spaces, our design practice is rooted in research, strategy, and a deep understanding of Southern California's unique cultural landscape."
       heroImages={
         <div className="relative">
-          <img src="/images/services/design-hero.jpg" alt="Design" className="w-full" />
+          <Image src="/images/services/design-hero.jpg" alt="Design" className="w-full" width={1400} height={525} style={{ width: "100%", height: "auto" }} />
           <div className="absolute bottom-[5%] right-[5%]">
-            <img src="/images/services/design-screenshot.png" alt="" style={{ width: "clamp(200px, 30vw, 500px)" }} />
+            <Image src="/images/services/design-screenshot.png" alt="" width={500} height={350} style={{ width: "clamp(200px, 30vw, 500px)", height: "auto" }} />
           </div>
         </div>
       }

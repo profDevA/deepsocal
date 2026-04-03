@@ -27,8 +27,8 @@ export default function AboutStatsSlider() {
           <button
             key={i}
             onClick={() => setActive(i)}
-            className={`w-[10px] h-[10px] rounded-full border border-[#111] p-0 cursor-pointer transition-colors ${
-              i === active ? "bg-[#111]" : "bg-transparent"
+            className={`w-2.5 h-2.5 rounded-full border border-dark p-0 cursor-pointer transition-colors ${
+              i === active ? "bg-dark" : "bg-transparent"
             }`}
           />
         ))}

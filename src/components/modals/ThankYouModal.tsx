@@ -19,7 +19,7 @@ export default function ThankYouModal() {
           <button onClick={closeModal} className="bg-black text-white uppercase rounded-none font-[Arial,sans-serif] text-base font-normal tracking-[-0.44px] px-6 py-3 min-h-[43px] inline-flex items-center justify-center no-underline border-none cursor-pointer w-[190px] h-[57px]">
             Got it, thanks
           </button>
-          <Link href="/services/marketing-branding" onClick={closeModal} className="bg-transparent border-[1.3px] border-black text-black inline-flex items-center justify-center uppercase font-[Arial,sans-serif] font-normal text-base tracking-[-0.58px] rounded-none p-0 w-[190px] h-[57px] cursor-pointer no-underline hover:bg-black hover:text-[#E3DFDC]">
+          <Link href="/services/marketing-branding" onClick={closeModal} className="bg-transparent border-[1.3px] border-black text-black inline-flex items-center justify-center uppercase font-[Arial,sans-serif] font-normal text-base tracking-[-0.58px] rounded-none p-0 w-[190px] h-[57px] cursor-pointer no-underline hover:bg-black hover:text-brand">
             Browse Services
           </Link>
         </div>

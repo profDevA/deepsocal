@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { FaBasketball, FaInstagram, FaThreads, FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
   return (
@@ -8,13 +10,13 @@ export default function Footer() {
           <div className="flex flex-wrap">
             <div className="w-full">
               <div>
-                <img src="/images/logo-black.svg" className="w-full" alt="DeepSoCal" />
+                <Image src="/images/logo-black.svg" className="w-full" alt="DeepSoCal" width={1400} height={100} unoptimized style={{ width: "100%", height: "auto" }} />
                 <div className="flex flex-wrap justify-end">
                   <ul className="inline-flex gap-[1vw] list-none p-0">
-                    <li><a href="#" className="w-[2.8vw] h-[2.8vw] inline-flex items-center justify-center bg-black text-white no-underline rounded-full text-[1.3vw] border border-black max-[1025px]:w-[50px] max-[1025px]:h-[50px] max-[1025px]:text-[120%]"><i className="fa-brands fa-instagram"></i></a></li>
-                    <li><a href="#" className="w-[2.8vw] h-[2.8vw] inline-flex items-center justify-center bg-black text-white no-underline rounded-full text-[1.3vw] border border-black max-[1025px]:w-[50px] max-[1025px]:h-[50px] max-[1025px]:text-[120%]"><i className="fa-solid fa-basketball"></i></a></li>
-                    <li><a href="#" className="w-[2.8vw] h-[2.8vw] inline-flex items-center justify-center bg-black text-white no-underline rounded-full text-[1.3vw] border border-black max-[1025px]:w-[50px] max-[1025px]:h-[50px] max-[1025px]:text-[120%]"><i className="fa-brands fa-threads"></i></a></li>
-                    <li><a href="#" className="w-[2.8vw] h-[2.8vw] inline-flex items-center justify-center bg-black text-white no-underline rounded-full text-[1.3vw] border border-black max-[1025px]:w-[50px] max-[1025px]:h-[50px] max-[1025px]:text-[120%]"><i className="fa-brands fa-x-twitter"></i></a></li>
+                    <li><a href="#" className="w-[2.8vw] h-[2.8vw] inline-flex items-center justify-center bg-black text-white no-underline rounded-full text-[1.3vw] border border-black max-[1025px]:w-[50px] max-[1025px]:h-[50px] max-[1025px]:text-[120%]"><FaInstagram /></a></li>
+                    <li><a href="#" className="w-[2.8vw] h-[2.8vw] inline-flex items-center justify-center bg-black text-white no-underline rounded-full text-[1.3vw] border border-black max-[1025px]:w-[50px] max-[1025px]:h-[50px] max-[1025px]:text-[120%]"><FaBasketball /></a></li>
+                    <li><a href="#" className="w-[2.8vw] h-[2.8vw] inline-flex items-center justify-center bg-black text-white no-underline rounded-full text-[1.3vw] border border-black max-[1025px]:w-[50px] max-[1025px]:h-[50px] max-[1025px]:text-[120%]"><FaThreads /></a></li>
+                    <li><a href="#" className="w-[2.8vw] h-[2.8vw] inline-flex items-center justify-center bg-black text-white no-underline rounded-full text-[1.3vw] border border-black max-[1025px]:w-[50px] max-[1025px]:h-[50px] max-[1025px]:text-[120%]"><FaXTwitter /></a></li>
                   </ul>
                 </div>
               </div>
@@ -27,7 +29,7 @@ export default function Footer() {
           <div className="flex flex-wrap max-[600px]:gap-y-[60px]">
             <div className="w-full md:w-1/3">
               <div>
-                <img src="/images/your_ally.svg" alt="Your Embedded Ally" />
+                <Image src="/images/your_ally.svg" alt="Your Embedded Ally" width={300} height={80} unoptimized style={{ width: "auto", height: "auto" }} />
               </div>
             </div>
             <div className="w-full md:flex-1">
