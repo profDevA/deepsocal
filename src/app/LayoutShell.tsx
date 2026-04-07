@@ -37,7 +37,7 @@ export default function LayoutShell({ children }: { children: ReactNode }) {
     <main
       id="page-wrapper"
       className="mx-[1.1vw] border-l border-r border-black max-[1025px]:mx-[15px]"
-      style={{ paddingTop }}
+      style={{ marginTop: paddingTop + 10 }}
     >
       {children}
     </main>

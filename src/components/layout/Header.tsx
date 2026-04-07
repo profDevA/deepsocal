@@ -22,9 +22,9 @@ export default function Header() {
   }, []);
 
   return (
-    <header id="header" className="fixed top-0 left-0 right-0 z-9999 bg-brand">
+    <header id="header" className="fixed top-0 left-0 right-0 z-9999 bg-brand border-b border-black">
       <div className="w-full px-[1.1vw] max-[1025px]:px-[15px]">
-        <nav className="flex flex-wrap gap-[30px] border-l border-r border-b border-black px-[1.1vw] max-[1025px]:px-[15px] min-h-[60px]">
+        <nav className="flex flex-wrap gap-[30px] min-h-[60px]">
           <div className="flex items-center">
             <Link className="w-[65px] h-[25px] flex p-0" href="/">
               <Image src="/images/logo.svg" alt="logo" className="w-[65px] h-[25px] object-contain" width={65} height={25} unoptimized />
