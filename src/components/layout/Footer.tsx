@@ -1,64 +1,60 @@
+"use client";
+
 import Link from "next/link";
-import Image from "next/image";
-import { FaBasketball, FaInstagram, FaThreads, FaXTwitter } from "react-icons/fa6";
+
+const COL_TITLE = "font-inter font-semibold text-[#d7d7d7] text-[18px] leading-[28px] uppercase m-0";
+const COL_LINK = "font-inter text-[#d7d7d7] text-[16px] leading-[20px] tracking-[0.48px] no-underline hover:opacity-80";
 
 export default function Footer() {
+  const handleBackToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <footer className="px-[1.1vw] max-[1025px]:px-[15px]">
-      <div className="border-l border-r border-black py-[4vw] pl-[2.5vw] pr-[2.5vw] max-[1025px]:py-[60px] max-[1025px]:pl-[35px] max-[1025px]:pr-[35px]">
-        <div className="w-full">
-          <div className="flex flex-wrap">
-            <div className="w-full">
-              <div>
-                <Image src="/images/logo-black.svg" className="w-full" alt="DeepSoCal" width={1400} height={100} unoptimized style={{ width: "100%", height: "auto" }} />
-                <div className="flex flex-wrap justify-end">
-                  <ul className="inline-flex gap-[1vw] list-none p-0">
-                    <li><a href="#" className="w-[2.8vw] h-[2.8vw] inline-flex items-center justify-center bg-black text-white no-underline rounded-full text-[1.3vw] border border-black max-[1025px]:w-[50px] max-[1025px]:h-[50px] max-[1025px]:text-[120%]"><FaInstagram /></a></li>
-                    <li><a href="#" className="w-[2.8vw] h-[2.8vw] inline-flex items-center justify-center bg-black text-white no-underline rounded-full text-[1.3vw] border border-black max-[1025px]:w-[50px] max-[1025px]:h-[50px] max-[1025px]:text-[120%]"><FaBasketball /></a></li>
-                    <li><a href="#" className="w-[2.8vw] h-[2.8vw] inline-flex items-center justify-center bg-black text-white no-underline rounded-full text-[1.3vw] border border-black max-[1025px]:w-[50px] max-[1025px]:h-[50px] max-[1025px]:text-[120%]"><FaThreads /></a></li>
-                    <li><a href="#" className="w-[2.8vw] h-[2.8vw] inline-flex items-center justify-center bg-black text-white no-underline rounded-full text-[1.3vw] border border-black max-[1025px]:w-[50px] max-[1025px]:h-[50px] max-[1025px]:text-[120%]"><FaXTwitter /></a></li>
-                  </ul>
-                </div>
-              </div>
+    <footer className="bg-dark w-full">
+      <div className="px-[clamp(20px,5vw,80px)] py-[clamp(40px,5vw,60px)]">
+        <div className="max-w-[1380px] mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[clamp(30px,4vw,60px)]">
+            <div className="flex flex-col gap-2">
+              <span className="font-bangers text-[#d7d7d7] text-[clamp(28px,3vw,38px)] leading-none tracking-[1px]">
+                DeepSocal
+              </span>
+              <span className="font-inter text-[#d7d7d7] text-[14px] leading-[18px] tracking-[0.42px]">
+                Your embedded ally across Southern California.
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <h3 className={COL_TITLE}>Contact Us</h3>
+              <a href="mailto:create@deepsocal.com" className={COL_LINK}>create@deepsocal.com</a>
+              <a href="mailto:careers@deepsocal.com" className={COL_LINK}>careers@deepsocal.com</a>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <h3 className={COL_TITLE}>Visit Us</h3>
+              <span className={COL_LINK}>Southern California</span>
+              <span className={COL_LINK}>Orange County, CA</span>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <h3 className={COL_TITLE}>Follow Us</h3>
+              <Link href="#" className={COL_LINK}>Instagram</Link>
+              <Link href="#" className={COL_LINK}>LinkedIn</Link>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="bg-black pt-[2.5vw] pb-[2.5vw] -mx-[1.1vw] px-5 max-[1025px]:pt-[35px] max-[1025px]:pb-[35px] max-[600px]:p-[60px_15px]!">
-        <div className="w-full">
-          <div className="flex flex-wrap max-[600px]:gap-y-[60px]">
-            <div className="w-full md:w-1/3">
-              <div>
-                <Image src="/images/your_ally.svg" alt="Your Embedded Ally" width={300} height={80} unoptimized style={{ width: "auto", height: "auto" }} />
-              </div>
-            </div>
-            <div className="w-full md:flex-1">
-              <div>
-                <h3 className="text-[1.5vw] text-white uppercase mb-[1vw] max-[1025px]:text-[120%] max-[1025px]:mb-[15px]">Contact Us</h3>
-                <ul className="m-0 p-0 list-none flex flex-col gap-[0.5vw]">
-                  <li><a href="mailto:create@deepsocal.com" className="no-underline text-white">create@deepsocal.com</a></li>
-                  <li><a href="mailto:careers@deepsocal.com" className="no-underline text-white">careers@deepsocal.com</a></li>
-                </ul>
-              </div>
-            </div>
-            <div className="w-full md:flex-1">
-              <div>
-                <h3 className="text-[1.5vw] text-white uppercase mb-[1vw] max-[1025px]:text-[120%] max-[1025px]:mb-[15px]">Visit Us</h3>
-                <ul className="m-0 p-0 list-none flex flex-col gap-[0.5vw] text-white">
-                  <li>Southern California</li>
-                  <li>Orange County, CA</li>
-                </ul>
-              </div>
-            </div>
-            <div className="w-full md:flex-1">
-              <div>
-                <h3 className="text-[1.5vw] text-white uppercase mb-[1vw] max-[1025px]:text-[120%] max-[1025px]:mb-[15px]">Follow Us</h3>
-                <ul className="m-0 p-0 list-none flex flex-col gap-[0.5vw]">
-                  <li><a href="#" className="no-underline text-white">Instagram</a></li>
-                  <li><Link href="#" className="no-underline text-white">LinkedIn</Link></li>
-                </ul>
-              </div>
-            </div>
+
+          <div className="border-t border-[#c5c5c5] mt-[clamp(30px,4vw,50px)] pt-[18px] flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="font-inter text-[#d7d7d7] text-[16px] leading-[20px] tracking-[0.48px] m-0">
+              Copyright &copy; {new Date().getFullYear()} | All rights reserved.
+            </p>
+            <a
+              href="#"
+              onClick={handleBackToTop}
+              className="font-inter text-[#d7d7d7] text-[16px] leading-[20px] tracking-[0.48px] no-underline hover:opacity-80"
+            >
+              Back to top &uarr;
+            </a>
           </div>
         </div>
       </div>

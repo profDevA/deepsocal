@@ -6,6 +6,7 @@ import { ModalProvider } from "@/components/modals/ModalProvider";
 import Modals from "@/components/modals/Modals";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import BigWordmark from "@/components/home/BigWordmark";
 import LayoutShell from "./LayoutShell";
 
 const fontVars = [druk, esAllianz, zillaSlab, instrumentSerif, inter, quintessential, bangers]
@@ -37,6 +38,7 @@ export default function RootLayout({
         <ModalProvider>
           <Header />
           <LayoutShell>{children}</LayoutShell>
+          <BigWordmark />
           <Footer />
           <Modals />
         </ModalProvider>

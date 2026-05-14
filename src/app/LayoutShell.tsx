@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 export default function LayoutShell({ children }: { children: ReactNode }) {
   const [paddingTop, setPaddingTop] = useState(0);
   const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     function setPageWrapperPadding() {
@@ -25,18 +26,14 @@ export default function LayoutShell({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const body = document.body;
-    body.classList.remove("home", "service-page");
-    if (pathname === "/") {
+    body.classList.remove("home");
+    if (isHome) {
       body.classList.add("home");
     }
-  }, [pathname]);
+  }, [isHome]);
 
   return (
-    <main
-      id="page-wrapper"
-      className="mx-[1.1vw] border-l border-r border-black max-[1025px]:mx-[15px]"
-      style={{ marginTop: paddingTop + 10 }}
-    >
+    <main id="page-wrapper" style={{ marginTop: paddingTop }}>
       {children}
     </main>
   );

@@ -15,17 +15,36 @@
   --color-dark: #111;
   --color-dark-text: #1F1C06;
 
-  /* STEEPC category color tokens (placeholders — confirm with Israel + Fas) */
-  --color-steepc-social: #C84B4B;
-  --color-steepc-tech: #3A6FB0;
-  --color-steepc-economic: #C9A14A;
-  --color-steepc-environment: #2E7D32;
-  --color-steepc-political: #6B4E9B;
-  --color-steepc-cultural: #D97757;
+  /* V2 brand tokens (Figma 15:5521) */
+  --color-bg-light: #E6E6E6;
+  --color-bg-dark: #121212;
+  --color-primary-sage: #D9DDD1;
+  --color-primary-orange: #FF8126;
+  --color-neutral-cream: #EDE6D4;
+  --color-neutral-grey-light: #E6E6E6;
+  --color-neutral-grey-mid: #8E8E93;
+  --color-neutral-grey-dark: #5E5E5E;
+  --color-border-light: #F2F2F2;
+  --color-border-strong: #1E1E1E;
+  --color-tag-bg: rgba(30, 30, 30, 0.8);
 
-  --animate-marquee: marquee 15s linear infinite;
-  --animate-marquee-right: marquee-right 15s linear infinite;
+  /* Editorial card colors — used for category cards / focus-area highlights */
+  --color-card-ocean: #D9DDD1;
+  --color-card-mental: #F5B086;
+  --color-card-commerce: #F3D4C4;
+  --color-card-culture: #DBD3E7;
+  --color-card-climate: #D2DAE5;
+  --color-card-ai: #CCDCDB;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee-right: marquee-right 40s linear infinite;
   --animate-slide-in: slideIn 0.5s ease;
+  --animate-hero-glow: heroGlow 8s ease-in-out infinite;
+}
+
+@layer utilities {
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
 }
 
 @layer base {
@@ -55,4 +74,8 @@
 @keyframes slideIn {
   from { transform: translateX(100%); }
   to   { transform: translateX(0); }
+}
+@keyframes heroGlow {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
 }
