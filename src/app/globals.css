@@ -14,6 +14,14 @@
   --color-dark: #111;
   --color-dark-text: #1F1C06;
 
+  /* STEEPC category color tokens (placeholders — confirm with Israel + Fas) */
+  --color-steepc-social: #C84B4B;
+  --color-steepc-tech: #3A6FB0;
+  --color-steepc-economic: #C9A14A;
+  --color-steepc-environment: #2E7D32;
+  --color-steepc-political: #6B4E9B;
+  --color-steepc-cultural: #D97757;
+
   --animate-marquee: marquee 15s linear infinite;
   --animate-marquee-right: marquee-right 15s linear infinite;
   --animate-slide-in: slideIn 0.5s ease;

@@ -28,8 +28,6 @@ export default function LayoutShell({ children }: { children: ReactNode }) {
     body.classList.remove("home", "service-page");
     if (pathname === "/") {
       body.classList.add("home");
-    } else if (pathname.startsWith("/services")) {
-      body.classList.add("service-page");
     }
   }, [pathname]);
 
