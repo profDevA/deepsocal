@@ -1,29 +1,60 @@
 "use client";
 
+import * as Dialog from "@radix-ui/react-dialog";
 import Link from "next/link";
+import { FaXmark } from "react-icons/fa6";
 import { useModal } from "./ModalProvider";
-import CenterModal from "./CenterModal";
 
 export default function ThankYouModal() {
   const { activeModal, closeModal } = useModal();
+  const open = activeModal === "thankyou";
 
   return (
-    <CenterModal open={activeModal === "thankyou"} onClose={closeModal}>
-      <div className="text-center py-[60px] px-10 max-w-[723px] mx-auto">
-        <h2 className="font-[Arial,sans-serif] font-bold text-[clamp(48px,4.7vw,68px)] leading-[1.17] tracking-[-1.37px] uppercase mb-11 text-black">Thank You!</h2>
-        <p className="font-[Arial,sans-serif] font-normal text-[clamp(22px,2.4vw,35px)] leading-[1.44] tracking-[-1.05px] max-w-[723px] mx-auto mb-11 text-black">
-          Your message has been successfully submitted. We appreciate you
-          reaching out to us!
-        </p>
-        <div className="flex gap-[38px] justify-center items-center flex-wrap">
-          <button onClick={closeModal} className="bg-black text-white uppercase rounded-none font-[Arial,sans-serif] text-base font-normal tracking-[-0.44px] px-6 py-3 min-h-[43px] inline-flex items-center justify-center no-underline border-none cursor-pointer w-[190px] h-[57px]">
-            Got it, thanks
-          </button>
-          <Link href="/services/marketing-branding" onClick={closeModal} className="bg-transparent border-[1.3px] border-black text-black inline-flex items-center justify-center uppercase font-[Arial,sans-serif] font-normal text-base tracking-[-0.58px] rounded-none p-0 w-[190px] h-[57px] cursor-pointer no-underline hover:bg-black hover:text-brand">
-            Browse Services
-          </Link>
-        </div>
-      </div>
-    </CenterModal>
+    <Dialog.Root open={open} onOpenChange={(v) => !v && closeModal()}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 z-99998 bg-black/50" />
+        <Dialog.Content
+          aria-describedby="thankyou-modal-description"
+          className="fixed inset-0 z-99999 bg-[#e6e6e6] flex items-center justify-center overflow-y-auto"
+        >
+          <Dialog.Close
+            aria-label="Close"
+            className="absolute top-7 right-7 w-10 h-10 bg-dark text-white rounded-full inline-flex items-center justify-center text-[22px] cursor-pointer border-none z-10"
+          >
+            <FaXmark />
+          </Dialog.Close>
+
+          <div className="flex flex-col gap-11 items-center text-center max-w-[723px] w-full px-6 py-16">
+            <Dialog.Title className="font-bangers text-black uppercase m-0 text-[clamp(48px,9vw,96px)] leading-[0.83] tracking-[-1.37px]">
+              Thank You!
+            </Dialog.Title>
+            <p
+              id="thankyou-modal-description"
+              className="font-inter font-light text-black text-[clamp(20px,3vw,32px)] leading-[1.18] tracking-[-1.05px] m-0"
+            >
+              Your message has been successfully submitted. We appreciate you
+              reaching out to us!
+            </p>
+
+            <div className="flex gap-[38px] items-center flex-wrap justify-center max-[600px]:gap-4">
+              <button
+                type="button"
+                onClick={closeModal}
+                className="font-bangers bg-black text-white text-[16px] tracking-[0.24px] uppercase w-[190px] h-[57px] inline-flex items-center justify-center border-none cursor-pointer transition-colors hover:bg-[#333]"
+              >
+                Got it, thanks
+              </button>
+              <Link
+                href="/#services"
+                onClick={closeModal}
+                className="font-bangers bg-transparent border border-black text-black text-[16px] tracking-[0.24px] uppercase w-[190px] h-[57px] inline-flex items-center justify-center no-underline cursor-pointer transition-colors hover:bg-black hover:text-white"
+              >
+                Browse Services
+              </Link>
+            </div>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }

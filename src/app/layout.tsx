@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { druk, esAllianz, zillaSlab, instrumentSerif, inter, quintessential } from "./fonts";
+import { druk, esAllianz, zillaSlab, instrumentSerif, inter, quintessential, bangers } from "./fonts";
 import { ModalProvider } from "@/components/modals/ModalProvider";
 import Modals from "@/components/modals/Modals";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import LayoutShell from "./LayoutShell";
 
-const fontVars = [druk, esAllianz, zillaSlab, instrumentSerif, inter, quintessential]
+const fontVars = [druk, esAllianz, zillaSlab, instrumentSerif, inter, quintessential, bangers]
   .map((f) => f.variable)
   .join(" ");
 

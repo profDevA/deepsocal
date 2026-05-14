@@ -1,100 +1,94 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { FaChevronDown } from "react-icons/fa6";
+import { FaBars } from "react-icons/fa6";
 import { useModal } from "@/components/modals/ModalProvider";
+import Drawer, { type DrawerNavItem } from "./Drawer";
+
+const navItems: DrawerNavItem[] = [
+  { label: "Our Work", href: "/#work" },
+  { label: "Our Difference", href: "/#difference" },
+  { label: "The Shop", href: "/shop" },
+];
+
+const NAV_PILL_CLASS =
+  "font-bangers bg-[#111] text-[#d7d7d7] text-[16px] leading-[1.4] px-4 py-1 no-underline whitespace-nowrap inline-flex items-center justify-center transition-colors hover:bg-[#333]";
 
 export default function Header() {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLLIElement>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const { openModal } = useModal();
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(false);
-      }
+    if (drawerOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
     };
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
+  }, [drawerOpen]);
+
+  const handleBookCall = () => {
+    setDrawerOpen(false);
+    openModal("contact");
+  };
 
   return (
-    <header id="header" className="fixed top-0 left-0 right-0 z-9999 bg-brand border-b border-black">
-      <div className="w-full px-[1.1vw] max-[1025px]:px-[15px]">
-        <nav className="flex flex-wrap gap-[30px] min-h-[60px]">
-          <div className="flex items-center">
-            <Link className="w-[65px] h-[25px] flex p-0" href="/">
-              <Image src="/images/logo.svg" alt="logo" className="w-[65px] h-[25px] object-contain" width={65} height={25} unoptimized />
-            </Link>
-          </div>
-          <div className="flex-1 py-[0.55vw]">
-            <button
-              className="hidden max-md:block ml-auto p-2"
-              type="button"
-              onClick={() => {
-                const el = document.getElementById("collapsibleNavbar");
-                el?.classList.toggle("max-md:hidden");
-              }}
+    <>
+      <header
+        id="header"
+        className="fixed top-0 left-0 right-0 z-9999 bg-[#e6e6e6] border-b border-dark"
+      >
+        <div className="w-full px-[80px] max-[1025px]:px-[20px]">
+          <nav className="flex items-center justify-between min-h-[64px]">
+            <Link
+              href="/"
+              aria-label="DeepSocal home"
+              className="font-bangers text-dark text-[38.905px] leading-none tracking-[1px] no-underline"
             >
-              <span className="block w-5 h-0.5 bg-black mb-1"></span>
-              <span className="block w-5 h-0.5 bg-black mb-1"></span>
-              <span className="block w-5 h-0.5 bg-black"></span>
+              DeepSocal
+            </Link>
+
+            <button
+              type="button"
+              className="hidden max-md:flex p-2 items-center justify-center cursor-pointer"
+              onClick={() => setDrawerOpen(true)}
+              aria-label="Open menu"
+              aria-expanded={drawerOpen}
+            >
+              <FaBars className="text-xl text-dark" />
             </button>
-            <div id="collapsibleNavbar" className="flex justify-end max-md:hidden">
-              <ul className="flex items-center gap-0 list-none m-0 p-0">
-                <li>
-                  <Link className="text-[0.9vw] leading-[1.4] py-[0.5vw] px-0 mx-[1.6vw] no-underline text-black max-[1025px]:text-base max-[1025px]:whitespace-nowrap" href="/about">About</Link>
+
+            <ul className="flex items-center gap-[25px] list-none m-0 p-0 max-md:hidden">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className={NAV_PILL_CLASS}>
+                    {item.label}
+                  </Link>
                 </li>
-                <li>
-                  <Link className="text-[0.9vw] leading-[1.4] py-[0.5vw] px-0 mx-[1.6vw] no-underline text-black max-[1025px]:text-base max-[1025px]:whitespace-nowrap" href="/works">Work</Link>
-                </li>
-                <li className="relative" ref={dropdownRef}>
-                  <a
-                    className="text-[0.9vw] leading-[1.4] py-[0.5vw] px-0 mx-[1.6vw] no-underline text-black max-[1025px]:text-base max-[1025px]:whitespace-nowrap cursor-pointer"
-                    href="#"
-                    role="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setDropdownOpen(!dropdownOpen);
-                    }}
-                  >
-                    Services <FaChevronDown className="text-[0.55em] ml-0.5 align-middle inline-block" />
-                  </a>
-                  {dropdownOpen && (
-                    <div className="absolute list-none top-full border border-dark border-t-0 rounded-none m-0 bg-brand z-99999 p-0 min-w-[240px] shadow-[0_8px_24px_rgba(0,0,0,0.08)] max-[1025px]:min-w-[220px]">
-                      <ul className="flex flex-col gap-0 p-0 m-0 list-none">
-                        <li><Link className="font-inter tracking-[-0.01em] text-[clamp(12px,0.82vw,13px)] font-normal leading-none no-underline py-[14px] px-6 text-dark bg-transparent block whitespace-nowrap transition-[background,color] duration-150 ease hover:bg-dark hover:text-brand max-[1025px]:text-[13px] max-[1025px]:py-3 max-[1025px]:px-5" href="/services/marketing-branding" onClick={() => setDropdownOpen(false)}>Marketing + Branding</Link></li>
-                        <li className="border-t border-black/12"><Link className="font-inter tracking-[-0.01em] text-[clamp(12px,0.82vw,13px)] font-normal leading-none no-underline py-[14px] px-6 text-dark bg-transparent block whitespace-nowrap transition-[background,color] duration-150 ease hover:bg-dark hover:text-brand max-[1025px]:text-[13px] max-[1025px]:py-3 max-[1025px]:px-5" href="/services/research" onClick={() => setDropdownOpen(false)}>Research</Link></li>
-                        <li className="border-t border-black/12"><Link className="font-inter tracking-[-0.01em] text-[clamp(12px,0.82vw,13px)] font-normal leading-none no-underline py-[14px] px-6 text-dark bg-transparent block whitespace-nowrap transition-[background,color] duration-150 ease hover:bg-dark hover:text-brand max-[1025px]:text-[13px] max-[1025px]:py-3 max-[1025px]:px-5" href="/services/design" onClick={() => setDropdownOpen(false)}>Design</Link></li>
-                        <li className="border-t border-black/12"><Link className="font-inter tracking-[-0.01em] text-[clamp(12px,0.82vw,13px)] font-normal leading-none no-underline py-[14px] px-6 text-dark bg-transparent block whitespace-nowrap transition-[background,color] duration-150 ease hover:bg-dark hover:text-brand max-[1025px]:text-[13px] max-[1025px]:py-3 max-[1025px]:px-5" href="/services/ai-strategy" onClick={() => setDropdownOpen(false)}>AI Strategy + Integration</Link></li>
-                        <li className="border-t border-black/12"><Link className="font-inter tracking-[-0.01em] text-[clamp(12px,0.82vw,13px)] font-normal leading-none no-underline py-[14px] px-6 text-dark bg-transparent block whitespace-nowrap transition-[background,color] duration-150 ease hover:bg-dark hover:text-brand max-[1025px]:text-[13px] max-[1025px]:py-3 max-[1025px]:px-5" href="/services/training-education" onClick={() => setDropdownOpen(false)}>Training &amp; Education</Link></li>
-                      </ul>
-                    </div>
-                  )}
-                </li>
-                <li>
-                  <a className="text-[0.9vw] leading-[1.4] py-[0.5vw] px-0 mx-[1.6vw] no-underline text-black max-[1025px]:text-base max-[1025px]:whitespace-nowrap" href="#">Shop</a>
-                </li>
-                <li>
-                  <a
-                    className="text-[0.9vw] text-black px-[1.5vw] py-[0.5vw] leading-none border border-black rounded-none no-underline mr-0 inline-block bg-[linear-gradient(to_top,#000_50%,transparent_50%)] bg-size-[100%_200%] bg-top transition-[background-position,color] duration-400 ease-in-out hover:text-white hover:bg-bottom max-[1025px]:px-[15px] max-[1025px]:py-2 max-[1025px]:text-base"
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      openModal("partner");
-                    }}
-                  >
-                    Work With Us
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </header>
+              ))}
+              <li>
+                <button
+                  type="button"
+                  onClick={handleBookCall}
+                  className={`${NAV_PILL_CLASS} border-none cursor-pointer`}
+                >
+                  Book a call
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <Drawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        navItems={navItems}
+        onBookCall={handleBookCall}
+      />
+    </>
   );
 }

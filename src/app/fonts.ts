@@ -4,6 +4,7 @@ import {
   Instrument_Serif,
   Inter,
   Quintessential,
+  Bangers,
 } from "next/font/google";
 
 export const druk = localFont({
@@ -53,5 +54,12 @@ export const quintessential = Quintessential({
   subsets: ["latin"],
   weight: "400",
   variable: "--nf-quintessential",
+  display: "swap",
+});
+
+export const bangers = Bangers({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--nf-bangers",
   display: "swap",
 });

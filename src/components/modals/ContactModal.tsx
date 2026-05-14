@@ -1,8 +1,9 @@
 "use client";
 
+import * as Dialog from "@radix-ui/react-dialog";
+import { FaXmark } from "react-icons/fa6";
 import { useModal } from "./ModalProvider";
 import { useFormSubmit } from "@/hooks/useFormSubmit";
-import SideModal from "./SideModal";
 
 export default function ContactModal() {
   const { activeModal, closeModal, switchModal } = useModal();
@@ -23,34 +24,92 @@ export default function ContactModal() {
     }
   };
 
+  const open = activeModal === "contact";
+
   return (
-    <SideModal open={activeModal === "contact"} onClose={closeModal}>
-      <h4 className="font-druk text-[58px] leading-[0.9] tracking-normal uppercase text-black">Contact us</h4>
-      <p className="font-[Arial,sans-serif] text-lg leading-[1.44] tracking-[-0.54px] text-black mt-7">
-        Start building your brand through a direct conversation with your
-        embedded ally. Tell us about your business goals and the challenges
-        you&apos;re facing. Our team will get back to you with ways we can move
-        forward.
-      </p>
-      <form onSubmit={handleSubmit} className="flex flex-col mt-8">
-        <div className="mb-[18px]">
-          <label className="font-[Arial,sans-serif] text-lg tracking-[-0.2px] leading-none mb-2.5 text-black block">Name:</label>
-          <input type="text" name="name" required placeholder="Enter your name" className="font-[Arial,sans-serif] text-sm px-4 py-3 bg-[#E6E6E6] border-none rounded-none resize-none text-black w-[345px] h-[43px] placeholder:text-[#A9A9A9] placeholder:text-sm focus:border-black/60 focus:outline-none max-[1025px]:w-full" />
-        </div>
-        <div className="mb-[18px]">
-          <label className="font-[Arial,sans-serif] text-lg tracking-[-0.2px] leading-none mb-2.5 text-black block">Email:</label>
-          <input type="email" name="email" required placeholder="Enter your email" className="font-[Arial,sans-serif] text-sm px-4 py-3 bg-[#E6E6E6] border-none rounded-none resize-none text-black w-[345px] h-[43px] placeholder:text-[#A9A9A9] placeholder:text-sm focus:border-black/60 focus:outline-none max-[1025px]:w-full" />
-        </div>
-        <div className="mb-[18px]">
-          <label className="font-[Arial,sans-serif] text-lg tracking-[-0.2px] leading-none mb-2.5 text-black block">Message:</label>
-          <textarea name="message" rows={5} placeholder="Enter your message" className="font-[Arial,sans-serif] text-sm px-4 py-3 bg-[#E6E6E6] border-none rounded-none resize-none text-black w-[345px] h-[120px]! placeholder:text-[#A9A9A9] placeholder:text-sm focus:border-black/60 focus:outline-none max-[1025px]:w-full" />
-        </div>
-        <div>
-          <button type="submit" disabled={isSubmitting} className="bg-black text-white uppercase rounded-none font-[Arial,sans-serif] text-xs font-normal tracking-[-0.44px] px-6 py-3 min-h-[43px] inline-flex items-center justify-center no-underline border-none cursor-pointer disabled:opacity-50">
-            {isSubmitting ? "SENDING..." : "Send Message"}
-          </button>
-        </div>
-      </form>
-    </SideModal>
+    <Dialog.Root open={open} onOpenChange={(v) => !v && closeModal()}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 z-99998 bg-black/50" />
+        <Dialog.Content
+          aria-describedby="contact-modal-description"
+          className="fixed top-0 right-0 z-99999 h-full w-[485px] max-w-[90vw] bg-white overflow-y-auto rounded-l-[62px] shadow-[0_5px_15px_rgba(0,0,0,0.25)] animate-slide-in flex flex-col"
+        >
+          <Dialog.Close
+            aria-label="Close"
+            className="absolute top-7 right-7 w-10 h-10 bg-dark text-white rounded-full inline-flex items-center justify-center text-[22px] cursor-pointer border-none z-10"
+          >
+            <FaXmark />
+          </Dialog.Close>
+
+          <div className="flex flex-col gap-7 px-[46px] pt-[88px] pb-[50px] max-[600px]:px-8 max-[600px]:pt-16">
+            <Dialog.Title className="font-bangers text-black text-[58px] leading-[0.9] uppercase m-0">
+              Contact us
+            </Dialog.Title>
+            <p
+              id="contact-modal-description"
+              className="font-inter text-[18px] leading-[1.44] tracking-[-0.5px] text-black m-0"
+            >
+              Start a direct conversation with your embedded ally. Tell us about
+              your business goals and the challenges you&apos;re facing. Our team
+              will get back to you with ways we can move forward.
+            </p>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-2">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="contact-name" className="font-inter text-[18px] tracking-[-0.2px] leading-none text-black">
+                  Name:
+                </label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  required
+                  placeholder="Enter your name"
+                  className="font-inter text-sm px-3 py-3 bg-[#f3f3f3] border border-[#e6e6e6] rounded-none text-black h-[46px] placeholder:text-[#a9a9a9] focus:outline-none focus:border-black/60"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="contact-email" className="font-inter text-[18px] tracking-[-0.2px] leading-none text-black">
+                  Email:
+                </label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="Enter your email"
+                  className="font-inter text-sm px-3 py-3 bg-[#f3f3f3] border border-[#e6e6e6] rounded-none text-black h-[46px] placeholder:text-[#a9a9a9] focus:outline-none focus:border-black/60"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="contact-message" className="font-inter text-[15px] tracking-[-0.2px] leading-none text-black">
+                  Message:
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  rows={4}
+                  required
+                  placeholder="Enter your message"
+                  className="font-inter text-sm px-3 py-3 bg-[#f3f3f3] border border-[#e6e6e6] rounded-none text-black h-[85px] resize-none placeholder:text-[#a9a9a9] focus:outline-none focus:border-black/60"
+                />
+              </div>
+
+              <div className="mt-2">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="font-bangers bg-dark text-white text-[16px] tracking-[0.24px] uppercase px-8 py-3 h-[43px] min-w-[170px] inline-flex items-center justify-center border-none cursor-pointer transition-colors hover:bg-[#333] disabled:opacity-50"
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
