@@ -101,13 +101,13 @@ function ProductHero({ product }: { product: Product }) {
         </div>
       </div>
 
-      <div className="flex md:flex-col gap-3 md:gap-4 overflow-x-auto md:overflow-visible no-scrollbar">
+      <div className="flex md:flex-col gap-3 md:gap-4 overflow-x-auto md:overflow-visible no-scrollbar -mx-2 px-2 md:mx-0 md:px-0">
         {[0, 1, 2].map((i) => (
           <button
             key={i}
             type="button"
             aria-label={`Image ${i + 1}`}
-            className="shrink-0 size-[clamp(80px,12vw,180px)] md:w-full md:h-auto md:aspect-square rounded-[clamp(12px,1.5vw,20px)] overflow-hidden cursor-pointer border border-[#c4c4c4] hover:border-dark transition-colors"
+            className="shrink-0 size-[88px] sm:size-[clamp(96px,12vw,180px)] md:w-full md:h-auto md:aspect-square rounded-[clamp(12px,1.5vw,20px)] overflow-hidden cursor-pointer border border-[#c4c4c4] hover:border-dark transition-colors"
             style={{
               backgroundImage: `linear-gradient(${135 + i * 20}deg, ${product.themeColor} 0%, #c8c8c8 50%, #909090 100%)`,
             }}

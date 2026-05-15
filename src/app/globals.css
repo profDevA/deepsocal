@@ -45,6 +45,28 @@
 @layer utilities {
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  /* Generic scroll-reveal — element starts hidden, .is-visible class triggers entrance */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* Work-grid column hover — dim non-hovered cards. Touch devices are skipped. */
+  @media (hover: hover) and (pointer: fine) {
+    .work-grid-hover:hover > * { opacity: 0.45; transition: opacity 220ms ease; }
+    .work-grid-hover:hover > *:hover { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .work-grid-hover:hover > * { opacity: 1; transition: none; }
+  }
 }
 
 @layer base {

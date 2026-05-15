@@ -1,5 +1,15 @@
+"use client";
+
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { socalThemes } from "@/data/socal-themes";
 import CaliforniaMap from "./CaliforniaMap";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const themeIcons: Record<string, string> = {
   "ocean-environment": "M2 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0 4 2 6 0 M2 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0 4 2 6 0",
@@ -11,8 +21,51 @@ const themeIcons: Record<string, string> = {
 };
 
 export default function WhyAreWeDifferent() {
+  const root = useRef<HTMLElement | null>(null);
+  const pinWrap = useRef<HTMLDivElement | null>(null);
+  const track = useRef<HTMLDivElement | null>(null);
+
+  useGSAP(
+    () => {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) return;
+
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        const trackEl = track.current;
+        const pinEl = pinWrap.current;
+        if (!trackEl || !pinEl) return;
+
+        const distance = trackEl.scrollWidth - pinEl.clientWidth;
+        if (distance <= 0) return;
+
+        const tween = gsap.to(trackEl, {
+          x: -distance,
+          ease: "none",
+          scrollTrigger: {
+            trigger: pinEl,
+            start: "center center",
+            end: () => `+=${distance + 200}`,
+            scrub: 0.6,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        return () => {
+          tween.scrollTrigger?.kill();
+          tween.kill();
+        };
+      });
+    },
+    { scope: root }
+  );
+
   return (
     <section
+      ref={root}
       id="difference"
       className="bg-[#e6e6e6] w-full py-[clamp(40px,6vw,80px)] px-[clamp(20px,4vw,80px)]"
     >
@@ -35,13 +88,19 @@ export default function WhyAreWeDifferent() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[minmax(280px,580px)_1fr] gap-[clamp(24px,3vw,50px)] py-[clamp(40px,5vw,60px)] items-center">
+        <div
+          ref={pinWrap}
+          className="grid grid-cols-1 md:grid-cols-[minmax(280px,580px)_1fr] gap-[clamp(24px,3vw,50px)] py-[clamp(40px,5vw,60px)] items-center md:overflow-hidden"
+        >
           <div className="bg-white border border-[#c0c0c0] rounded-[clamp(20px,2.5vw,39px)] aspect-580/421 max-w-[580px] w-full p-[clamp(20px,3vw,40px)] flex items-center justify-center">
             <CaliforniaMap className="w-auto h-full max-h-[380px]" />
           </div>
 
-          <div className="overflow-x-auto overflow-y-hidden no-scrollbar -mx-[clamp(20px,4vw,80px)] md:mx-0 pl-[clamp(20px,4vw,80px)] md:pl-0">
-            <div className="flex gap-[clamp(20px,2.5vw,44px)] items-center pr-[clamp(20px,4vw,80px)] md:pr-0">
+          <div className="overflow-x-auto md:overflow-visible no-scrollbar -mx-[clamp(20px,4vw,80px)] md:mx-0 pl-[clamp(20px,4vw,80px)] md:pl-0">
+            <div
+              ref={track}
+              className="flex gap-[clamp(20px,2.5vw,44px)] items-center pr-[clamp(20px,4vw,80px)] md:pr-0 will-change-transform"
+            >
               {socalThemes.map((theme) => (
                 <ThemeCard key={theme.id} theme={theme} />
               ))}

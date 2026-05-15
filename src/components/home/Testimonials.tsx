@@ -48,7 +48,7 @@ export default function Testimonials() {
             {testimonials.map((t, i) => (
               <div
                 key={`${t.name}-${i}`}
-                className="shrink-0 basis-[80%] md:basis-[45%] flex justify-center px-3"
+                className="shrink-0 basis-[88%] sm:basis-[70%] md:basis-[45%] flex justify-center px-3"
               >
                 <TestimonialCard
                   testimonial={t}

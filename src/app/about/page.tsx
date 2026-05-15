@@ -48,7 +48,7 @@ export default function AboutPage() {
     <div className="bg-[#e6e6e6] w-full">
       <section className="w-full px-[clamp(20px,4vw,80px)] pt-[clamp(40px,6vw,80px)] pb-[clamp(40px,5vw,60px)]">
         <div className="max-w-[1380px] mx-auto flex flex-col items-center gap-[clamp(24px,4vw,49px)] text-center">
-          <h1 className="font-bangers text-dark text-[clamp(40px,7vw,96px)] leading-[0.94] tracking-[clamp(1.5px,0.3vw,2.88px)] uppercase m-0 max-w-[799px]">
+          <h1 className="font-bangers text-dark text-[clamp(34px,7vw,96px)] leading-[0.94] tracking-[clamp(0.5px,0.3vw,2.88px)] uppercase m-0 max-w-[799px] wrap-break-word hyphens-auto">
             The best social narratives are success stories
           </h1>
           <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[703px] m-0">
@@ -87,7 +87,7 @@ export default function AboutPage() {
       <section className="w-full px-[clamp(20px,4vw,80px)] py-[clamp(40px,6vw,80px)]">
         <div className="max-w-[1380px] mx-auto grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-[clamp(32px,5vw,80px)] items-start md:divide-x md:divide-dark">
           <div className="md:pr-[clamp(20px,3vw,60px)] flex flex-col gap-6">
-            <h2 className="font-bangers text-dark text-[clamp(48px,8vw,96px)] leading-[1] tracking-[2.88px] uppercase m-0">
+            <h2 className="font-bangers text-dark text-[clamp(56px,8vw,96px)] leading-none tracking-[clamp(1px,0.3vw,2.88px)] uppercase m-0">
               team
             </h2>
             <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[510px] m-0">
@@ -99,10 +99,10 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="md:pl-[clamp(20px,3vw,60px)] grid grid-cols-2 lg:grid-cols-3 gap-x-[clamp(20px,2vw,32px)] gap-y-[clamp(32px,4vw,48px)]">
+          <div className="md:pl-[clamp(20px,3vw,60px)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[clamp(20px,2vw,32px)] gap-y-[clamp(28px,4vw,48px)]">
             {teamGroups.map((group) => (
               <div key={group.id} className="flex flex-col gap-[clamp(12px,1.5vw,18px)]">
-                <h3 className="font-bangers text-dark text-[clamp(16px,1.6vw,18px)] leading-[1.2] tracking-[0.36px] uppercase m-0">
+                <h3 className="font-bangers text-dark text-[clamp(18px,1.6vw,20px)] leading-[1.2] tracking-[0.36px] uppercase m-0">
                   {group.name}
                 </h3>
                 <ul className="flex flex-col gap-[8px] list-none p-0 m-0">

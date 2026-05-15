@@ -14,7 +14,7 @@ export default function ShopPage() {
     <div className="bg-[#e6e6e6] w-full pt-[clamp(40px,6vw,80px)] pb-[clamp(40px,6vw,80px)] px-[clamp(16px,2vw,28px)]">
       <div className="max-w-[1384px] mx-auto">
         <header className="flex flex-col items-center gap-[clamp(20px,3vw,49px)] text-center mb-[clamp(40px,6vw,80px)] max-w-[799px] mx-auto">
-          <h1 className="font-bangers text-dark text-[clamp(48px,8vw,96px)] leading-[0.94] tracking-[clamp(1.5px,0.3vw,2.88px)] uppercase m-0">
+          <h1 className="font-bangers text-dark text-[clamp(38px,8vw,96px)] leading-[0.94] tracking-[clamp(0.5px,0.3vw,2.88px)] uppercase m-0 wrap-break-word">
             Shop the look
           </h1>
           <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[482px] m-0">

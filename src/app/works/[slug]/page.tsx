@@ -247,17 +247,17 @@ function CaseStudyNav({
 }) {
   return (
     <div className="max-w-[1384px] mx-auto mt-[clamp(40px,5vw,52px)] border-b border-dark py-[clamp(24px,3vw,40px)]">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <Link
           href={prevSlug ? `/works/${prevSlug}` : "/#work"}
-          className="font-inter font-medium text-dark text-[clamp(18px,2.4vw,24px)] leading-none tracking-[-1.5px] uppercase underline no-underline-offset-2 inline-flex items-center gap-3 hover:opacity-70 transition-opacity"
+          className="font-inter font-medium text-dark text-[clamp(18px,2.4vw,24px)] leading-none tracking-[-1.5px] uppercase no-underline inline-flex items-center gap-3 hover:opacity-70 transition-opacity"
         >
           <FaArrowLeft className="text-[18px]" />
           {prevSlug ? "Previous" : "Back to Work"}
         </Link>
         <Link
           href={nextSlug ? `/works/${nextSlug}` : "/#work"}
-          className="font-inter font-medium text-dark text-[clamp(18px,2.4vw,24px)] leading-none tracking-[-1.5px] uppercase underline no-underline-offset-2 inline-flex items-center gap-3 hover:opacity-70 transition-opacity"
+          className="font-inter font-medium text-dark text-[clamp(18px,2.4vw,24px)] leading-none tracking-[-1.5px] uppercase no-underline inline-flex items-center gap-3 hover:opacity-70 transition-opacity"
         >
           {nextSlug ? "Next project" : "Back to Work"}
           <FaArrowRight className="text-[18px]" />
