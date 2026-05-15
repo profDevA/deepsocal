@@ -41,6 +41,8 @@ export default function Footer() {
               <h3 className={COL_TITLE}>Follow Us</h3>
               <Link href="#" className={COL_LINK}>Instagram</Link>
               <Link href="#" className={COL_LINK}>LinkedIn</Link>
+              <Link href="/about" className={COL_LINK}>About</Link>
+              <Link href="/about#faqs" className={COL_LINK}>FAQs</Link>
             </div>
           </div>
 

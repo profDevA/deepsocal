@@ -2,40 +2,54 @@ import type { ServiceId } from "./case-studies";
 
 export type Service = {
   id: ServiceId;
+  slug: ServiceId;
   name: string;
   description: string;
   longDescription: string;
-  image: string;
+  ctaLabel: string;
+  themeColor: string;
 };
 
 export const services: Service[] = [
   {
     id: "brand-strategy",
+    slug: "brand-strategy",
     name: "Brand Strategy",
-    description: "TBD — Fas to write",
-    longDescription: "TBD",
-    image: "/img/services/brand-strategy.jpg",
+    description: "Brand systems built on community insight.",
+    longDescription:
+      "We approach marketing as community-building. Campaigns are shaped by how Southern California communities live and interact. By blending cultural insight with systems thinking, we design strategies that create participation, build credibility, and help brands grow as trusted parts of their communities.",
+    ctaLabel: "Work With Us",
+    themeColor: "#D9DDD1",
   },
   {
     id: "identity-systems",
+    slug: "identity-systems",
     name: "Identity Systems",
-    description: "TBD",
-    longDescription: "TBD",
-    image: "/img/services/identity-systems.jpg",
+    description: "Visual languages that scale with you.",
+    longDescription:
+      "We design identity systems that hold together across every surface — from packaging and signage to product and editorial. Built on cultural research and a Southern California sensibility, our systems scale with your brand without losing the specificity that makes it yours.",
+    ctaLabel: "Work With Us",
+    themeColor: "#F3D4C4",
   },
   {
     id: "digital-experiences",
+    slug: "digital-experiences",
     name: "Digital Experiences",
-    description: "TBD",
-    longDescription: "TBD",
-    image: "/img/services/digital-experiences.jpg",
+    description: "Useful tools for real local needs.",
+    longDescription:
+      "We build digital products that meet people where they are. From civic platforms to commerce experiences, we pair research-led design with modern engineering so the tools we ship feel inevitable to the communities that use them.",
+    ctaLabel: "Work With Us",
+    themeColor: "#CCDCDB",
   },
   {
     id: "next-gen-innovations",
+    slug: "next-gen-innovations",
     name: "Next-Gen Innovations",
-    description: "TBD",
-    longDescription: "TBD",
-    image: "/img/services/next-gen-innovations.jpg",
+    description: "AI, climate, and emerging-tech work.",
+    longDescription:
+      "We partner with teams exploring AI, climate adaptation, and emerging technology in service of Southern California. Our work translates new capability into things people can actually use — never tech for its own sake, always grounded in regional context.",
+    ctaLabel: "Work With Us",
+    themeColor: "#DBD3E7",
   },
 ];
 
