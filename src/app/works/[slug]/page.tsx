@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaArrowLeft, FaArrowRight, FaPlay } from "react-icons/fa6";
@@ -63,19 +64,36 @@ function CaseStudyHero({
   caseStudy: ReturnType<typeof getCaseStudyBySlug> & object;
   heroBg: string;
 }) {
+  const heroSrc = caseStudy.heroImage || caseStudy.thumbnailImage;
   return (
-    <div className="relative w-full aspect-1416/764 overflow-hidden">
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `linear-gradient(135deg, ${heroBg} 0%, #1f1f1f 60%, #111 100%)`,
-        }}
-      />
+    <div className="relative w-full aspect-1416/764 overflow-hidden bg-[#1f1f1f]">
+      {heroSrc ? (
+        <Image
+          src={heroSrc}
+          alt={caseStudy.title}
+          fill
+          priority
+          sizes="(max-width: 1416px) 100vw, 1416px"
+          className="object-cover"
+        />
+      ) : (
+        <>
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `linear-gradient(135deg, ${heroBg} 0%, #1f1f1f 60%, #111 100%)`,
+            }}
+          />
+          <div
+            className="absolute inset-0 mix-blend-overlay opacity-30"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(45deg, transparent 0 18px, rgba(255,255,255,0.08) 18px 20px)",
+            }}
+          />
+        </>
+      )}
       <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent" />
-      <div className="absolute inset-0 mix-blend-overlay opacity-30" style={{
-        backgroundImage:
-          "repeating-linear-gradient(45deg, transparent 0 18px, rgba(255,255,255,0.08) 18px 20px)",
-      }} />
 
       <div className="absolute bottom-[clamp(20px,4%,40px)] left-[clamp(20px,4%,52px)] flex flex-wrap gap-[clamp(12px,2vw,37px)] items-center">
         {caseStudy.tags.map((t, i) => (
@@ -157,27 +175,61 @@ function CaseStudyGalleryImage({
   caseStudy: ReturnType<typeof getCaseStudyBySlug> & object;
   heroBg: string;
 }) {
+  const gallerySrc =
+    caseStudy.gallery[0] || caseStudy.heroImage || caseStudy.thumbnailImage;
   return (
     <div className="max-w-[1384px] mx-auto mt-[clamp(40px,5vw,52px)]">
-      <div
-        className="w-full aspect-1380/728 rounded-[clamp(20px,2.5vw,30px)] overflow-hidden relative"
-        style={{
-          backgroundImage: `linear-gradient(160deg, ${heroBg} 0%, #c8c8c8 50%, #909090 100%)`,
-        }}
-      >
-        <div
-          className="absolute inset-0 opacity-30 mix-blend-multiply"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(45deg, transparent 0 14px, rgba(0,0,0,0.06) 14px 16px)",
-          }}
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="font-bangers text-dark/30 text-[clamp(40px,6vw,72px)] tracking-[2px] uppercase select-none">
-            {caseStudy.title}
-          </span>
-        </div>
+      <div className="w-full aspect-1380/728 rounded-[clamp(20px,2.5vw,30px)] overflow-hidden relative bg-[#1f1f1f]">
+        {gallerySrc ? (
+          <Image
+            src={gallerySrc}
+            alt={`${caseStudy.title} — gallery`}
+            fill
+            sizes="(max-width: 1384px) 100vw, 1384px"
+            className="object-cover"
+          />
+        ) : (
+          <>
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `linear-gradient(160deg, ${heroBg} 0%, #c8c8c8 50%, #909090 100%)`,
+              }}
+            />
+            <div
+              className="absolute inset-0 opacity-30 mix-blend-multiply"
+              style={{
+                backgroundImage:
+                  "repeating-linear-gradient(45deg, transparent 0 14px, rgba(0,0,0,0.06) 14px 16px)",
+              }}
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="font-bangers text-dark/30 text-[clamp(40px,6vw,72px)] tracking-[2px] uppercase select-none">
+                {caseStudy.title}
+              </span>
+            </div>
+          </>
+        )}
       </div>
+
+      {caseStudy.gallery.length > 1 && (
+        <div className="mt-[clamp(20px,3vw,40px)] grid grid-cols-2 gap-[clamp(16px,2vw,28px)]">
+          {caseStudy.gallery.slice(1, 3).map((src, i) => (
+            <div
+              key={src}
+              className="relative aspect-square sm:aspect-4/3 rounded-[clamp(16px,2vw,24px)] overflow-hidden bg-[#1f1f1f]"
+            >
+              <Image
+                src={src}
+                alt={`${caseStudy.title} — image ${i + 2}`}
+                fill
+                sizes="(max-width: 1384px) 50vw, 690px"
+                className="object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

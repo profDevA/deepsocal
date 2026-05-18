@@ -114,6 +114,12 @@ export const caseStudies: CaseStudy[] = [
     teamLabel: "Ana Abreu, Sam Carter",
     servicesLabel: "Strategy + Design + Research",
     thumbnailImage: "/images/case-studies/oc-navigator.png",
+    heroImage: "/images/case-studies/oc-navigator.png",
+    gallery: [
+      "/images/oc-resource-navigator.png",
+      "/images/slide-3-ocnavigator.jpg",
+      "/images/oc-links.png",
+    ],
     order: 2,
   }),
   seed({
@@ -125,6 +131,12 @@ export const caseStudies: CaseStudy[] = [
     editorialTheme: "ocean-environment",
     services: ["brand-strategy", "identity-systems"],
     thumbnailImage: "/images/case-studies/surf-magazine.png",
+    heroImage: "/images/case-studies/surf-magazine.png",
+    gallery: [
+      "/images/works/surfer-1.jpg",
+      "/images/works/surfer-2.jpg",
+      "/images/works/surfer-3.jpg",
+    ],
     order: 3,
   }),
   seed({
@@ -136,6 +148,7 @@ export const caseStudies: CaseStudy[] = [
     editorialTheme: "ai-digital-access",
     services: ["digital-experiences", "next-gen-innovations"],
     thumbnailImage: "/images/case-studies/concrete-dreams.png",
+    heroImage: "/images/case-studies/concrete-dreams.png",
     order: 4,
   }),
   seed({
@@ -157,6 +170,7 @@ export const caseStudies: CaseStudy[] = [
     editorialTheme: "mental-health",
     services: ["brand-strategy", "digital-experiences"],
     thumbnailImage: "/images/case-studies/coral-health.png",
+    heroImage: "/images/case-studies/coral-health.png",
     order: 6,
   }),
   seed({
@@ -178,6 +192,7 @@ export const caseStudies: CaseStudy[] = [
     editorialTheme: "local-commerce",
     services: ["identity-systems", "brand-strategy"],
     thumbnailImage: "/images/case-studies/salt-and-sand.png",
+    heroImage: "/images/case-studies/salt-and-sand.png",
     order: 8,
   }),
   seed({
@@ -189,6 +204,7 @@ export const caseStudies: CaseStudy[] = [
     editorialTheme: "local-commerce",
     services: ["identity-systems", "brand-strategy"],
     thumbnailImage: "/images/case-studies/luku-watches.png",
+    heroImage: "/images/case-studies/luku-watches.png",
     order: 9,
   }),
   seed({

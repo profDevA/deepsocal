@@ -11,7 +11,19 @@ export type TeamMember = {
   };
 };
 
-export const team: TeamMember[] = [];
+/**
+ * Leadership / featured team members. Rendered above the discipline groups
+ * on the About page when present.
+ */
+export const leadership: TeamMember[] = [
+  {
+    name: "Dr. Fas Lebbie",
+    role: "Founder & Chief Strategist",
+    bio: "Former Head of Design at Frankie. Teaches design at Carnegie Mellon. Based in Southern California.",
+    avatar: "/images/about/ceo.png",
+    skills: ["Strategy", "Design Leadership", "Research"],
+  },
+];
 
 export type TeamGroup = {
   id: string;
@@ -19,31 +31,35 @@ export type TeamGroup = {
   members: string[];
 };
 
-// Placeholder names from Figma — replace with real team
+/**
+ * Discipline groupings rendered on the About page.
+ * Members list intentionally short while team scales — partner network is
+ * additive (per 5/18 dev-network decision, see `business-terms.md`).
+ */
 export const teamGroups: TeamGroup[] = [
   {
     id: "design",
-    name: "Design team",
-    members: ["Bruce Torphy", "Sonia Kessler", "Taylor Lehner"],
-  },
-  {
-    id: "marketing",
-    name: "Marketing",
-    members: ["Bruce Torphy", "Sonia Kessler", "Taylor Lehner"],
+    name: "Design",
+    members: ["Israel Adeniji", "+ partner network"],
   },
   {
     id: "development",
     name: "Development",
-    members: ["Bruce Torphy", "Sonia Kessler", "Taylor Lehner"],
+    members: ["Xiang Chen", "+ partner network"],
+  },
+  {
+    id: "strategy",
+    name: "Strategy",
+    members: ["Dr. Fas Lebbie", "+ advisory partners"],
   },
   {
     id: "research",
     name: "Research",
-    members: ["Bruce Torphy", "Sonia Kessler", "Taylor Lehner"],
+    members: ["Dr. Fas Lebbie", "+ Carnegie Mellon collaborators"],
   },
   {
-    id: "branding",
-    name: "Branding",
-    members: ["Bruce Torphy", "Sonia Kessler", "Taylor Lehner"],
+    id: "operations",
+    name: "Operations",
+    members: ["+ hiring"],
   },
 ];

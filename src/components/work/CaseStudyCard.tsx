@@ -13,15 +13,24 @@ export function pickVariant(caseStudy: CaseStudy): CardVariant {
 export default function CaseStudyCard({
   caseStudy,
   variant = pickVariant(caseStudy),
+  priority = false,
 }: {
   caseStudy: CaseStudy;
   variant?: CardVariant;
+  /** Set true for cards likely to be above the fold (improves LCP). */
+  priority?: boolean;
 }) {
   if (variant === "editorial") return <EditorialCard caseStudy={caseStudy} />;
-  return <ImageCard caseStudy={caseStudy} />;
+  return <ImageCard caseStudy={caseStudy} priority={priority} />;
 }
 
-function ImageCard({ caseStudy }: { caseStudy: CaseStudy }) {
+function ImageCard({
+  caseStudy,
+  priority,
+}: {
+  caseStudy: CaseStudy;
+  priority: boolean;
+}) {
   return (
     <Link
       href={`/works/${caseStudy.slug}`}
@@ -35,7 +44,7 @@ function ImageCard({ caseStudy }: { caseStudy: CaseStudy }) {
             fill
             sizes="(max-width: 768px) 100vw, 406px"
             className="object-cover"
-            priority={false}
+            priority={priority}
           />
 
           <span

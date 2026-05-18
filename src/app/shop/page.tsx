@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa6";
 import { products, type Product } from "@/data/products";
@@ -25,26 +26,16 @@ export default function ShopPage() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-[clamp(24px,3vw,40px)] items-start">
-          <div
-            className="relative w-full lg:sticky lg:top-[100px] aspect-[1384/820] rounded-[clamp(20px,2.5vw,30px)] overflow-hidden"
-            style={{
-              backgroundImage:
-                "linear-gradient(140deg, #D9DDD1 0%, #8E8E93 60%, #5E5E5E 100%)",
-            }}
-          >
-            <div className="absolute inset-0 bg-black/10" />
-            <div
-              className="absolute inset-0 mix-blend-overlay opacity-25"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(45deg, transparent 0 18px, rgba(255,255,255,0.18) 18px 20px)",
-              }}
+          <div className="relative w-full lg:sticky lg:top-[100px] aspect-1384/820 rounded-[clamp(20px,2.5vw,30px)] overflow-hidden bg-[#1f1f1f]">
+            <Image
+              src="/images/slide-4-surf.jpg"
+              alt="DeepSoCal merch — designed in Southern California"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 60vw"
+              className="object-cover"
             />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="font-bangers text-white/30 text-[clamp(40px,7vw,96px)] tracking-[2px] uppercase select-none">
-                Shop hero
-              </span>
-            </div>
+            <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
           </div>
 
           <div className="flex flex-col gap-[clamp(24px,3vw,37px)]">
@@ -59,6 +50,7 @@ export default function ShopPage() {
 }
 
 function ProductCard({ product }: { product: Product }) {
+  const cover = product.images[0];
   return (
     <Link
       href={`/shop/${product.slug}`}
@@ -68,16 +60,36 @@ function ProductCard({ product }: { product: Product }) {
         <div
           className="relative flex-1 overflow-hidden"
           style={{
-            backgroundImage: `linear-gradient(160deg, ${product.themeColor} 0%, #c8c8c8 60%, #909090 100%)`,
+            backgroundImage: cover
+              ? undefined
+              : `linear-gradient(160deg, ${product.themeColor} 0%, #c8c8c8 60%, #909090 100%)`,
+            backgroundColor: cover ? product.themeColor : undefined,
           }}
         >
-          <div
-            className="absolute inset-0 opacity-25 mix-blend-multiply"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(45deg, transparent 0 12px, rgba(0,0,0,0.06) 12px 14px)",
-            }}
-          />
+          {cover ? (
+            <Image
+              src={cover}
+              alt={product.name}
+              fill
+              sizes="(max-width: 1024px) 100vw, 400px"
+              className="object-contain p-6 mix-blend-multiply"
+            />
+          ) : (
+            <>
+              <div
+                className="absolute inset-0 opacity-25 mix-blend-multiply"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(45deg, transparent 0 12px, rgba(0,0,0,0.06) 12px 14px)",
+                }}
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="font-bangers text-dark/30 text-[clamp(28px,4vw,48px)] tracking-[1.5px] uppercase select-none">
+                  {product.name}
+                </span>
+              </div>
+            </>
+          )}
 
           <span
             className="absolute top-4 right-4 font-bangers text-[#d7d7d7] text-[clamp(14px,1.5vw,20px)] leading-[1.4] px-3 py-1 whitespace-pre"
@@ -85,12 +97,6 @@ function ProductCard({ product }: { product: Product }) {
           >
             {`$ ${product.price.toFixed(2)}  ${product.shipping}`}
           </span>
-
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="font-bangers text-dark/30 text-[clamp(28px,4vw,48px)] tracking-[1.5px] uppercase select-none">
-              {product.name}
-            </span>
-          </div>
         </div>
 
         <div className="bg-white h-[200px] rounded-t-[clamp(20px,2vw,30px)] -mt-[24px] relative px-[34px] py-[42px] flex items-end gap-[24px]">

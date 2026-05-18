@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { FaArrowDown } from "react-icons/fa6";
+import Image from "next/image";
+import { FaArrowDown, FaPlay } from "react-icons/fa6";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -88,19 +89,25 @@ export default function Hero() {
 
       <div className="mt-[clamp(40px,7vw,90px)] w-full max-w-[924px] flex flex-col items-center gap-[clamp(32px,5vw,64px)]">
         <div
-          className="hero-video relative w-full max-w-[535px] aspect-535/271 overflow-hidden rounded-[clamp(8px,1vw,16px)] bg-dark animate-hero-glow bg-size-[200%_200%]"
-          style={{
-            backgroundImage:
-              "linear-gradient(120deg, #111 0%, #1f1f1f 25%, #FF8126 50%, #1f1f1f 75%, #111 100%)",
-          }}
-          aria-hidden="true"
+          className="hero-video relative w-full max-w-[535px] aspect-535/271 overflow-hidden rounded-[clamp(8px,1vw,16px)] bg-dark"
+          aria-label="Hero video preview — final reel coming soon"
         >
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="font-bangers text-white/30 text-[clamp(24px,4vw,48px)] tracking-[2px] uppercase">
-              Hero video
-            </span>
-          </div>
-          <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
+          <Image
+            src="/images/slide-4-surf.jpg"
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 535px"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-black/55 via-black/20 to-black/10" />
+          <button
+            type="button"
+            aria-label="Play hero video"
+            className="absolute inset-0 m-auto size-[clamp(48px,6vw,72px)] rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white transition-colors border-none shadow-[0_8px_24px_rgba(0,0,0,0.3)]"
+          >
+            <FaPlay className="text-dark text-[clamp(14px,1.8vw,20px)] ml-[3px]" />
+          </button>
         </div>
 
         <a

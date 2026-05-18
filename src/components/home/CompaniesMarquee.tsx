@@ -25,7 +25,8 @@ export default function CompaniesMarquee() {
                 alt={company.name}
                 width={140}
                 height={40}
-                className="h-10 w-auto object-contain opacity-80"
+                style={{ width: "auto", height: "auto" }}
+                className="h-10 max-w-[180px] object-contain opacity-80"
                 unoptimized
               />
             ) : (

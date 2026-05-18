@@ -7,6 +7,7 @@ export type Product = {
   price: number;
   currency: "usd";
   shipping: string;
+  /** Hero/gallery photos. First image renders as the main view, others as thumbnails. */
   images: string[];
   details: string[];
   stripePriceId: string;
@@ -50,6 +51,7 @@ export const products: Product[] = [
     price: 30,
     themeColor: "#D9DDD1",
     related: ["the-hoodie", "the-tote", "the-cap"],
+    images: ["/images/01 Free Folded T-Shirt Mockup 4.png"],
   }),
   seed({
     slug: "the-hoodie",
@@ -57,6 +59,7 @@ export const products: Product[] = [
     price: 65,
     themeColor: "#1F1F1F",
     related: ["the-t-shirt", "the-tote", "the-crewneck"],
+    images: ["/images/services/marketing-shirt.png"],
   }),
   seed({
     slug: "the-tote",

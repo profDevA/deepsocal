@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaArrowLeft, FaArrowRight, FaCircleCheck } from "react-icons/fa6";
@@ -55,26 +56,44 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
 }
 
 function ProductHero({ product }: { product: Product }) {
+  const cover = product.images[0];
+  const thumbs = product.images.length > 0 ? product.images : [];
   return (
     <div className="relative grid grid-cols-1 md:grid-cols-[1fr_215px] gap-[clamp(20px,3vw,40px)] p-[clamp(20px,4%,80px)]">
       <div
-        className="relative aspect-[831/743] rounded-[clamp(20px,2.5vw,30px)] overflow-hidden"
+        className="relative aspect-831/743 rounded-[clamp(20px,2.5vw,30px)] overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(140deg, ${product.themeColor} 0%, #c8c8c8 50%, #909090 100%)`,
+          backgroundColor: product.themeColor,
+          backgroundImage: cover
+            ? undefined
+            : `linear-gradient(140deg, ${product.themeColor} 0%, #c8c8c8 50%, #909090 100%)`,
         }}
       >
-        <div
-          className="absolute inset-0 opacity-25 mix-blend-multiply"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(45deg, transparent 0 16px, rgba(0,0,0,0.06) 16px 18px)",
-          }}
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="font-bangers text-dark/30 text-[clamp(48px,7vw,96px)] tracking-[2px] uppercase select-none">
-            {product.name}
-          </span>
-        </div>
+        {cover ? (
+          <Image
+            src={cover}
+            alt={product.name}
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 60vw"
+            className="object-contain p-[clamp(20px,4%,60px)] mix-blend-multiply"
+          />
+        ) : (
+          <>
+            <div
+              className="absolute inset-0 opacity-25 mix-blend-multiply"
+              style={{
+                backgroundImage:
+                  "repeating-linear-gradient(45deg, transparent 0 16px, rgba(0,0,0,0.06) 16px 18px)",
+              }}
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="font-bangers text-dark/30 text-[clamp(48px,7vw,96px)] tracking-[2px] uppercase select-none">
+                {product.name}
+              </span>
+            </div>
+          </>
+        )}
 
         <button
           type="button"
@@ -102,19 +121,34 @@ function ProductHero({ product }: { product: Product }) {
       </div>
 
       <div className="flex md:flex-col gap-3 md:gap-4 overflow-x-auto md:overflow-visible no-scrollbar -mx-2 px-2 md:mx-0 md:px-0">
-        {[0, 1, 2].map((i) => (
-          <button
-            key={i}
-            type="button"
-            aria-label={`Image ${i + 1}`}
-            className="shrink-0 size-[88px] sm:size-[clamp(96px,12vw,180px)] md:w-full md:h-auto md:aspect-square rounded-[clamp(12px,1.5vw,20px)] overflow-hidden cursor-pointer border border-[#c4c4c4] hover:border-dark transition-colors"
-            style={{
-              backgroundImage: `linear-gradient(${135 + i * 20}deg, ${product.themeColor} 0%, #c8c8c8 50%, #909090 100%)`,
-            }}
-          >
-            <span className="sr-only">Thumbnail {i + 1}</span>
-          </button>
-        ))}
+        {[0, 1, 2].map((i) => {
+          const src = thumbs[i] ?? cover;
+          return (
+            <button
+              key={i}
+              type="button"
+              aria-label={`Image ${i + 1}`}
+              className="relative shrink-0 size-[88px] sm:size-[clamp(96px,12vw,180px)] md:w-full md:h-auto md:aspect-square rounded-[clamp(12px,1.5vw,20px)] overflow-hidden cursor-pointer border border-[#c4c4c4] hover:border-dark transition-colors"
+              style={{
+                backgroundColor: product.themeColor,
+                backgroundImage: src
+                  ? undefined
+                  : `linear-gradient(${135 + i * 20}deg, ${product.themeColor} 0%, #c8c8c8 50%, #909090 100%)`,
+              }}
+            >
+              {src && (
+                <Image
+                  src={src}
+                  alt={`${product.name} thumbnail ${i + 1}`}
+                  fill
+                  sizes="180px"
+                  className="object-contain p-2 mix-blend-multiply"
+                />
+              )}
+              <span className="sr-only">Thumbnail {i + 1}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -206,20 +240,33 @@ function RelatedProducts({ products }: { products: Product[] }) {
               <div
                 className="relative flex-1"
                 style={{
-                  backgroundImage: `linear-gradient(160deg, ${p.themeColor} 0%, #c8c8c8 60%, #909090 100%)`,
+                  backgroundColor: p.themeColor,
+                  backgroundImage: p.images[0]
+                    ? undefined
+                    : `linear-gradient(160deg, ${p.themeColor} 0%, #c8c8c8 60%, #909090 100%)`,
                 }}
               >
+                {p.images[0] ? (
+                  <Image
+                    src={p.images[0]}
+                    alt={p.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 400px"
+                    className="object-contain p-6 mix-blend-multiply"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="font-bangers text-dark/30 text-[clamp(28px,4vw,48px)] tracking-[1.5px] uppercase select-none">
+                      {p.name}
+                    </span>
+                  </div>
+                )}
                 <span
                   className="absolute top-4 right-4 font-bangers text-white text-[14px] leading-[1.4] px-3 py-1 whitespace-pre"
                   style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
                 >
                   {`$ ${p.price.toFixed(2)}`}
                 </span>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-bangers text-dark/30 text-[clamp(28px,4vw,48px)] tracking-[1.5px] uppercase select-none">
-                    {p.name}
-                  </span>
-                </div>
               </div>
               <div className="bg-white h-[200px] px-[28px] py-[36px] flex items-end gap-4">
                 <div className="flex flex-col gap-2 flex-1 min-w-0">

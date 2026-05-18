@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { services, getServiceById } from "@/data/services";
 import { getCaseStudiesByService, type ServiceId } from "@/data/case-studies";
@@ -44,6 +45,30 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
         </div>
       </section>
 
+      {service.heroImage && (
+        <section className="w-full px-[clamp(20px,4vw,80px)] pb-[clamp(20px,3vw,40px)]">
+          <div className="max-w-[1380px] mx-auto relative aspect-1380/600 rounded-[clamp(20px,2.5vw,30px)] overflow-hidden bg-[#1f1f1f]">
+            <Image
+              src={service.heroImage}
+              alt={`${service.name} — DeepSoCal`}
+              fill
+              priority
+              sizes="(max-width: 1380px) 100vw, 1380px"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
+            <div className="absolute left-[clamp(20px,4%,52px)] bottom-[clamp(20px,4%,40px)]">
+              <span
+                className="font-bangers text-dark text-[clamp(14px,1.6vw,20px)] leading-[1.4] px-[13px] py-1 inline-block uppercase tracking-wide"
+                style={{ backgroundColor: service.themeColor }}
+              >
+                {service.description}
+              </span>
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="w-full px-[clamp(20px,4vw,80px)] py-[clamp(40px,5vw,60px)]">
         <div className="max-w-[1380px] mx-auto border-t border-b border-dark py-[clamp(40px,5vw,60px)] grid grid-cols-1 md:grid-cols-[447px_1fr] gap-[clamp(24px,4vw,60px)] md:divide-x md:divide-dark">
           <div className="md:pr-12">
@@ -55,12 +80,14 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
             <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[742px] m-0">
               {service.longDescription}
             </p>
-            <span
-              className="self-start font-bangers text-[#d7d7d7] text-[14px] leading-[1.4] px-3 py-1 mt-3 uppercase tracking-wide"
-              style={{ backgroundColor: service.themeColor, color: "#1f1c06" }}
-            >
-              {service.description}
-            </span>
+            {!service.heroImage && (
+              <span
+                className="self-start font-bangers text-[#d7d7d7] text-[14px] leading-[1.4] px-3 py-1 mt-3 uppercase tracking-wide"
+                style={{ backgroundColor: service.themeColor, color: "#1f1c06" }}
+              >
+                {service.description}
+              </span>
+            )}
           </div>
         </div>
       </section>

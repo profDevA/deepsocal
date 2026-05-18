@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { teamGroups } from "@/data/team";
+import Image from "next/image";
+import { teamGroups, leadership } from "@/data/team";
 import { faqValueTags } from "@/data/faqs";
 import FAQAccordion from "@/components/about/FAQAccordion";
 import ContactCTAButton from "@/components/modals/ContactCTAButton";
@@ -62,25 +63,16 @@ export default function AboutPage() {
       </section>
 
       <section className="w-full px-[clamp(20px,4vw,80px)] pb-[clamp(40px,6vw,80px)]">
-        <div
-          className="max-w-[1380px] mx-auto aspect-1358/725 rounded-[clamp(20px,2.5vw,30px)] overflow-hidden relative"
-          style={{
-            backgroundImage:
-              "linear-gradient(140deg, #D9DDD1 0%, #c8c8c8 50%, #5E5E5E 100%)",
-          }}
-        >
-          <div
-            className="absolute inset-0 opacity-20 mix-blend-overlay"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(45deg, transparent 0 18px, rgba(255,255,255,0.2) 18px 20px)",
-            }}
+        <div className="max-w-[1380px] mx-auto aspect-1358/725 rounded-[clamp(20px,2.5vw,30px)] overflow-hidden relative bg-[#1f1f1f]">
+          <Image
+            src="/images/about/socal-silhouette.jpg"
+            alt="The DeepSoCal studio — Southern California"
+            fill
+            priority
+            sizes="(max-width: 1380px) 100vw, 1380px"
+            className="object-cover"
           />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="font-bangers text-white/30 text-[clamp(40px,6vw,80px)] tracking-[2px] uppercase select-none">
-              Studio image
-            </span>
-          </div>
+          <div className="absolute inset-0 bg-linear-to-t from-black/35 via-transparent to-transparent" />
         </div>
       </section>
 
@@ -99,31 +91,62 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="md:pl-[clamp(20px,3vw,60px)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[clamp(20px,2vw,32px)] gap-y-[clamp(28px,4vw,48px)]">
-            {teamGroups.map((group) => (
-              <div key={group.id} className="flex flex-col gap-[clamp(12px,1.5vw,18px)]">
-                <h3 className="font-bangers text-dark text-[clamp(18px,1.6vw,20px)] leading-[1.2] tracking-[0.36px] uppercase m-0">
-                  {group.name}
-                </h3>
-                <ul className="flex flex-col gap-[8px] list-none p-0 m-0">
-                  {group.members.map((m) => (
-                    <li
-                      key={m}
-                      className="font-inter text-dark text-[15px] leading-[1.4] tracking-[0.45px]"
-                    >
-                      {m}
-                    </li>
-                  ))}
-                </ul>
+          <div className="md:pl-[clamp(20px,3vw,60px)] flex flex-col gap-[clamp(32px,4vw,48px)]">
+            {leadership.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[clamp(20px,3vw,40px)]">
+                {leadership.map((person) => (
+                  <article
+                    key={person.name}
+                    className="flex flex-col gap-3 items-start"
+                  >
+                    <div className="relative w-full aspect-square rounded-[clamp(16px,2vw,24px)] overflow-hidden bg-[#dadada]">
+                      <Image
+                        src={person.avatar}
+                        alt={person.name}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <h3 className="font-bangers text-dark text-[clamp(18px,1.8vw,22px)] leading-[1.2] tracking-[0.4px] uppercase m-0">
+                        {person.name}
+                      </h3>
+                      <p className="font-inter text-dark/70 text-[13px] leading-[1.4] tracking-[0.3px] m-0 uppercase">
+                        {person.role}
+                      </p>
+                    </div>
+                  </article>
+                ))}
               </div>
-            ))}
+            )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[clamp(20px,2vw,32px)] gap-y-[clamp(28px,4vw,48px)]">
+              {teamGroups.map((group) => (
+                <div key={group.id} className="flex flex-col gap-[clamp(12px,1.5vw,18px)]">
+                  <h3 className="font-bangers text-dark text-[clamp(18px,1.6vw,20px)] leading-[1.2] tracking-[0.36px] uppercase m-0">
+                    {group.name}
+                  </h3>
+                  <ul className="flex flex-col gap-[8px] list-none p-0 m-0">
+                    {group.members.map((m) => (
+                      <li
+                        key={m}
+                        className="font-inter text-dark text-[15px] leading-[1.4] tracking-[0.45px]"
+                      >
+                        {m}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       <section className="w-full px-[clamp(20px,4vw,80px)] py-[clamp(40px,6vw,80px)] border-t border-dark">
         <div className="max-w-[1380px] mx-auto flex flex-col items-center gap-[clamp(24px,3vw,40px)] text-center">
-          <h2 className="font-bangers text-dark text-[clamp(36px,5vw,64px)] leading-[1] tracking-[1.92px] uppercase m-0 max-w-[995px]">
+          <h2 className="font-bangers text-dark text-[clamp(36px,5vw,64px)] leading-none tracking-[1.92px] uppercase m-0 max-w-[995px]">
             Trivision approach, singular
           </h2>
           <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[919px] m-0">
@@ -141,7 +164,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-[clamp(24px,3vw,40px)]">
             {approachPillars.map((pillar) => (
               <div key={pillar.id} className="flex flex-col gap-3">
-                <h3 className="font-bangers text-dark text-[clamp(28px,3vw,40px)] leading-[1] tracking-[1.5px] uppercase m-0 whitespace-pre-wrap">
+                <h3 className="font-bangers text-dark text-[clamp(28px,3vw,40px)] leading-none tracking-[1.5px] uppercase m-0 whitespace-pre-wrap">
                   {pillar.title}
                 </h3>
                 <div
@@ -186,7 +209,7 @@ export default function AboutPage() {
       <section className="w-full px-[clamp(20px,4vw,80px)] pb-[clamp(60px,8vw,120px)]" id="faqs">
         <div className="max-w-[1380px] mx-auto border-t border-dark pt-[clamp(40px,5vw,60px)] grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-[clamp(24px,4vw,60px)] items-start md:divide-x md:divide-dark">
           <div className="md:pr-[clamp(20px,3vw,60px)] flex flex-col gap-4">
-            <h2 className="font-bangers text-dark text-[clamp(40px,5vw,53px)] leading-[1] tracking-[1.59px] uppercase m-0">
+            <h2 className="font-bangers text-dark text-[clamp(40px,5vw,53px)] leading-none tracking-[1.59px] uppercase m-0">
               FAQS
             </h2>
             <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[324px] m-0">
