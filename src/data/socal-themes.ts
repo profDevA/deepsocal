@@ -6,7 +6,8 @@ export type SoCalTheme = {
   description: string;
   steepc: STEEPC;
   bgColor: string;
-  image: string;
+  /** Large photo card shown next to the theme card in the horizontal carousel. */
+  carouselImage: string;
 };
 
 export const socalThemes: SoCalTheme[] = [
@@ -16,15 +17,15 @@ export const socalThemes: SoCalTheme[] = [
     description: "Coast, climate, and ecological health",
     steepc: "environment",
     bgColor: "#D9DDD1",
-    image: "/img/themes/ocean.jpg",
+    carouselImage: "/images/slide-4-surf.jpg",
   },
   {
     id: "mental-health",
     name: "Mental Health Access",
     description: "Care, navigation, community support.",
     steepc: "social",
-    bgColor: "#F5B086",
-    image: "/img/themes/mental-health.jpg",
+    bgColor: "#F5E4C6",
+    carouselImage: "/images/case-studies/coral-health.png",
   },
   {
     id: "local-commerce",
@@ -32,7 +33,7 @@ export const socalThemes: SoCalTheme[] = [
     description: "Small business growth and resilience.",
     steepc: "economic",
     bgColor: "#F3D4C4",
-    image: "/img/themes/local-commerce.jpg",
+    carouselImage: "/images/about/community.png",
   },
   {
     id: "culture",
@@ -40,7 +41,7 @@ export const socalThemes: SoCalTheme[] = [
     description: "Surf, skate, food, art, fashion",
     steepc: "cultural",
     bgColor: "#DBD3E7",
-    image: "/img/themes/culture.jpg",
+    carouselImage: "/images/works/surfer-3.jpg",
   },
   {
     id: "climate-resilience",
@@ -48,7 +49,7 @@ export const socalThemes: SoCalTheme[] = [
     description: "Climate adaptation across SoCal.",
     steepc: "environment",
     bgColor: "#D2DAE5",
-    image: "/img/themes/climate.jpg",
+    carouselImage: "/images/case-studies/concrete-dreams.png",
   },
   {
     id: "ai-digital-access",
@@ -56,7 +57,7 @@ export const socalThemes: SoCalTheme[] = [
     description: "Practical tools for local terms.",
     steepc: "tech",
     bgColor: "#CCDCDB",
-    image: "/img/themes/digital-access.jpg",
+    carouselImage: "/images/case-studies/surf-magazine.png",
   },
 ];
 

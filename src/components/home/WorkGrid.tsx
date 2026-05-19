@@ -3,6 +3,8 @@ import CaseStudyCard from "@/components/work/CaseStudyCard";
 import WorkFilterDropdown from "@/components/work/WorkFilterDropdown";
 
 export default function WorkGrid() {
+  const cards = [...caseStudies].sort((a, b) => a.order - b.order);
+
   return (
     <section
       id="work"
@@ -17,7 +19,7 @@ export default function WorkGrid() {
         </div>
 
         <div className="work-grid-hover grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[clamp(24px,4vw,57px)] w-full">
-          {caseStudies.slice(0, 12).map((cs, i) => (
+          {cards.slice(0, 12).map((cs, i) => (
             <CaseStudyCard key={cs.slug} caseStudy={cs} priority={i < 3} />
           ))}
         </div>

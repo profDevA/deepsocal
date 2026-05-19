@@ -4,17 +4,17 @@ import WhyAreWeDifferent from "@/components/home/WhyAreWeDifferent";
 import WorkGrid from "@/components/home/WorkGrid";
 import Testimonials from "@/components/home/Testimonials";
 import RevealOnScroll from "@/components/animation/RevealOnScroll";
+import PageFrame from "@/components/layout/PageFrame";
 
 export default function Home() {
   return (
     <>
+      <PageFrame />
       <Hero />
       <RevealOnScroll>
         <CompaniesMarquee />
       </RevealOnScroll>
-      <RevealOnScroll>
-        <WhyAreWeDifferent />
-      </RevealOnScroll>
+      <WhyAreWeDifferent />
       <RevealOnScroll>
         <WorkGrid />
       </RevealOnScroll>

@@ -63,6 +63,11 @@
     .work-grid-hover:hover > *:hover { opacity: 1; }
   }
 
+  /* Image card bottom panel: show category color on hover */
+  .group:hover .card-bottom-panel {
+    background-color: var(--hover-bg) !important;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
     .work-grid-hover:hover > * { opacity: 1; transition: none; }
@@ -87,10 +92,10 @@
 
 @keyframes marquee {
   from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
+  to   { transform: translateX(-50%); }
 }
 @keyframes marquee-right {
-  from { transform: translateX(-100%); }
+  from { transform: translateX(-50%); }
   to   { transform: translateX(0); }
 }
 @keyframes slideIn {

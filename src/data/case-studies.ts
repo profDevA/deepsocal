@@ -89,6 +89,7 @@ const seed = (overrides: Partial<CaseStudy>): CaseStudy => ({
 });
 
 export const caseStudies: CaseStudy[] = [
+  // --- Category 1: Ocean & Environment ---
   seed({
     slug: "ocean-environment",
     title: "Ocean & Environment",
@@ -106,7 +107,7 @@ export const caseStudies: CaseStudy[] = [
     tag: "Design + Research",
     tags: ["DESIGN + RESEARCH", "SYSTEMS DESIGN"],
     category: "cultural",
-    editorialTheme: "culture",
+    editorialTheme: "ocean-environment",
     services: ["brand-strategy", "digital-experiences"],
     client: "Orange County Health Care Agency",
     industry: "Public Sector",
@@ -139,13 +140,14 @@ export const caseStudies: CaseStudy[] = [
     ],
     order: 3,
   }),
+  // --- Category 2: Mental Health Access ---
   seed({
     slug: "concrete-dreams",
     title: "Concrete Dreams",
     subtitle: "Issue card the landscape, coast, and environmental wellbeing",
     tag: "Brand + Content",
     category: "tech",
-    editorialTheme: "ai-digital-access",
+    editorialTheme: "ocean-environment",
     services: ["digital-experiences", "next-gen-innovations"],
     thumbnailImage: "/images/case-studies/concrete-dreams.png",
     heroImage: "/images/case-studies/concrete-dreams.png",
@@ -173,6 +175,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "/images/case-studies/coral-health.png",
     order: 6,
   }),
+  // --- Category 3: Local Commerce ---
   seed({
     slug: "local-commerce",
     title: "Local Commerce",
@@ -207,6 +210,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "/images/case-studies/luku-watches.png",
     order: 9,
   }),
+  // --- Category 4: Creative Culture ---
   seed({
     slug: "creative-culture",
     title: "Creative Culture",
@@ -225,8 +229,11 @@ export const caseStudies: CaseStudy[] = [
     category: "tech",
     editorialTheme: "ai-digital-access",
     services: ["next-gen-innovations", "digital-experiences"],
+    thumbnailImage: "/images/case-studies/oc-navigator.png",
+    heroImage: "/images/case-studies/oc-navigator.png",
     order: 11,
   }),
+  // --- Category 5: Climate Resilience ---
   seed({
     slug: "climate-resilience",
     title: "Climate Resilience",
