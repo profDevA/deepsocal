@@ -112,8 +112,7 @@ export default function Hero() {
       <div className="mt-[clamp(40px,7vw,90px)] w-full max-w-[924px] flex flex-col items-center gap-[clamp(20px,3vw,40px)]">
         <div className="hero-video relative w-full max-w-[535px] aspect-535/271 overflow-hidden rounded-[clamp(8px,1vw,16px)] bg-dark">
           <video
-            src="/videos/bck_video.mp4"
-            poster="/images/slide-4-surf.jpg"
+            src="/videos/california.mp4"
             autoPlay
             muted
             loop
