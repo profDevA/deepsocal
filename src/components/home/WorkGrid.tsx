@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { caseStudies } from "@/data/case-studies";
 import CaseStudyCard from "@/components/work/CaseStudyCard";
 import WorkFilterDropdown from "@/components/work/WorkFilterDropdown";
@@ -23,6 +24,13 @@ export default function WorkGrid() {
             <CaseStudyCard key={cs.slug} caseStudy={cs} priority={i < 3} />
           ))}
         </div>
+
+        <Link
+          href="/works"
+          className="inline-flex items-center justify-center w-[172px] h-[48px] bg-[#1e1e1e] text-white font-bangers text-[18px] leading-[1.5] no-underline hover:opacity-90 transition-opacity"
+        >
+          view all
+        </Link>
       </div>
     </section>
   );

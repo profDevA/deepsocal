@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { type CaseStudy } from "@/data/case-studies";
 import { getThemeById } from "@/data/socal-themes";
-import { themeIcons } from "@/data/theme-icons";
 
 export type CardVariant = "image" | "editorial";
 
@@ -90,7 +89,7 @@ function ImageCard({
 function EditorialCard({ caseStudy }: { caseStudy: CaseStudy }) {
   const theme = getThemeById(caseStudy.editorialTheme);
   const bgColor = theme?.bgColor ?? "#dadada";
-  const iconPath = themeIcons[caseStudy.editorialTheme] ?? themeIcons.culture;
+  const badgeImage = theme?.badgeImage ?? "/images/badges/ocean-environment.png";
 
   return (
     <Link
@@ -99,20 +98,14 @@ function EditorialCard({ caseStudy }: { caseStudy: CaseStudy }) {
       style={{ backgroundColor: bgColor }}
     >
       <article className="relative h-[453px] p-[31px] flex flex-col">
-        <div className="w-[94px] h-[96px] rounded-full bg-white/40 flex items-center justify-center">
-          <svg
-            viewBox="0 0 24 24"
-            width="40"
-            height="40"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-dark/70"
-          >
-            <path d={iconPath} />
-          </svg>
+        <div className="relative w-[94px] h-[96px] rounded-full overflow-hidden">
+          <Image
+            src={badgeImage}
+            alt=""
+            fill
+            sizes="96px"
+            className="object-cover"
+          />
         </div>
 
         <h3 className="font-bangers text-dark text-[60px] leading-[60px] tracking-[1.8px] uppercase m-0 max-w-[329px] mt-auto">

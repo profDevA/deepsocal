@@ -8,6 +8,8 @@ export type SoCalTheme = {
   bgColor: string;
   /** Large photo card shown next to the theme card in the horizontal carousel. */
   carouselImage: string;
+  /** Small circular badge/icon image for category cards. */
+  badgeImage: string;
 };
 
 export const socalThemes: SoCalTheme[] = [
@@ -18,6 +20,7 @@ export const socalThemes: SoCalTheme[] = [
     steepc: "environment",
     bgColor: "#D9DDD1",
     carouselImage: "/images/slide-4-surf.jpg",
+    badgeImage: "/images/badges/ocean-environment.svg",
   },
   {
     id: "mental-health",
@@ -26,6 +29,7 @@ export const socalThemes: SoCalTheme[] = [
     steepc: "social",
     bgColor: "#F5E4C6",
     carouselImage: "/images/case-studies/coral-health.png",
+    badgeImage: "/images/badges/mental-health.svg",
   },
   {
     id: "local-commerce",
@@ -34,6 +38,7 @@ export const socalThemes: SoCalTheme[] = [
     steepc: "economic",
     bgColor: "#F3D4C4",
     carouselImage: "/images/about/community.png",
+    badgeImage: "/images/badges/local-commerce.svg",
   },
   {
     id: "culture",
@@ -42,6 +47,7 @@ export const socalThemes: SoCalTheme[] = [
     steepc: "cultural",
     bgColor: "#DBD3E7",
     carouselImage: "/images/works/surfer-3.jpg",
+    badgeImage: "/images/badges/creative-culture.svg",
   },
   {
     id: "climate-resilience",
@@ -50,6 +56,7 @@ export const socalThemes: SoCalTheme[] = [
     steepc: "environment",
     bgColor: "#D2DAE5",
     carouselImage: "/images/case-studies/concrete-dreams.png",
+    badgeImage: "/images/badges/climate-resilience.svg",
   },
   {
     id: "ai-digital-access",
@@ -58,6 +65,7 @@ export const socalThemes: SoCalTheme[] = [
     steepc: "tech",
     bgColor: "#CCDCDB",
     carouselImage: "/images/case-studies/surf-magazine.png",
+    badgeImage: "/images/badges/climate-resilience.svg",
   },
 ];
 
