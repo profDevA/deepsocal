@@ -1,11 +1,3 @@
-export type STEEPC =
-  | "social"
-  | "tech"
-  | "economic"
-  | "environment"
-  | "political"
-  | "cultural";
-
 export type ServiceId =
   | "brand-strategy"
   | "identity-systems"
@@ -20,19 +12,12 @@ export type EditorialTheme =
   | "climate-resilience"
   | "ai-digital-access";
 
-export type TeamMember = {
-  name: string;
-  role: string;
-  avatar: string;
-};
-
 export type CaseStudy = {
   slug: string;
   title: string;
   subtitle: string;
   tag: string;
   tags: string[];
-  category: STEEPC;
   editorialTheme: EditorialTheme;
   services: ServiceId[];
   servicesLabel: string;
@@ -43,207 +28,270 @@ export type CaseStudy = {
   heroImage: string;
   thumbnailImage: string;
   gallery: string[];
-  videoPoster: string;
-  team: TeamMember[];
   summary: string;
   summary2: string;
   impactMetrics: string;
-  description: string;
   order: number;
-  publishedAt: string;
 };
-
-const placeholderSummary =
-  "DeepSoCal used surf culture to connect California communities with global humanitarian causes. Documentary crews captured community stories that reflected local identity. Influencer partnerships expanded their reach, while community events turned narratives into action.";
-
-const placeholderImpact =
-  "We helped position the U.S. Surf Open as a platform for lasting community connection. Our research-driven storytelling and strategic engagement strengthened ties within California surf culture and secured the brand's presence in the community.";
-
-// Seed data — replace with real content from Fas + Israel
-const seed = (overrides: Partial<CaseStudy>): CaseStudy => ({
-  slug: "tbd",
-  title: "TBD",
-  subtitle: "TBD",
-  tag: "TBD",
-  tags: ["DESIGN + RESEARCH", "DESIGN + RESEARCH", "DESIGN + RESEARCH"],
-  category: "cultural",
-  editorialTheme: "culture",
-  services: [],
-  servicesLabel: "Strategy + Branding",
-  client: "CityLeaks",
-  industry: "Culture & Music",
-  scope: "Art direction, Print design, Editorial",
-  teamLabel: "Ana Abreu",
-  heroImage: "",
-  thumbnailImage: "",
-  gallery: [],
-  videoPoster: "",
-  team: [],
-  summary: placeholderSummary,
-  summary2: placeholderSummary,
-  impactMetrics: placeholderImpact,
-  description: "",
-  order: 1,
-  publishedAt: "2026-01-01",
-  ...overrides,
-});
 
 export const caseStudies: CaseStudy[] = [
   // --- Category 1: Ocean & Environment ---
-  seed({
+  {
     slug: "ocean-environment",
     title: "Ocean & Environment",
     subtitle: "The landscape, coast, and environmental wellbeing we design within",
     tag: "Theme",
-    category: "environment",
+    tags: [],
     editorialTheme: "ocean-environment",
     services: ["brand-strategy", "identity-systems"],
+    servicesLabel: "",
+    client: "",
+    industry: "",
+    scope: "",
+    teamLabel: "",
+    heroImage: "",
+    thumbnailImage: "",
+    gallery: [],
+    summary: "",
+    summary2: "",
+    impactMetrics: "",
     order: 1,
-  }),
-  seed({
+  },
+  {
     slug: "oc-navigator",
     title: "OC Resource Navigator",
     subtitle: "Public-interest systems design",
     tag: "Design + Research",
     tags: ["DESIGN + RESEARCH", "SYSTEMS DESIGN"],
-    category: "cultural",
     editorialTheme: "culture",
     services: ["brand-strategy", "digital-experiences"],
+    servicesLabel: "Strategy + Design + Research",
     client: "Orange County Health Care Agency",
     industry: "Public Sector",
     scope: "Strategy, UX research, design systems",
     teamLabel: "Ana Abreu, Sam Carter",
-    servicesLabel: "Strategy + Design + Research",
-    thumbnailImage: "/images/case-studies/oc-navigator.png",
-    heroImage: "/images/case-studies/oc-navigator.png",
-    gallery: [
-      "/images/oc-resource-navigator.png",
-      "/images/slide-3-ocnavigator.jpg",
-      "/images/oc-links.png",
-    ],
+    heroImage: "/images/case-studies/oc-resource-navigator.png",
+    thumbnailImage: "/images/case-studies/oc-resource-navigator.png",
+    gallery: ["/images/case-studies/oc-resource-navigator.png"],
+    summary: "",
+    summary2: "",
+    impactMetrics: "",
     order: 2,
-  }),
-  seed({
+  },
+  {
     slug: "surf-magazine",
     title: "Surf Magazine",
     subtitle: "Editorial and growth storytelling",
     tag: "Strategy + Content",
-    category: "cultural",
+    tags: ["STRATEGY + CONTENT"],
     editorialTheme: "ocean-environment",
     services: ["brand-strategy", "identity-systems"],
-    thumbnailImage: "/images/case-studies/surf-magazine.png",
+    servicesLabel: "Strategy + Branding",
+    client: "",
+    industry: "",
+    scope: "",
+    teamLabel: "",
     heroImage: "/images/case-studies/surf-magazine.png",
-    gallery: [
-      "/images/works/surfer-1.jpg",
-      "/images/works/surfer-2.jpg",
-      "/images/works/surfer-3.jpg",
-    ],
+    thumbnailImage: "/images/case-studies/surf-magazine.png",
+    gallery: ["/images/case-studies/surf-magazine.png"],
+    summary: "",
+    summary2: "",
+    impactMetrics: "",
     order: 3,
-  }),
+  },
   // --- Category 2: Mental Health Access ---
-  seed({
+  {
     slug: "concrete-dreams",
     title: "Concrete Dreams",
     subtitle: "Issue card the landscape, coast, and environmental wellbeing",
     tag: "Brand + Content",
-    category: "tech",
+    tags: ["BRAND + CONTENT"],
     editorialTheme: "ocean-environment",
     services: ["digital-experiences", "next-gen-innovations"],
-    thumbnailImage: "/images/case-studies/concrete-dreams.png",
+    servicesLabel: "Strategy + Branding",
+    client: "",
+    industry: "",
+    scope: "",
+    teamLabel: "",
     heroImage: "/images/case-studies/concrete-dreams.png",
+    thumbnailImage: "/images/case-studies/concrete-dreams.png",
+    gallery: ["/images/case-studies/concrete-dreams.png"],
+    summary: "",
+    summary2: "",
+    impactMetrics: "",
     order: 4,
-  }),
-  seed({
+  },
+  {
     slug: "mental-health-access",
     title: "Mental Health Access",
     subtitle: "Research, care, and transformation designing better pathways to healing",
     tag: "Theme",
-    category: "social",
+    tags: [],
     editorialTheme: "mental-health",
     services: ["digital-experiences"],
+    servicesLabel: "",
+    client: "",
+    industry: "",
+    scope: "",
+    teamLabel: "",
+    heroImage: "",
+    thumbnailImage: "",
+    gallery: [],
+    summary: "",
+    summary2: "",
+    impactMetrics: "",
     order: 5,
-  }),
-  seed({
+  },
+  {
     slug: "coral-health",
     title: "Coral Health",
     subtitle: "Human-centered growth design",
     tag: "Strategy + Influencers",
-    category: "social",
+    tags: ["STRATEGY + INFLUENCERS"],
     editorialTheme: "mental-health",
     services: ["brand-strategy", "digital-experiences"],
-    thumbnailImage: "/images/case-studies/coral-health.png",
+    servicesLabel: "Strategy + Branding",
+    client: "",
+    industry: "",
+    scope: "",
+    teamLabel: "",
     heroImage: "/images/case-studies/coral-health.png",
+    thumbnailImage: "/images/case-studies/coral-health.png",
+    gallery: ["/images/case-studies/coral-health.png"],
+    summary: "",
+    summary2: "",
+    impactMetrics: "",
     order: 6,
-  }),
+  },
   // --- Category 3: Local Commerce ---
-  seed({
+  {
     slug: "local-commerce",
     title: "Local Commerce",
     subtitle: "For entrepreneurs and community-rooted brands building something real",
     tag: "Theme",
-    category: "economic",
+    tags: [],
     editorialTheme: "local-commerce",
     services: ["brand-strategy"],
+    servicesLabel: "",
+    client: "",
+    industry: "",
+    scope: "",
+    teamLabel: "",
+    heroImage: "",
+    thumbnailImage: "",
+    gallery: [],
+    summary: "",
+    summary2: "",
+    impactMetrics: "",
     order: 7,
-  }),
-  seed({
+  },
+  {
     slug: "salt-and-sand",
     title: "Salt & Sand",
     subtitle: "Editorial and growth storytelling",
     tag: "Brand + Content",
-    category: "economic",
+    tags: ["BRAND + CONTENT"],
     editorialTheme: "local-commerce",
     services: ["identity-systems", "brand-strategy"],
-    thumbnailImage: "/images/case-studies/salt-and-sand.png",
+    servicesLabel: "Strategy + Branding",
+    client: "",
+    industry: "",
+    scope: "",
+    teamLabel: "",
     heroImage: "/images/case-studies/salt-and-sand.png",
+    thumbnailImage: "/images/case-studies/salt-and-sand.png",
+    gallery: ["/images/case-studies/salt-and-sand.png"],
+    summary: "",
+    summary2: "",
+    impactMetrics: "",
     order: 8,
-  }),
-  seed({
+  },
+  {
     slug: "luku-watches",
     title: "Luku Watches",
     subtitle: "Editorial and growth storytelling",
     tag: "Brand + Content",
-    category: "economic",
+    tags: ["BRAND + CONTENT"],
     editorialTheme: "local-commerce",
     services: ["identity-systems", "brand-strategy"],
-    thumbnailImage: "/images/case-studies/luku-watches.png",
+    servicesLabel: "Strategy + Branding",
+    client: "",
+    industry: "",
+    scope: "",
+    teamLabel: "",
     heroImage: "/images/case-studies/luku-watches.png",
+    thumbnailImage: "/images/case-studies/luku-watches.png",
+    gallery: ["/images/case-studies/luku-watches.png"],
+    summary: "",
+    summary2: "",
+    impactMetrics: "",
     order: 9,
-  }),
+  },
   // --- Category 4: Creative Culture ---
-  seed({
+  {
     slug: "creative-culture",
     title: "Creative Culture",
     subtitle: "Social innovation, community wellbeing, and the stories worth telling",
     tag: "Theme",
-    category: "cultural",
+    tags: [],
     editorialTheme: "culture",
     services: ["brand-strategy", "identity-systems"],
+    servicesLabel: "",
+    client: "",
+    industry: "",
+    scope: "",
+    teamLabel: "",
+    heroImage: "",
+    thumbnailImage: "",
+    gallery: [],
+    summary: "",
+    summary2: "",
+    impactMetrics: "",
     order: 10,
-  }),
-  seed({
+  },
+  {
     slug: "oc-navigator-2",
     title: "OC Navigator",
     subtitle: "Editorial and growth storytelling",
     tag: "Brand + Content",
-    category: "cultural",
+    tags: ["BRAND + CONTENT"],
     editorialTheme: "culture",
     services: ["brand-strategy", "digital-experiences"],
-    thumbnailImage: "/images/case-studies/oc-navigator-2.png",
+    servicesLabel: "Strategy + Branding",
+    client: "",
+    industry: "",
+    scope: "",
+    teamLabel: "",
     heroImage: "/images/case-studies/oc-navigator-2.png",
+    thumbnailImage: "/images/case-studies/oc-navigator-2.png",
+    gallery: ["/images/case-studies/oc-navigator-2.png"],
+    summary: "",
+    summary2: "",
+    impactMetrics: "",
     order: 11,
-  }),
+  },
   // --- Category 5: Climate Resilience ---
-  seed({
+  {
     slug: "climate-resilience",
     title: "Climate Resilience",
     subtitle: "Social innovation, community wellbeing, and the stories worth telling",
     tag: "Theme",
-    category: "environment",
+    tags: [],
     editorialTheme: "climate-resilience",
     services: ["next-gen-innovations"],
+    servicesLabel: "",
+    client: "",
+    industry: "",
+    scope: "",
+    teamLabel: "",
+    heroImage: "",
+    thumbnailImage: "",
+    gallery: [],
+    summary: "",
+    summary2: "",
+    impactMetrics: "",
     order: 12,
-  }),
+  },
 ];
 
 export const getCaseStudyBySlug = (slug: string): CaseStudy | undefined =>

@@ -1,4 +1,12 @@
-import type { EditorialTheme, STEEPC } from "./case-studies";
+import type { EditorialTheme } from "./case-studies";
+
+export type STEEPC =
+  | "social"
+  | "tech"
+  | "economic"
+  | "environment"
+  | "political"
+  | "cultural";
 
 export type SoCalTheme = {
   id: EditorialTheme;

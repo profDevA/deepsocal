@@ -1,4 +1,4 @@
-import type { STEEPC } from "@/data/case-studies";
+import type { STEEPC } from "@/data/socal-themes";
 
 export const steepcLabels: Record<STEEPC, string> = {
   social: "Social",

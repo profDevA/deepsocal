@@ -7,7 +7,6 @@ export type Product = {
   price: number;
   currency: "usd";
   shipping: string;
-  /** Hero/gallery photos. First image renders as the main view, others as thumbnails. */
   images: string[];
   details: string[];
   stripePriceId: string;
@@ -16,79 +15,103 @@ export type Product = {
   themeColor: string;
 };
 
-const placeholderDescription =
-  "This notebook is what we use to write down all of our big ideas. Whether you're thoughtfully strategizing your grocery list, brainstorming the meaning of life, or jotting down ways to create legendary social media content, this is the little black book for you.";
-
-const seed = (overrides: Partial<Product>): Product => ({
-  slug: "tbd",
-  name: "TBD",
-  tagline: "Public-interest systems design",
-  description: placeholderDescription.slice(0, 110) + "…",
-  longDescription: placeholderDescription,
-  price: 25,
-  currency: "usd",
-  shipping: "+ Shipping",
-  images: [],
-  details: [
-    "Heavyweight cotton",
-    "Made in California",
-    "Color: Charcoal",
-    "Size: S, M, L, XL",
-    "Embroidered logo",
-    "Limited run",
-  ],
-  stripePriceId: "",
-  related: [],
-  inStock: true,
-  themeColor: "#D9DDD1",
-  ...overrides,
-});
-
 export const products: Product[] = [
-  seed({
+  {
     slug: "the-t-shirt",
     name: "The T-Shirt",
+    tagline: "",
+    description: "",
+    longDescription: "",
     price: 30,
-    themeColor: "#D9DDD1",
-    related: ["the-hoodie", "the-tote", "the-cap"],
+    currency: "usd",
+    shipping: "+ Shipping",
     images: ["/images/01 Free Folded T-Shirt Mockup 4.png"],
-  }),
-  seed({
+    details: [],
+    stripePriceId: "",
+    related: ["the-hoodie", "the-tote", "the-cap"],
+    inStock: true,
+    themeColor: "#D9DDD1",
+  },
+  {
     slug: "the-hoodie",
     name: "The Hoodie",
+    tagline: "",
+    description: "",
+    longDescription: "",
     price: 65,
-    themeColor: "#1F1F1F",
-    related: ["the-t-shirt", "the-tote", "the-crewneck"],
+    currency: "usd",
+    shipping: "+ Shipping",
     images: ["/images/services/marketing-shirt.png"],
-  }),
-  seed({
+    details: [],
+    stripePriceId: "",
+    related: ["the-t-shirt", "the-tote", "the-crewneck"],
+    inStock: true,
+    themeColor: "#1F1F1F",
+  },
+  {
     slug: "the-tote",
     name: "The Tote",
+    tagline: "",
+    description: "",
+    longDescription: "",
     price: 25,
-    themeColor: "#EDE6D4",
+    currency: "usd",
+    shipping: "+ Shipping",
+    images: [],
+    details: [],
+    stripePriceId: "",
     related: ["the-t-shirt", "the-bottle", "the-cap"],
-  }),
-  seed({
+    inStock: true,
+    themeColor: "#EDE6D4",
+  },
+  {
     slug: "the-bottle",
     name: "The Bottle",
+    tagline: "",
+    description: "",
+    longDescription: "",
     price: 22,
-    themeColor: "#CCDCDB",
+    currency: "usd",
+    shipping: "+ Shipping",
+    images: [],
+    details: [],
+    stripePriceId: "",
     related: ["the-tote", "the-cap", "the-t-shirt"],
-  }),
-  seed({
+    inStock: true,
+    themeColor: "#CCDCDB",
+  },
+  {
     slug: "the-crewneck",
     name: "The Crewneck",
+    tagline: "",
+    description: "",
+    longDescription: "",
     price: 55,
-    themeColor: "#DBD3E7",
+    currency: "usd",
+    shipping: "+ Shipping",
+    images: [],
+    details: [],
+    stripePriceId: "",
     related: ["the-hoodie", "the-t-shirt", "the-tote"],
-  }),
-  seed({
+    inStock: true,
+    themeColor: "#DBD3E7",
+  },
+  {
     slug: "the-cap",
     name: "The Cap",
+    tagline: "",
+    description: "",
+    longDescription: "",
     price: 28,
-    themeColor: "#F3D4C4",
+    currency: "usd",
+    shipping: "+ Shipping",
+    images: [],
+    details: [],
+    stripePriceId: "",
     related: ["the-t-shirt", "the-tote", "the-bottle"],
-  }),
+    inStock: true,
+    themeColor: "#F3D4C4",
+  },
 ];
 
 export const getProductBySlug = (slug: string): Product | undefined =>

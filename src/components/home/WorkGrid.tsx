@@ -1,10 +1,20 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { caseStudies } from "@/data/case-studies";
+import { caseStudies, getCaseStudiesByService, type ServiceId } from "@/data/case-studies";
+import { getServiceById } from "@/data/services";
 import CaseStudyCard from "@/components/work/CaseStudyCard";
 import WorkFilterDropdown from "@/components/work/WorkFilterDropdown";
 
 export default function WorkGrid() {
-  const cards = [...caseStudies].sort((a, b) => a.order - b.order);
+  const [activeService, setActiveService] = useState<ServiceId | null>(null);
+
+  const allCards = [...caseStudies].sort((a, b) => a.order - b.order);
+  const service = activeService ? getServiceById(activeService) : null;
+  const filteredCards = activeService
+    ? getCaseStudiesByService(activeService)
+    : allCards;
 
   return (
     <section
@@ -16,11 +26,25 @@ export default function WorkGrid() {
           <h2 className="font-quintessential text-dark text-[clamp(20px,2.5vw,32px)] leading-[1.4] tracking-[-1.4px] m-0">
             How We work with SoCal Builders
           </h2>
-          <WorkFilterDropdown />
+          <WorkFilterDropdown
+            current={activeService ?? undefined}
+            onChange={(id) => setActiveService(id)}
+          />
         </div>
 
+        {service && (
+          <div className="w-full border-t border-dark pt-[clamp(30px,4vw,50px)] flex flex-col gap-[clamp(16px,2vw,24px)] transition-opacity duration-500">
+            <h3 className="font-bangers text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0">
+              {service.name}
+            </h3>
+            <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[742px] m-0">
+              {service.longDescription}
+            </p>
+          </div>
+        )}
+
         <div className="work-grid-hover grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[clamp(24px,4vw,57px)] w-full">
-          {cards.slice(0, 12).map((cs, i) => (
+          {filteredCards.slice(0, 12).map((cs, i) => (
             <CaseStudyCard key={cs.slug} caseStudy={cs} priority={i < 3} />
           ))}
         </div>

@@ -159,9 +159,11 @@ function TestimonialCard({
         <h3 className="font-bangers text-dark text-[48px] leading-[50px] tracking-[1.44px] m-0 uppercase">
           {testimonial.name}
         </h3>
-        <p className="font-inter font-medium italic text-dark text-[24px] leading-[1.4] m-0">
-          &ldquo;{testimonial.quote}&rdquo;
-        </p>
+        {testimonial.quote && (
+          <p className="font-inter font-medium italic text-dark text-[24px] leading-[1.4] m-0">
+            &ldquo;{testimonial.quote}&rdquo;
+          </p>
+        )}
       </div>
     </article>
   );
