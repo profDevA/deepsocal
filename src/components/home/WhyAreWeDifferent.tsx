@@ -6,7 +6,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { socalThemes, type SoCalTheme } from "@/data/socal-themes";
-import { themeIcons } from "@/data/theme-icons";
 import CaliforniaMap from "./CaliforniaMap";
 
 if (typeof window !== "undefined") {
@@ -31,31 +30,41 @@ export default function WhyAreWeDifferent() {
         const section = root.current;
         if (!trackEl || !section) return;
 
-        const getDistance = () => {
-          const container = trackEl.parentElement;
-          if (!container) return 0;
-          return trackEl.scrollWidth - container.clientWidth;
+        const PAIR_WIDTH = 386 + 27 + 328;
+        const OUTER_GAP = 44;
+        const STEP_WIDTH = PAIR_WIDTH + OUTER_GAP;
+        const STEP_SCROLL = 300;
+        const pairCount = socalThemes.length;
+        const totalScroll = (pairCount - 1) * STEP_SCROLL;
+
+        let currentIndex = 0;
+
+        const goTo = (index: number) => {
+          if (index === currentIndex) return;
+          currentIndex = index;
+          gsap.to(trackEl, {
+            x: -index * STEP_WIDTH,
+            duration: 0.4,
+            ease: "power2.out",
+            overwrite: true,
+          });
         };
 
-        if (getDistance() <= 0) return;
-
-        const tween = gsap.to(trackEl, {
-          x: () => -getDistance(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () => `+=${getDistance()}`,
-            scrub: 0.8,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
+        const st = ScrollTrigger.create({
+          trigger: section,
+          start: "top top",
+          end: `+=${totalScroll}`,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const targetIndex = Math.round(self.progress * (pairCount - 1));
+            goTo(targetIndex);
           },
         });
 
         return () => {
-          tween.scrollTrigger?.kill();
-          tween.kill();
+          st.kill();
         };
       });
     },
@@ -66,12 +75,12 @@ export default function WhyAreWeDifferent() {
     <section
       ref={root}
       id="difference"
-      className="bg-[#e6e6e6] w-full py-[clamp(40px,6vw,80px)] px-[clamp(20px,4vw,80px)]"
+      className="bg-[#e6e6e6] w-full py-[60px] px-0"
     >
-      <div className="max-w-[1380px] mx-auto">
+      <div className="w-full">
         {/* Heading row */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-x-[clamp(30px,5vw,80px)] gap-y-6 py-[clamp(40px,4vw,53px)]">
-          <h2 className="font-bangers text-dark text-[clamp(32px,4vw,48px)] leading-[1.04] tracking-[1.44px] m-0">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-x-[50px] gap-y-6 py-[48px] px-[40px]">
+          <h2 className="font-bangers text-dark text-[48px] leading-[1.04] tracking-[1.44px] m-0">
             Why are we different?
           </h2>
           <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[742px] m-0">
@@ -85,14 +94,14 @@ export default function WhyAreWeDifferent() {
         </div>
 
         {/* Cards row — map stays fixed, carousel slides behind it */}
-        <div className="relative mb-[clamp(40px,5vw,60px)]">
+        <div className="relative mb-[50px] md:pl-[40px]">
           {/* California map — higher z-index, positioned left, taller than carousel items */}
-          <div className="relative z-10 w-full md:w-[44%] md:max-w-[614px] h-[421px] rounded-[39px] overflow-hidden">
+          <div className="relative z-10 w-full md:w-[614px] h-[421px] rounded-[39px] overflow-hidden">
             <CaliforniaMap className="w-full h-full object-cover block" />
           </div>
 
           {/* Carousel — overlaps map area, items slide behind it */}
-          <div className="mt-6 md:mt-0 md:absolute md:top-0 md:bottom-0 md:left-[46%] md:right-0 z-0 flex items-center overflow-visible">
+          <div className="mt-6 md:mt-0 md:absolute md:top-0 md:bottom-0 md:left-[654px] md:right-[40px] z-0 flex items-center overflow-hidden">
             <div
               ref={track}
               className="flex gap-[44px] items-center will-change-transform"
@@ -105,7 +114,7 @@ export default function WhyAreWeDifferent() {
         </div>
 
         {/* Bottom border */}
-        <div className="border-b border-dark mx-[-30px]" />
+        <div className="border-b border-dark mx-[40px]" />
       </div>
     </section>
   );
@@ -140,21 +149,19 @@ function ThemeCard({ theme }: { theme: SoCalTheme }) {
       className="shrink-0 w-[328px] h-[328px] rounded-[24px] border border-[#b0b0b0] shadow-[0_5px_38px_rgba(0,0,0,0.18)] overflow-hidden p-8 flex flex-col justify-center gap-[10px]"
       style={{ backgroundColor: theme.bgColor }}
     >
-      {/* Icon placeholder — designer is providing final icons */}
-      <div className="w-[110px] h-[110px] rounded-full bg-white/50 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
-        <svg
-          viewBox="0 0 24 24"
-          width="44"
-          height="44"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-dark/60"
-        >
-          <path d={themeIcons[theme.id] ?? themeIcons.culture} />
-        </svg>
+      <div
+        className="relative w-[126px] h-[126px] rounded-full overflow-hidden flex items-center justify-center"
+        style={{ backgroundColor: theme.iconBgColor ?? "transparent" }}
+      >
+        <Image
+          src={theme.badgeImage}
+          alt=""
+          fill={!theme.iconBgColor}
+          width={theme.iconBgColor ? 60 : undefined}
+          height={theme.iconBgColor ? 60 : undefined}
+          sizes="126px"
+          className="object-cover"
+        />
       </div>
 
       <span

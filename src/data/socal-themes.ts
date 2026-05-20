@@ -18,6 +18,8 @@ export type SoCalTheme = {
   carouselImage: string;
   /** Small circular badge/icon image for category cards. */
   badgeImage: string;
+  /** Optional background color for the badge circle (used when the badge image is icon-only). */
+  iconBgColor?: string;
 };
 
 export const socalThemes: SoCalTheme[] = [
@@ -27,7 +29,7 @@ export const socalThemes: SoCalTheme[] = [
     description: "Coast, climate, and ecological health",
     steepc: "environment",
     bgColor: "#D9DDD1",
-    carouselImage: "/images/slide-4-surf.jpg",
+    carouselImage: "/images/themes/ocean-environment.png",
     badgeImage: "/images/badges/ocean-environment.svg",
   },
   {
@@ -36,7 +38,7 @@ export const socalThemes: SoCalTheme[] = [
     description: "Care, navigation, community support.",
     steepc: "social",
     bgColor: "#F5E4C6",
-    carouselImage: "/images/case-studies/coral-health.png",
+    carouselImage: "/images/themes/mental-health.png",
     badgeImage: "/images/badges/mental-health.svg",
   },
   {
@@ -45,7 +47,7 @@ export const socalThemes: SoCalTheme[] = [
     description: "Small business growth and resilience.",
     steepc: "economic",
     bgColor: "#F3D4C4",
-    carouselImage: "/images/about/community.png",
+    carouselImage: "/images/themes/local-commerce.png",
     badgeImage: "/images/badges/local-commerce.svg",
   },
   {
@@ -54,16 +56,16 @@ export const socalThemes: SoCalTheme[] = [
     description: "Surf, skate, food, art, fashion",
     steepc: "cultural",
     bgColor: "#DBD3E7",
-    carouselImage: "/images/works/surfer-3.jpg",
+    carouselImage: "/images/themes/creative-culture.png",
     badgeImage: "/images/badges/creative-culture.svg",
   },
   {
     id: "climate-resilience",
     name: "Climate Resilience",
-    description: "Climate adaptation across SoCal.",
+    description: "Adaptation, recovery, long-term systems.",
     steepc: "environment",
     bgColor: "#D2DAE5",
-    carouselImage: "/images/case-studies/concrete-dreams.png",
+    carouselImage: "/images/themes/climate-resilience.png",
     badgeImage: "/images/badges/climate-resilience.svg",
   },
   {
@@ -72,8 +74,9 @@ export const socalThemes: SoCalTheme[] = [
     description: "Practical tools for local terms.",
     steepc: "tech",
     bgColor: "#CCDCDB",
-    carouselImage: "/images/case-studies/surf-magazine.png",
-    badgeImage: "/images/badges/climate-resilience.svg",
+    carouselImage: "/images/themes/ai-digital-access.png",
+    badgeImage: "/images/badges/ai-digital-access.svg",
+    iconBgColor: "#DEE8E9",
   },
 ];
 
