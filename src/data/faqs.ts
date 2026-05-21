@@ -46,13 +46,3 @@ export const faqs: FAQ[] = [
   },
 ];
 
-export const faqValueTags = [
-  "Connection",
-  "Collective Growth",
-  "Belonging",
-  "Local Pride",
-  "Shared Values",
-  "Diversity",
-  "Everyday Lifestyle",
-  "Creative Expression",
-];
