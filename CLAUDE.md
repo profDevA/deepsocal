@@ -43,7 +43,8 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - `layout/Header.tsx` / `Footer.tsx` / `PageFrame.tsx` — Shared shell
 - `layout/PageFrame.tsx` — Fixed-position decorative rails (15px from each edge) + rotated `CONTACT US` button on the right rail. Used on `/` and `/about`. `pointer-events-none` except for the button.
 - `home/BigWordmark.tsx` — Big "DeepSocal" wordmark rendered in root layout (appears on every page). Includes social icon row in bottom-right (Instagram, Dribbble, Threads, X).
-- `about/FAQAccordion.tsx` — Radix Accordion with curved arrow SVG from Figma (`Vector 1145`). Asymmetric padding `pt-[13px] pb-[14px]` matches Figma 1:1.
+- `about/FAQAccordion.tsx` — Radix Accordion with **plus icon** (rotates 45° → "×" when open). Asymmetric padding `pt-[13px] pb-[14px]`, button `36×30.4px` matches Figma sizing. Note: Figma shows a curved arrow but Fas explicitly preferred the plus sign (5/21 review).
+- `shop/ShopHeroCard.tsx` — Client component: GSAP-animated vertical product carousel inside a bordered hero card. Handles wheel scroll, touch/swipe, and dot-click navigation.
 - `modals/` — Contact, scoping, partner modals (Radix Dialog)
 - `animation/RevealOnScroll.tsx` — Generic IntersectionObserver reveal wrapper
 
@@ -106,7 +107,7 @@ The About page (`src/app/about/page.tsx`) is built section-by-section to match F
 1. **Hero** — `SOCAL-LOCAL` headline (96px Bangers), description, coastline image (1358×725, rounded 27px), then a centered `DISCOVER OUR APPROACH` button (201×43, dark bg, Bangers 18px). 80px gap from image to button, 128px gap from button to the "WE ARE DESIGNERS…" mission line. Spacers use inline `<div style={{ height: 80px }}>` for guaranteed predictable spacing (avoids any Tailwind purge edge cases with sibling-margin arbitrary values).
 2. **Team** — left column ("team" title + paragraph), right column = 5 discipline groups in a 3-column grid. Group titles use **Inter Semibold 18px uppercase** (not Bangers), members use Inter Regular 16px. Vertical divider between columns.
 3. **WE'RE SOCAL-LOCAL** — centered title + description, then "Community / Growth / Impact" row, then a **3×2 image grid** (6 photos at `aspect-square`, 26px radius, 0.5px `#adadad` border, subtle shadow). The middle-top card is the Instagram-themed white card with a small Instagram glyph overlay in the bottom-right. Below the grid: `communityValueTags` (8 tags) with **natural content widths**, 12px horizontal padding, `whitespace-nowrap`. **Do not hardcode per-tag pixel widths** — that's brittle; consistent padding handles it.
-4. **FAQ** — left column ("FAQS" title + paragraph), right column = `FAQAccordion`. Vertical divider between. Arrow button is `36×30.4px` with the curved arrow SVG from Figma (`public/images/about/faq-arrow.svg`), inlined in the component so the rotate animation works.
+4. **FAQ** — left column ("FAQS" title + paragraph), right column = `FAQAccordion`. Vertical divider between. Toggle button is `36×30.4px` with a **plus icon** (`FaPlus` from `react-icons/fa6`) that rotates 45° to "×" when open. Per-Fas preference over the Figma curved arrow.
 
 ### Section divider convention (matches home page)
 
@@ -130,6 +131,14 @@ Pattern used on both home (`WhyAreWeDifferent`, `CompaniesMarquee`) and about (`
 
 **TODO**: replace placeholder `href="#"` values in `socialLinks` with real account URLs when provided.
 
+## Header Navigation Links
+
+`src/components/layout/Header.tsx` — `navItems`:
+- **Our Work** → `/#work` (works section on homepage)
+- **Our Difference** → `/about` (NOT `/#difference` — Fas directed in 5/21 review that "Our Difference" should route to the About page since that's where the "WE'RE SOCAL-LOCAL why the community chooses us as embedded allies" content lives)
+- **The Shop** → `/shop`
+- **Book a call** → opens contact modal (no route)
+
 ## Services Dropdown (In-Place Content Swap)
 
 The homepage `WorkGrid` integrates with `WorkFilterDropdown` to swap content **in place** without navigation (mimicking the Stanford D.School pattern):
@@ -141,11 +150,75 @@ The homepage `WorkGrid` integrates with `WorkFilterDropdown` to swap content **i
 
 Do **not** route to `/services/[slug]` from the homepage filter — the dropdown is purely state-driven. The standalone `/services/[slug]` pages still exist for direct/SEO access.
 
+## Shop Page Layout (Figma node `161:1151`)
+
+The shop page uses a server component (`src/app/shop/page.tsx`) for metadata + title, and a client component (`src/components/shop/ShopHeroCard.tsx`) for the interactive product carousel.
+
+1. **Hero header** (outside the card) — `Shop the Look` (Bangers 96px) + 482px wide intro paragraph, centered. 80px top padding, 60px bottom padding.
+2. **Product card container** — `max-w-[1384px]` rounded `30px` card with `border border-[#c4c4c4]` and `overflow-hidden`. Fixed `h-[1162px]` on desktop so only ~2.5 product cards are visible — the rest are clipped by overflow.
+   - **Hero background** — `Image fill` covers the entire card behind the products. Uses `shop-main-bg.png` (woman with DeepSoCal bottle). `-z-10` so it sits behind the product column.
+   - **Vertical pagination dots** — one dot per product, 5th filled by default. Positioned at `right-[26px]` of the card, `-rotate-90` so they read vertically. White dots with white border. Hidden below `lg` breakpoint. Dots are interactive — clicking scrolls to that product.
+   - **Product cards column** — absolutely positioned at `right-[91px] top-[85px] w-[399px]`, floating over the hero image. GSAP-animated vertical slider (`power2.out` ease, 0.55s duration). Supports mouse wheel (500ms cooldown), touch/swipe, and dot-click navigation.
+
+### Product card (`<ProductCard />`)
+
+Each product card is `445px` tall, rounded `30.593px`, `bg-[#dadada]`:
+- **Product image** — fills entire card as background (`next/image fill`, `object-cover object-top`). The white panel covers the bottom half, so only the top ~245px of the image is visible.
+- **Floating price tag** — positioned at `top-[39px] left-[228px]`, `rgba(0,0,0,0.6)` pill, Bangers 20px white text, format `$ <price>  + Shipping`
+- **Bottom panel (~200px)** — white panel with rounded corners (`z-[5]` to sit above the background image), title (Bangers 36px uppercase) + 3-line description (Inter 16px) + `FaArrowRight` icon. The arrow translates right 1px on hover.
+- Products without images show a colored placeholder using `product.themeColor`.
+
+### Shop image assets (`public/images/shop/`)
+
+- `shop-main-bg.png` — hero card background (woman with DeepSoCal bottle)
+- `the-t-shirt.png` — folded t-shirt product photo
+- `the-hoodie.png` — black hoodie with DeepSoCal logo
+- `the-bottle.png` — DeepSoCal water bottle
+
+## Case Study Detail Layout (Figma node `12:1263`)
+
+The case study page (`src/app/works/[slug]/page.tsx`) is composed of five distinct sections:
+
+1. **Hero** (`CaseStudyHero`) — `aspect-1384/764` rounded `30px` card with `border border-[#c4c4c4]`. The hero image is rendered with `next/image fill` then overlaid with a warm **orange tint** `rgba(223,136,73,0.2)` per Figma. Tag pills (Bangers 20px on `rgba(0,0,0,0.6)`) anchor to bottom-left of the hero with 37px gap. The three tags repeat the same label intentionally in the OC Navigator mock (`["DESIGN + RESEARCH", "DESIGN + RESEARCH", "DESIGN + RESEARCH"]`) — that's straight from the Figma comp.
+2. **Meta block** (`CaseStudyMeta`) — Title + subtitle sit at the **top** of the section (own block, `mb-[52px]`). Below that, a 3-column grid (`grid-cols-[1fr_1fr_1fr]`, `gap-[80px]`) with: left = meta `<dl>` with `( client ) / ( industry ) / ( scope ) / ( team )`, middle and right = two identical "Summary" columns. This layout matches Figma where the summaries are positioned below the title, not beside it. The summary columns render only when populated.
+3. **Gallery** (`CaseStudyGallery`) — up to two large `aspect-1380/728` rounded `30px` images stacked vertically with 40px gap. The second image has a slightly stronger overlay (`rgba(0,0,0,0.2)` vs `rgba(0,0,0,0.05)`) per Figma.
+4. **Video block** (`CaseStudyVideoBlock`) — split inside a horizontal-bordered band (`border-t border-b border-dark`). Left = `aspect-642/399` poster with a next-slide arrow button anchored to the right edge (`rgba(2,2,2,0.8)` bg, white `FaArrowRight`) plus 7 pagination dots underneath. Right = `Impact Metrics` paragraph + `Services` line, separated from the left by a vertical divider (`md:divide-x md:divide-dark`).
+5. **Prev / Next nav** (`CaseStudyNav`) — `Back to Work` (left) + `Next project` (right), Inter Medium 24px uppercase **underlined**, separated by a `border-b-[0.75px] border-dark`.
+
+### Case study data shape
+
+`CaseStudy` (in `src/data/case-studies.ts`) drives the page. Key fields used by the detail page:
+
+- `heroImage` — used for the hero card (orange overlay applied on top)
+- `tags` — array of pill labels; render only when non-empty
+- `client / industry / scope / teamLabel` — meta list; each row renders only when populated
+- `summary / summary2` — two side-by-side paragraphs (omit a column by leaving empty)
+- `gallery[0..1]` — up to two large parallax images between meta and video
+- `gallery[0]` (or `heroImage` as fallback) — also used as the video poster
+- `impactMetrics / servicesLabel` — right side of the video block
+
+The `oc-navigator` case study is the canonical Figma-aligned example. When adding new case studies, populate the same fields for design parity.
+
+### Figma CDN caveat
+
+Some Figma MCP image assets fail to serve through `figma.com/api/mcp/asset/<id>` and return ~2.5KB blank PNGs instead of the real image. When that happens:
+
+1. Re-call `get_design_context` to get a fresh signed URL — sometimes it fixes itself.
+2. If it still fails, use an existing asset from `public/images/` as a fallback. Document the swap in the data file with a comment so the real asset can be swapped in later.
+
+Successfully downloaded for this build:
+- `public/images/shop/the-t-shirt.png`, `the-bottle.png`, `the-hoodie.png`, `shop-main-bg.png`
+- `public/images/case-studies/detail-hero-family.png`, `detail-gallery-2.png`
+
+Pending re-download (CDN returned blanks): case study `detail-gallery-1.png` and `detail-video-poster.png` (uses surf/family fallbacks).
+
 ## Figma Reference
 
 Design file: `I53058PEBiq17COrTraapK` (DP_June_2026--LATEST-)
 - Homepage: `12:308`, All Works: `12:341`, Why Are We Different: `110:413` / `263:588`
 - About page: `12:1037` (full frame), FAQ block: `92:1942`, big wordmark + social icons: `92:2051` / `92:2054`
+- Case Study Single: `12:1263` (hero `12:1266`, gallery `12:1328` / `12:1391`, video block `12:1378`)
+- Shop page: `161:1151` (hero image `161:1189`, product card template `161:1203`)
 - Services dropdown: `12:1805`, Brand Strategy: `12:718`
 - OC Resource Navigator card: `77:582`
 - Use `get_design_context` via Figma MCP for measurements and assets

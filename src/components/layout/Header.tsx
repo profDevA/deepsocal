@@ -8,7 +8,7 @@ import Drawer, { type DrawerNavItem } from "./Drawer";
 
 const navItems: DrawerNavItem[] = [
   { label: "Our Work", href: "/#work" },
-  { label: "Our Difference", href: "/#difference" },
+  { label: "Our Difference", href: "/about" },
   { label: "The Shop", href: "/shop" },
 ];
 

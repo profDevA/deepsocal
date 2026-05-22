@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa6";
-import { products, type Product } from "@/data/products";
+import PageFrame from "@/components/layout/PageFrame";
+import ShopHeroCard from "@/components/shop/ShopHeroCard";
+import { products } from "@/data/products";
 
 export const metadata: Metadata = {
   title: "Shop the Look",
@@ -10,107 +9,31 @@ export const metadata: Metadata = {
     "DeepSoCal's design-led merch — small-batch goods inspired by Southern California.",
 };
 
+const HERO_IMAGE = "/images/shop/shop-main-bg.png";
+
 export default function ShopPage() {
   return (
-    <div className="bg-[#e6e6e6] w-full pt-[clamp(40px,6vw,80px)] pb-[clamp(40px,6vw,80px)] px-[clamp(16px,2vw,28px)]">
-      <div className="max-w-[1384px] mx-auto">
-        <header className="flex flex-col items-center gap-[clamp(20px,3vw,49px)] text-center mb-[clamp(40px,6vw,80px)] max-w-[799px] mx-auto">
-          <h1 className="font-bangers text-dark text-[clamp(38px,8vw,96px)] leading-[0.94] tracking-[clamp(0.5px,0.3vw,2.88px)] uppercase m-0 wrap-break-word">
+    <div className="bg-[#e6e6e6] w-full">
+      <PageFrame />
+
+      {/* Title + Description */}
+      <section className="w-full px-[40px] pt-[80px] pb-[60px] flex flex-col items-center">
+        <div className="flex flex-col items-center gap-[49px] text-center max-w-[799px]">
+          <h1 className="font-bangers text-dark text-[96px] leading-[90px] tracking-[2.88px] uppercase">
             Shop the look
           </h1>
-          <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[482px] m-0">
+          <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[482px]">
             Deep SoCal is a design-led technology studio working with local
             businesses, startups, and communities to solve real challenges
             across the region from coastlines to culture to commerce.
           </p>
-        </header>
-
-        <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-[clamp(24px,3vw,40px)] items-start">
-          <div className="relative w-full lg:sticky lg:top-[100px] aspect-1384/820 rounded-[clamp(20px,2.5vw,30px)] overflow-hidden bg-[#1f1f1f]">
-            <Image
-              src="/images/slide-4-surf.jpg"
-              alt="DeepSoCal merch — designed in Southern California"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 60vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
-          </div>
-
-          <div className="flex flex-col gap-[clamp(24px,3vw,37px)]">
-            {products.map((product) => (
-              <ProductCard key={product.slug} product={product} />
-            ))}
-          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Hero card with scrollable product carousel */}
+      <section className="w-full px-[14px] lg:px-[28px] pb-[80px]">
+        <ShopHeroCard products={products} heroImage={HERO_IMAGE} />
+      </section>
     </div>
-  );
-}
-
-function ProductCard({ product }: { product: Product }) {
-  const cover = product.images[0];
-  return (
-    <Link
-      href={`/shop/${product.slug}`}
-      className="group block w-full max-w-[399px] mx-auto bg-[#dadada] rounded-[clamp(20px,2vw,30px)] overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-transform hover:-translate-y-1 no-underline"
-    >
-      <article className="relative h-[445px] flex flex-col">
-        <div
-          className="relative flex-1 overflow-hidden"
-          style={{
-            backgroundImage: cover
-              ? undefined
-              : `linear-gradient(160deg, ${product.themeColor} 0%, #c8c8c8 60%, #909090 100%)`,
-            backgroundColor: cover ? product.themeColor : undefined,
-          }}
-        >
-          {cover ? (
-            <Image
-              src={cover}
-              alt={product.name}
-              fill
-              sizes="(max-width: 1024px) 100vw, 400px"
-              className="object-contain p-6 mix-blend-multiply"
-            />
-          ) : (
-            <>
-              <div
-                className="absolute inset-0 opacity-25 mix-blend-multiply"
-                style={{
-                  backgroundImage:
-                    "repeating-linear-gradient(45deg, transparent 0 12px, rgba(0,0,0,0.06) 12px 14px)",
-                }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="font-bangers text-dark/30 text-[clamp(28px,4vw,48px)] tracking-[1.5px] uppercase select-none">
-                  {product.name}
-                </span>
-              </div>
-            </>
-          )}
-
-          <span
-            className="absolute top-4 right-4 font-bangers text-[#d7d7d7] text-[clamp(14px,1.5vw,20px)] leading-[1.4] px-3 py-1 whitespace-pre"
-            style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
-          >
-            {`$ ${product.price.toFixed(2)}  ${product.shipping}`}
-          </span>
-        </div>
-
-        <div className="bg-white h-[200px] rounded-t-[clamp(20px,2vw,30px)] -mt-[24px] relative px-[34px] py-[42px] flex items-end gap-[24px]">
-          <div className="flex flex-col gap-[11px] flex-1 min-w-0">
-            <h3 className="font-bangers text-[#303030] text-[clamp(28px,3vw,36px)] leading-tight tracking-[1.08px] m-0 uppercase">
-              {product.name}
-            </h3>
-            <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] m-0 line-clamp-2">
-              {product.description}
-            </p>
-          </div>
-          <FaArrowRight className="text-dark text-[24px] shrink-0 transition-transform group-hover:translate-x-1" />
-        </div>
-      </article>
-    </Link>
   );
 }
