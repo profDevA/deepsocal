@@ -5,8 +5,11 @@ import WorkGrid from "@/components/home/WorkGrid";
 import Testimonials from "@/components/home/Testimonials";
 import RevealOnScroll from "@/components/animation/RevealOnScroll";
 import PageFrame from "@/components/layout/PageFrame";
+import { fetchAllCaseStudies } from "@/sanity/lib/fetch";
 
-export default function Home() {
+export default async function Home() {
+  const caseStudies = await fetchAllCaseStudies();
+
   return (
     <>
       <PageFrame />
@@ -16,7 +19,7 @@ export default function Home() {
       </RevealOnScroll>
       <WhyAreWeDifferent />
       <RevealOnScroll>
-        <WorkGrid />
+        <WorkGrid caseStudies={caseStudies} />
       </RevealOnScroll>
       <RevealOnScroll>
         <Testimonials />

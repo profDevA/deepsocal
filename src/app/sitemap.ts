@@ -1,14 +1,14 @@
 import type { MetadataRoute } from "next";
-import { caseStudies } from "@/data/case-studies";
+import { fetchAllCaseStudies } from "@/sanity/lib/fetch";
 import { products } from "@/data/products";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://deepsocal.com";
   const now = new Date();
+  const caseStudies = await fetchAllCaseStudies();
 
   return [
     { url: baseUrl, lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: `${baseUrl}/shop`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     ...caseStudies.map((cs) => ({
       url: `${baseUrl}/works/${cs.slug}`,
       lastModified: now,

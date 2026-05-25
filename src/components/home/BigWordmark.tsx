@@ -15,15 +15,15 @@ const socialLinks = [
 
 export default function BigWordmark() {
   return (
-    <section className="bg-[#e6e6e6] w-full overflow-hidden relative flex items-center justify-center py-[clamp(40px,8vw,120px)]">
+    <section data-bigwordmark className="bg-[#e6e6e6] w-full overflow-hidden relative flex items-center justify-center py-[40px] md:py-[80px] lg:py-[120px] px-[25px]">
       <span
         aria-hidden="true"
-        className="font-bangers text-dark whitespace-nowrap leading-none tracking-[clamp(2px,0.6vw,8px)] text-[clamp(80px,28vw,368px)] select-none"
+        className="font-bangers text-dark whitespace-nowrap leading-none tracking-[2px] md:tracking-[4px] lg:tracking-[8px] text-[80px] md:text-[200px] lg:text-[368px] select-none"
       >
         DeepSocal
       </span>
 
-      <ul className="absolute right-[clamp(20px,4vw,80px)] bottom-[clamp(20px,4vw,60px)] flex items-center gap-[10px] list-none p-0 m-0">
+      <ul className="absolute right-[20px] md:right-[40px] lg:right-[80px] bottom-[20px] md:bottom-[40px] lg:bottom-[60px] flex items-center gap-[10px] list-none p-0 m-0">
         {socialLinks.map(({ href, label, Icon }) => (
           <li key={label}>
             <Link

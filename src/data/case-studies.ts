@@ -28,6 +28,7 @@ export type CaseStudy = {
   heroImage: string;
   thumbnailImage: string;
   gallery: string[];
+  carouselImages: string[];
   summary: string;
   summary2: string;
   impactMetrics: string;
@@ -52,6 +53,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "",
     thumbnailImage: "",
     gallery: [],
+    carouselImages: [],
     summary: "",
     summary2: "",
     impactMetrics: "",
@@ -75,6 +77,15 @@ export const caseStudies: CaseStudy[] = [
     gallery: [
       "/images/case-studies/detail-gallery-2.png",
       "/images/slide-4-surf.jpg",
+    ],
+    carouselImages: [
+      "/images/slide-4-surf.jpg",
+      "/images/case-studies/detail-gallery-2.png",
+      "/images/case-studies/detail-hero-family.png",
+      "/images/case-studies/surf-magazine.png",
+      "/images/case-studies/concrete-dreams.png",
+      "/images/case-studies/coral-health.png",
+      "/images/case-studies/luku-watches.png",
     ],
     summary:
       "DeepSoCal used surf culture to connect California communities with global humanitarian causes. Documentary crews captured community stories that reflected local identity. Influencer partnerships expanded their reach, while community events turned narratives into action.",
@@ -100,6 +111,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "/images/case-studies/surf-magazine.png",
     thumbnailImage: "/images/case-studies/surf-magazine.png",
     gallery: ["/images/case-studies/surf-magazine.png"],
+    carouselImages: [],
     summary: "",
     summary2: "",
     impactMetrics: "",
@@ -122,6 +134,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "/images/case-studies/concrete-dreams.png",
     thumbnailImage: "/images/case-studies/concrete-dreams.png",
     gallery: ["/images/case-studies/concrete-dreams.png"],
+    carouselImages: [],
     summary: "",
     summary2: "",
     impactMetrics: "",
@@ -143,6 +156,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "",
     thumbnailImage: "",
     gallery: [],
+    carouselImages: [],
     summary: "",
     summary2: "",
     impactMetrics: "",
@@ -164,6 +178,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "/images/case-studies/coral-health.png",
     thumbnailImage: "/images/case-studies/coral-health.png",
     gallery: ["/images/case-studies/coral-health.png"],
+    carouselImages: [],
     summary: "",
     summary2: "",
     impactMetrics: "",
@@ -186,6 +201,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "",
     thumbnailImage: "",
     gallery: [],
+    carouselImages: [],
     summary: "",
     summary2: "",
     impactMetrics: "",
@@ -207,6 +223,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "/images/case-studies/salt-and-sand.png",
     thumbnailImage: "/images/case-studies/salt-and-sand.png",
     gallery: ["/images/case-studies/salt-and-sand.png"],
+    carouselImages: [],
     summary: "",
     summary2: "",
     impactMetrics: "",
@@ -228,6 +245,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "/images/case-studies/luku-watches.png",
     thumbnailImage: "/images/case-studies/luku-watches.png",
     gallery: ["/images/case-studies/luku-watches.png"],
+    carouselImages: [],
     summary: "",
     summary2: "",
     impactMetrics: "",
@@ -250,6 +268,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "",
     thumbnailImage: "",
     gallery: [],
+    carouselImages: [],
     summary: "",
     summary2: "",
     impactMetrics: "",
@@ -271,6 +290,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "/images/case-studies/oc-navigator-2.png",
     thumbnailImage: "/images/case-studies/oc-navigator-2.png",
     gallery: ["/images/case-studies/oc-navigator-2.png"],
+    carouselImages: [],
     summary: "",
     summary2: "",
     impactMetrics: "",
@@ -293,6 +313,7 @@ export const caseStudies: CaseStudy[] = [
     heroImage: "",
     thumbnailImage: "",
     gallery: [],
+    carouselImages: [],
     summary: "",
     summary2: "",
     impactMetrics: "",

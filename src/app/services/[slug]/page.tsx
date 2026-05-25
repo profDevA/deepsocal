@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { services, getServiceById } from "@/data/services";
-import { getCaseStudiesByService, type ServiceId } from "@/data/case-studies";
+import type { ServiceId } from "@/data/case-studies";
+import { fetchCaseStudiesByService } from "@/sanity/lib/fetch";
 import CaseStudyCard from "@/components/work/CaseStudyCard";
 import WorkFilterDropdown from "@/components/work/WorkFilterDropdown";
 import ContactCTAButton from "@/components/modals/ContactCTAButton";
@@ -32,7 +33,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
   const service = getServiceById(slug as ServiceId);
   if (!service) notFound();
 
-  const filtered = getCaseStudiesByService(service.id);
+  const filtered = await fetchCaseStudiesByService(service.id);
 
   return (
     <div className="bg-[#e6e6e6] w-full">

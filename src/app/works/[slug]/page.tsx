@@ -2,18 +2,19 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FaArrowRight } from "react-icons/fa6";
-import PageFrame from "@/components/layout/PageFrame";
-import {
-  caseStudies,
-  getCaseStudyBySlug,
-  getNextCaseStudy,
-  getPreviousCaseStudy,
-  type CaseStudy,
-} from "@/data/case-studies";
 
-export function generateStaticParams() {
-  return caseStudies.map((cs) => ({ slug: cs.slug }));
+
+import type { CaseStudy } from "@/data/case-studies";
+import CaseStudyCarousel from "@/components/work/CaseStudyCarousel";
+import {
+  fetchCaseStudyBySlug,
+  fetchCaseStudySlugs,
+  fetchAllCaseStudies,
+} from "@/sanity/lib/fetch";
+
+export async function generateStaticParams() {
+  const slugs = await fetchCaseStudySlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 type Params = Promise<{ slug: string }>;
@@ -24,7 +25,7 @@ export async function generateMetadata({
   params: Params;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const cs = getCaseStudyBySlug(slug);
+  const cs = await fetchCaseStudyBySlug(slug);
   if (!cs) return { title: "Case study not found" };
   return {
     title: cs.title,
@@ -34,32 +35,37 @@ export async function generateMetadata({
 
 export default async function CaseStudyPage({ params }: { params: Params }) {
   const { slug } = await params;
-  const cs = getCaseStudyBySlug(slug);
+  const cs = await fetchCaseStudyBySlug(slug);
   if (!cs) notFound();
 
-  const next = getNextCaseStudy(cs.order);
-  const prev = getPreviousCaseStudy(cs.order);
+  const all = await fetchAllCaseStudies();
+  const sorted = [...all].sort((a, b) => a.order - b.order);
+  const idx = sorted.findIndex((c) => c.slug === cs.slug);
+  const next = sorted[(idx + 1) % sorted.length];
+  const prev = sorted[(idx - 1 + sorted.length) % sorted.length];
 
   return (
     <div className="bg-[#e6e6e6] w-full">
-      <PageFrame />
+      {/* Hero — no rails here */}
+      <div className="w-full px-[15px] pt-[44px]">
+        <CaseStudyHero caseStudy={cs} />
+      </div>
 
-      {/* HERO + META — bordered card wrapping the hero image, with meta block below */}
-      <section className="w-full px-[28px] pt-[44px] pb-[40px]">
-        <div className="max-w-[1384px] mx-auto">
-          <CaseStudyHero caseStudy={cs} />
+      {/* Content box + everything below — rails start here */}
+      <div className="relative">
+        <span aria-hidden="true" className="absolute top-[60px] bottom-0 left-[15px] w-px bg-dark/40 z-50 hidden md:block" />
+        <span aria-hidden="true" className="absolute top-[60px] bottom-0 right-[15px] w-px bg-dark/40 z-50 hidden md:block" />
+
+        <div className="relative z-1 px-[15px]">
           <CaseStudyMeta caseStudy={cs} />
         </div>
-      </section>
 
-      {/* LARGE PARALLAX IMAGES — two full-bleed cards stacked vertically */}
-      <CaseStudyGallery caseStudy={cs} />
-
-      {/* VIDEO + IMPACT/SERVICES — split panel with horizontal dividers */}
-      <CaseStudyVideoBlock caseStudy={cs} />
-
-      {/* PREV / NEXT NAV */}
-      <CaseStudyNav prevSlug={prev?.slug} nextSlug={next?.slug} />
+        <div className="pb-[40px]">
+          <CaseStudyGallery caseStudy={cs} />
+          <CaseStudyVideoBlock caseStudy={cs} />
+          <CaseStudyNav prevSlug={prev?.slug} nextSlug={next?.slug} />
+        </div>
+      </div>
     </div>
   );
 }
@@ -67,7 +73,7 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
 function CaseStudyHero({ caseStudy }: { caseStudy: CaseStudy }) {
   const heroSrc = caseStudy.heroImage || caseStudy.thumbnailImage;
   return (
-    <div className="relative w-full aspect-1384/764 rounded-[30px] overflow-hidden bg-[#1f1f1f] border border-[#c4c4c4]">
+    <div className="relative w-full aspect-1440/764 bg-[#1f1f1f] rounded-t-[30px] overflow-hidden border-t border-x border-[#c4c4c4]">
       {heroSrc ? (
         <Image
           src={heroSrc}
@@ -90,7 +96,7 @@ function CaseStudyHero({ caseStudy }: { caseStudy: CaseStudy }) {
 
       {/* Tag pills row, anchored to bottom-left of hero */}
       {caseStudy.tags.length > 0 && (
-        <div className="absolute left-[64px] bottom-[64px] flex flex-wrap gap-[37px] items-center">
+        <div className="absolute left-[64px] bottom-[180px] flex flex-wrap gap-[37px] items-center z-10">
           {caseStudy.tags.map((t, i) => (
             <span
               key={`${t}-${i}`}
@@ -108,7 +114,7 @@ function CaseStudyHero({ caseStudy }: { caseStudy: CaseStudy }) {
 
 function CaseStudyMeta({ caseStudy }: { caseStudy: CaseStudy }) {
   return (
-    <div className="bg-[#e6e6e6] px-[64px] pt-[88px] pb-[64px]">
+    <div className="relative bg-[#e6e6e6] rounded-t-[30px] -mt-[128px] z-1 px-[64px] pt-[88px] pb-[64px]">
       {/* Title + subtitle — sits above the content grid */}
       <div className="flex flex-col gap-[15px] max-w-[533px] mb-[52px]">
         <h1 className="font-bangers text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0">
@@ -181,11 +187,11 @@ function CaseStudyGallery({ caseStudy }: { caseStudy: CaseStudy }) {
   if (images.length === 0) return null;
 
   return (
-    <section className="w-full px-[28px] pb-[60px] flex flex-col gap-[40px]">
+    <section className="w-full px-[25px] pb-[60px] flex flex-col gap-[40px]">
       {images.slice(0, 2).map((src, i) => (
         <div
           key={src}
-          className="max-w-[1380px] mx-auto w-full aspect-1380/728 rounded-[30px] overflow-hidden relative bg-[#eee]"
+          className="w-full aspect-1380/728 rounded-[30px] overflow-hidden relative bg-[#eee]"
         >
           <Image
             src={src}
@@ -207,49 +213,17 @@ function CaseStudyGallery({ caseStudy }: { caseStudy: CaseStudy }) {
 }
 
 function CaseStudyVideoBlock({ caseStudy }: { caseStudy: CaseStudy }) {
-  const posterSrc = caseStudy.gallery[0] || caseStudy.heroImage;
+  const carouselSrcs = caseStudy.carouselImages.length > 0
+    ? caseStudy.carouselImages
+    : caseStudy.gallery[0] ? [caseStudy.gallery[0]] : caseStudy.heroImage ? [caseStudy.heroImage] : [];
 
   return (
-    <section className="w-full px-[28px] pb-[60px]">
-      <div className="max-w-[1381px] mx-auto border-t border-b border-dark py-[20px]">
+    <section className="w-full px-[25px] pb-[60px]">
+      <div className="border-t border-b border-dark py-[20px]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-[28px] md:divide-x md:divide-dark">
-          {/* Left — video poster + pagination dots */}
-          <div className="flex flex-col gap-[24px] md:pr-[28px]">
-            <div className="relative aspect-642/399 rounded-[30px] overflow-hidden bg-[#828282]">
-              {posterSrc ? (
-                <Image
-                  src={posterSrc}
-                  alt={`${caseStudy.title} — video preview`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 642px"
-                  className="object-cover"
-                />
-              ) : (
-                <div className="absolute inset-0 bg-linear-to-br from-[#444] via-[#666] to-[#222]" />
-              )}
-
-              {/* Next-slide arrow button anchored to right edge */}
-              <button
-                type="button"
-                aria-label="Next slide"
-                className="absolute right-0 top-1/2 -translate-y-1/2 h-[38px] w-[45px] flex items-center justify-center cursor-pointer border-none transition-colors hover:bg-black"
-                style={{ backgroundColor: "rgba(2,2,2,0.8)" }}
-              >
-                <FaArrowRight className="text-white text-[14px]" />
-              </button>
-            </div>
-
-            {/* Pagination dots — 7 dots, first one filled */}
-            <div className="flex items-center justify-center gap-[15px]">
-              {Array.from({ length: 7 }, (_, i) => (
-                <span
-                  key={i}
-                  className={`size-[9.184px] rounded-full border border-dark ${
-                    i === 0 ? "bg-dark" : "bg-transparent"
-                  }`}
-                />
-              ))}
-            </div>
+          {/* Left — image carousel + pagination dots */}
+          <div className="md:pr-[28px]">
+            <CaseStudyCarousel images={carouselSrcs} title={caseStudy.title} />
           </div>
 
           {/* Right — Impact Metrics + Services */}
@@ -285,8 +259,8 @@ function CaseStudyNav({
   nextSlug?: string;
 }) {
   return (
-    <section className="w-full px-[28px] pb-[40px]">
-      <div className="max-w-[1411px] mx-auto border-b-[0.75px] border-dark py-[28px]">
+    <section className="w-full px-[25px] pb-[40px]">
+      <div className="border-b-[0.75px] border-dark py-[28px]">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <Link
             href={prevSlug ? `/works/${prevSlug}` : "/#work"}

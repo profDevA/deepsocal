@@ -9,7 +9,8 @@ import Drawer, { type DrawerNavItem } from "./Drawer";
 const navItems: DrawerNavItem[] = [
   { label: "Our Work", href: "/#work" },
   { label: "Our Difference", href: "/about" },
-  { label: "The Shop", href: "/shop" },
+  // Shop hidden per Fas (5/22) — not a priority for launch, can re-enable later
+  // { label: "The Shop", href: "/shop" },
 ];
 
 const NAV_PILL_CLASS =

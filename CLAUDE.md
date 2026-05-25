@@ -21,6 +21,7 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - UI primitives: Radix UI (accordion, dialog, dropdown)
 - Carousel: Embla Carousel
 - Icons: `react-icons` (Fa6)
+- CMS: Sanity (case studies) — embedded studio at `/studio`
 - Payments: Stripe (checkout)
 - Email: Resend
 
@@ -29,8 +30,9 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - `/about` — About page (hero, mission, team grid, "WE'RE SOCAL-LOCAL" community grid, FAQ accordion)
 - `/works/[slug]` — Case study detail (dynamic, `generateStaticParams`)
 - `/services/[slug]` — Service detail (4 services, `generateStaticParams`)
-- `/shop` — Product listing
+- `/shop` — Product listing (hidden from nav per 5/22 meeting — not a launch priority)
 - `/shop/[slug]` — Product detail
+- `/studio` — Embedded Sanity Studio (content management)
 
 **Key components (`src/components/`):**
 - `home/Hero.tsx` — Full-screen hero with video (`/videos/california.mp4`) and staggered text reveal (GSAP)
@@ -48,8 +50,8 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - `modals/` — Contact, scoping, partner modals (Radix Dialog)
 - `animation/RevealOnScroll.tsx` — Generic IntersectionObserver reveal wrapper
 
-**Data layer (`src/data/`):**
-- `case-studies.ts` — All case studies with slug, title, thumbnailImage, editorialTheme, order, etc. Explicit objects (no `seed()` factory).
+**Data layer (`src/data/` + `src/sanity/`):**
+- `case-studies.ts` — Static fallback case studies + TypeScript types. Still used when Sanity is not configured.
 - `socal-themes.ts` — SoCal editorial themes (id, bgColor, carouselImage, badgeImage). Also exports the `STEEPC` type.
 - `services.ts` — 4 service definitions
 - `products.ts` — Shop products (explicit objects, no factory function)
@@ -57,6 +59,16 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - `companies.ts` — Client logos for marquee
 - `testimonials.ts` — Testimonial quotes (each entry is independent — no shared placeholder constants)
 - `faqs.ts` — FAQ items. `faqValueTags` was removed (was only used by the About page; the "community value" tags array now lives locally in `src/app/about/page.tsx` as `communityValueTags`).
+
+**Sanity CMS (`src/sanity/`):**
+- `env.ts` — Reads `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION` from env
+- `lib/client.ts` — Sanity client (createClient)
+- `lib/image.ts` — Image URL builder
+- `lib/queries.ts` — GROQ queries for case studies
+- `lib/fetch.ts` — Data-fetching functions (always queries Sanity — no silent fallback)
+- `schemas/case-study.ts` — Sanity document schema for case studies
+- `schemas/index.ts` — Schema registry
+- `sanity.config.ts` (root) — Studio configuration (basePath `/studio`)
 
 ## Data Conventions
 
@@ -136,7 +148,7 @@ Pattern used on both home (`WhyAreWeDifferent`, `CompaniesMarquee`) and about (`
 `src/components/layout/Header.tsx` — `navItems`:
 - **Our Work** → `/#work` (works section on homepage)
 - **Our Difference** → `/about` (NOT `/#difference` — Fas directed in 5/21 review that "Our Difference" should route to the About page since that's where the "WE'RE SOCAL-LOCAL why the community chooses us as embedded allies" content lives)
-- **The Shop** → `/shop`
+- ~~**The Shop** → `/shop`~~ (hidden per 5/22 — not a launch priority)
 - **Book a call** → opens contact modal (no route)
 
 ## Services Dropdown (In-Place Content Swap)
@@ -211,6 +223,31 @@ Successfully downloaded for this build:
 - `public/images/case-studies/detail-hero-family.png`, `detail-gallery-2.png`
 
 Pending re-download (CDN returned blanks): case study `detail-gallery-1.png` and `detail-video-poster.png` (uses surf/family fallbacks).
+
+## Sanity CMS Setup
+
+Case studies are managed via Sanity. `NEXT_PUBLIC_SANITY_PROJECT_ID` must be set in `.env.local` for the site to work.
+
+### First-time setup
+
+1. Create a Sanity project at https://www.sanity.io/manage
+2. Copy `.env.local.example` → `.env.local` and fill in `NEXT_PUBLIC_SANITY_PROJECT_ID`
+3. Add `http://localhost:3000` as a CORS origin in Sanity project settings (API → CORS origins)
+4. Run `npm run dev` and visit `http://localhost:3000/studio` — the embedded Sanity Studio appears
+5. Seed existing case studies: `SANITY_PROJECT_ID=xxx SANITY_TOKEN=yyy node scripts/seed-sanity.mjs`
+
+### Adding a new case study
+
+1. Open `/studio` → create a new Case Study document
+2. Fill in the fields (title, slug, editorial theme, images, etc.)
+3. Publish — the site picks it up automatically on next request
+
+### Architecture
+
+- Server components (`works/[slug]`, home page, services, sitemap) call `src/sanity/lib/fetch.ts`
+- `fetch.ts` checks for `NEXT_PUBLIC_SANITY_PROJECT_ID` — if missing, imports static data instead
+- The `WorkGrid` client component receives case studies as props from the home page server component
+- Images in Sanity are uploaded as assets and served via Sanity's CDN; image URLs are resolved in GROQ queries
 
 ## Figma Reference
 

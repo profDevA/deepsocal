@@ -2,18 +2,22 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { caseStudies, getCaseStudiesByService, type ServiceId } from "@/data/case-studies";
+import type { CaseStudy, ServiceId } from "@/data/case-studies";
 import { getServiceById } from "@/data/services";
 import CaseStudyCard from "@/components/work/CaseStudyCard";
 import WorkFilterDropdown from "@/components/work/WorkFilterDropdown";
 
-export default function WorkGrid() {
+interface WorkGridProps {
+  caseStudies: CaseStudy[];
+}
+
+export default function WorkGrid({ caseStudies }: WorkGridProps) {
   const [activeService, setActiveService] = useState<ServiceId | null>(null);
 
   const allCards = [...caseStudies].sort((a, b) => a.order - b.order);
   const service = activeService ? getServiceById(activeService) : null;
   const filteredCards = activeService
-    ? getCaseStudiesByService(activeService)
+    ? allCards.filter((cs) => cs.services.includes(activeService))
     : allCards;
 
   return (
