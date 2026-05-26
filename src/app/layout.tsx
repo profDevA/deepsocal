@@ -8,6 +8,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import BigWordmark from "@/components/home/BigWordmark";
 import LayoutShell from "./LayoutShell";
+import SmoothScroll from "@/components/animation/SmoothScroll";
 
 const fontVars = [druk, esAllianz, zillaSlab, instrumentSerif, inter, quintessential, bangers]
   .map((f) => f.variable)
@@ -36,6 +37,7 @@ export default function RootLayout({
       <head />
       <body>
         <ModalProvider>
+          <SmoothScroll />
           <Header />
           <LayoutShell>{children}</LayoutShell>
           <BigWordmark />

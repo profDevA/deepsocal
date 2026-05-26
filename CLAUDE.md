@@ -18,6 +18,7 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - Framework: Next.js 16.2.1 (App Router, `src/app/`)
 - Styling: Tailwind CSS 4 via `@tailwindcss/postcss` — no `tailwind.config`, tokens defined in `globals.css` `@theme`
 - Animations: GSAP 3.15 + `@gsap/react` (`useGSAP`, `ScrollTrigger` for pinning & horizontal scroll)
+- Smooth scroll: Lenis — inertia-based page scrolling (reference: [OrthoFX](https://www.orthofx.com/)). Integrated with GSAP via `gsap.ticker`. Component: `SmoothScroll.tsx` in root layout.
 - UI primitives: Radix UI (accordion, dialog, dropdown)
 - Carousel: Embla Carousel
 - Icons: `react-icons` (Fa6)
@@ -45,7 +46,7 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - `layout/Header.tsx` / `Footer.tsx` / `PageFrame.tsx` — Shared shell
 - `layout/PageFrame.tsx` — Fixed-position decorative rails (15px from each edge) + rotated `CONTACT US` button on the right rail. Used on `/` and `/about`. `pointer-events-none` except for the button.
 - `home/BigWordmark.tsx` — Big "DeepSocal" wordmark rendered in root layout (appears on every page). Includes social icon row in bottom-right (Instagram, Dribbble, Threads, X).
-- `about/FAQAccordion.tsx` — Radix Accordion with **plus icon** (rotates 45° → "×" when open). Asymmetric padding `pt-[13px] pb-[14px]`, button `36×30.4px` matches Figma sizing. Note: Figma shows a curved arrow but Fas explicitly preferred the plus sign (5/21 review).
+- `about/FAQAccordion.tsx` — Radix Accordion with **plus/minus toggle** (+ when closed, − when open). Asymmetric padding `pt-[13px] pb-[14px]`, button `36×30.4px` matches Figma sizing. Per Fas 5/25 feedback: "when you put a plus, it should be a dash/minus" — no rotation, just swap icons.
 - `shop/ShopHeroCard.tsx` — Client component: GSAP-animated vertical product carousel inside a bordered hero card. Handles wheel scroll, touch/swipe, and dot-click navigation.
 - `modals/` — Contact, scoping, partner modals (Radix Dialog)
 - `animation/RevealOnScroll.tsx` — Generic IntersectionObserver reveal wrapper
@@ -119,7 +120,7 @@ The About page (`src/app/about/page.tsx`) is built section-by-section to match F
 1. **Hero** — `SOCAL-LOCAL` headline (96px Bangers), description, coastline image (1358×725, rounded 27px), then a centered `DISCOVER OUR APPROACH` button (201×43, dark bg, Bangers 18px). 80px gap from image to button, 128px gap from button to the "WE ARE DESIGNERS…" mission line. Spacers use inline `<div style={{ height: 80px }}>` for guaranteed predictable spacing (avoids any Tailwind purge edge cases with sibling-margin arbitrary values).
 2. **Team** — left column ("team" title + paragraph), right column = 5 discipline groups in a 3-column grid. Group titles use **Inter Semibold 18px uppercase** (not Bangers), members use Inter Regular 16px. Vertical divider between columns.
 3. **WE'RE SOCAL-LOCAL** — centered title + description, then "Community / Growth / Impact" row, then a **3×2 image grid** (6 photos at `aspect-square`, 26px radius, 0.5px `#adadad` border, subtle shadow). The middle-top card is the Instagram-themed white card with a small Instagram glyph overlay in the bottom-right. Below the grid: `communityValueTags` (8 tags) with **natural content widths**, 12px horizontal padding, `whitespace-nowrap`. **Do not hardcode per-tag pixel widths** — that's brittle; consistent padding handles it.
-4. **FAQ** — left column ("FAQS" title + paragraph), right column = `FAQAccordion`. Vertical divider between. Toggle button is `36×30.4px` with a **plus icon** (`FaPlus` from `react-icons/fa6`) that rotates 45° to "×" when open. Per-Fas preference over the Figma curved arrow.
+4. **FAQ** — left column ("FAQS" title + paragraph), right column = `FAQAccordion`. Vertical divider between. Toggle button is `36×30.4px` with a **plus/minus toggle** (`FaPlus` / `FaMinus` from `react-icons/fa6`). Closed = plus, open = minus. Per Fas 5/25: "it should be a dash, a minus."
 
 ### Section divider convention (matches home page)
 

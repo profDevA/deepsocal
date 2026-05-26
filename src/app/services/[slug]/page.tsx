@@ -37,9 +37,9 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
 
   return (
     <div className="bg-[#e6e6e6] w-full">
-      <section className="w-full px-[clamp(20px,4vw,80px)] pt-[clamp(40px,6vw,80px)] pb-[clamp(20px,3vw,40px)]">
+      <section className="w-full px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] pt-[40px] sm:pt-[56px] md:pt-[68px] lg:pt-[80px] pb-[20px] sm:pb-[28px] md:pb-[34px] lg:pb-[40px]">
         <div className="max-w-[1380px] mx-auto flex flex-col items-center gap-[10px] text-center">
-          <h2 className="font-quintessential text-dark text-[clamp(20px,2.5vw,32px)] leading-[1.4] tracking-[-1.4px] m-0">
+          <h2 className="font-quintessential text-dark text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] leading-[1.4] tracking-[-1.4px] m-0">
             How We work with SoCal Builders
           </h2>
           <WorkFilterDropdown current={service.id} />
@@ -47,8 +47,8 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
       </section>
 
       {service.heroImage && (
-        <section className="w-full px-[clamp(20px,4vw,80px)] pb-[clamp(20px,3vw,40px)]">
-          <div className="max-w-[1380px] mx-auto relative aspect-1380/600 rounded-[clamp(20px,2.5vw,30px)] overflow-hidden bg-[#1f1f1f]">
+        <section className="w-full px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] pb-[20px] sm:pb-[28px] md:pb-[34px] lg:pb-[40px]">
+          <div className="max-w-[1380px] mx-auto relative aspect-1380/600 rounded-[20px] sm:rounded-[24px] md:rounded-[30px] overflow-hidden bg-[#1f1f1f]">
             <Image
               src={service.heroImage}
               alt={`${service.name} — DeepSoCal`}
@@ -58,9 +58,9 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
               className="object-cover"
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
-            <div className="absolute left-[clamp(20px,4%,52px)] bottom-[clamp(20px,4%,40px)]">
+            <div className="absolute left-[20px] sm:left-[32px] md:left-[42px] lg:left-[52px] bottom-[20px] sm:bottom-[28px] md:bottom-[34px] lg:bottom-[40px]">
               <span
-                className="font-bangers text-dark text-[clamp(14px,1.6vw,20px)] leading-[1.4] px-[13px] py-1 inline-block uppercase tracking-wide"
+                className="font-bangers text-dark text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] leading-[1.4] px-[13px] py-1 inline-block uppercase tracking-wide"
                 style={{ backgroundColor: service.themeColor }}
               >
                 {service.description}
@@ -70,10 +70,10 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
         </section>
       )}
 
-      <section className="w-full px-[clamp(20px,4vw,80px)] py-[clamp(40px,5vw,60px)]">
-        <div className="max-w-[1380px] mx-auto border-t border-b border-dark py-[clamp(40px,5vw,60px)] grid grid-cols-1 md:grid-cols-[447px_1fr] gap-[clamp(24px,4vw,60px)] md:divide-x md:divide-dark">
+      <section className="w-full px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] py-[40px] sm:py-[48px] md:py-[54px] lg:py-[60px]">
+        <div className="max-w-[1380px] mx-auto border-t border-b border-dark py-[40px] sm:py-[48px] md:py-[54px] lg:py-[60px] grid grid-cols-1 md:grid-cols-[447px_1fr] gap-[24px] sm:gap-[36px] md:gap-[48px] lg:gap-[60px] md:divide-x md:divide-dark">
           <div className="md:pr-12">
-            <h1 className="font-bangers text-dark text-[clamp(36px,5vw,52px)] leading-[1.04] tracking-[1.44px] uppercase m-0">
+            <h1 className="font-bangers text-dark text-[36px] sm:text-[42px] md:text-[48px] lg:text-[52px] leading-[1.04] tracking-[1.44px] uppercase m-0">
               {service.name}
             </h1>
           </div>
@@ -93,13 +93,13 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
         </div>
       </section>
 
-      <section className="w-full px-[clamp(20px,4vw,80px)] pb-[clamp(60px,8vw,120px)]">
-        <div className="max-w-[1380px] mx-auto flex flex-col gap-[clamp(40px,5vw,60px)]">
-          <h2 className="font-bangers text-dark text-[clamp(28px,3.5vw,40px)] leading-[1.04] tracking-[1.2px] uppercase m-0">
+      <section className="w-full px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] pb-[60px] sm:pb-[80px] md:pb-[100px] lg:pb-[120px]">
+        <div className="max-w-[1380px] mx-auto flex flex-col gap-[40px] sm:gap-[48px] md:gap-[54px] lg:gap-[60px]">
+          <h2 className="font-bangers text-dark text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] leading-[1.04] tracking-[1.2px] uppercase m-0">
             Selected work
           </h2>
           {filtered.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[clamp(24px,4vw,57px)] w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px] sm:gap-[36px] md:gap-[48px] lg:gap-[57px] w-full">
               {filtered.map((cs) => (
                 <CaseStudyCard key={cs.slug} caseStudy={cs} />
               ))}
@@ -112,9 +112,9 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
         </div>
       </section>
 
-      <section className="w-full px-[clamp(20px,4vw,80px)] pb-[clamp(60px,8vw,120px)]">
-        <div className="max-w-[1380px] mx-auto border-t border-dark pt-[clamp(40px,5vw,60px)] flex flex-col items-center gap-[clamp(20px,3vw,32px)] text-center">
-          <h3 className="font-bangers text-dark text-[clamp(28px,4vw,48px)] leading-[1.04] tracking-[1.44px] uppercase m-0">
+      <section className="w-full px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] pb-[60px] sm:pb-[80px] md:pb-[100px] lg:pb-[120px]">
+        <div className="max-w-[1380px] mx-auto border-t border-dark pt-[40px] sm:pt-[48px] md:pt-[54px] lg:pt-[60px] flex flex-col items-center gap-[20px] sm:gap-[24px] md:gap-[28px] lg:gap-[32px] text-center">
+          <h3 className="font-bangers text-dark text-[28px] sm:text-[36px] md:text-[42px] lg:text-[48px] leading-[1.04] tracking-[1.44px] uppercase m-0">
             Ready to get started?
           </h3>
           <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[480px] m-0">

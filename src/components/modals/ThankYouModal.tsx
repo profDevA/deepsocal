@@ -25,12 +25,12 @@ export default function ThankYouModal() {
           </Dialog.Close>
 
           <div className="flex flex-col gap-11 items-center text-center max-w-[723px] w-full px-6 py-16">
-            <Dialog.Title className="font-bangers text-black uppercase m-0 text-[clamp(48px,9vw,96px)] leading-[0.83] tracking-[-1.37px]">
+            <Dialog.Title className="font-bangers text-black uppercase m-0 text-[48px] sm:text-[64px] md:text-[80px] lg:text-[96px] leading-[0.83] tracking-[-1.37px]">
               Thank You!
             </Dialog.Title>
             <p
               id="thankyou-modal-description"
-              className="font-inter font-light text-black text-[clamp(20px,3vw,32px)] leading-[1.18] tracking-[-1.05px] m-0"
+              className="font-inter font-light text-black text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] leading-[1.18] tracking-[-1.05px] m-0"
             >
               Your message has been successfully submitted. We appreciate you
               reaching out to us!

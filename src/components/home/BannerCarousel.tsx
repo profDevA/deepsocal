@@ -92,8 +92,8 @@ export default function BannerCarousel() {
                       <div>
                         <div className="flex flex-col gap-3 items-center">
                           <div className="flex justify-between w-[82%] max-w-[1400px] mx-auto">
-                            <span className="font-semibold text-[clamp(10px,0.9vw,14px)] whitespace-nowrap tracking-[0.5px]">{slide.headerLeft}</span>
-                            <span className="font-semibold text-[clamp(10px,0.9vw,14px)] whitespace-nowrap tracking-[0.5px]">{slide.headerRight}</span>
+                            <span className="font-semibold text-[10px] sm:text-[12px] md:text-[14px] whitespace-nowrap tracking-[0.5px]">{slide.headerLeft}</span>
+                            <span className="font-semibold text-[10px] sm:text-[12px] md:text-[14px] whitespace-nowrap tracking-[0.5px]">{slide.headerRight}</span>
                           </div>
                           <div
                             className={
@@ -122,17 +122,16 @@ export default function BannerCarousel() {
                                   alt={slide.alt}
                                   width={220}
                                   height={80}
-                                  style={{ width: 'clamp(120px, 15vw, 220px)', height: 'auto' }}
+                                  className="w-[120px] sm:w-[160px] md:w-[190px] lg:w-[220px] h-auto"
                                 />
                               </div>
                             )}
                             {slide.overlayType === 'text' && (
                               <div
-                                className="absolute top-[15%] left-[5%] text-white whitespace-pre-line"
+                                className="absolute top-[15%] left-[5%] text-white whitespace-pre-line text-[32px] sm:text-[48px] md:text-[60px] lg:text-[72px]"
                                 style={{
                                   fontFamily: "'Instrument Serif', serif",
                                   fontStyle: 'italic',
-                                  fontSize: 'clamp(32px, 5vw, 72px)',
                                   lineHeight: 1,
                                   textShadow: '1px 2px 8px rgba(0,0,0,0.3)',
                                 }}
@@ -142,16 +141,16 @@ export default function BannerCarousel() {
                             )}
                             {slide.type === 'image' && (
                               <div className="absolute bottom-3 right-3 z-1">
-                                <Image src="/images/banner-watermark.svg" alt="deepSoCal" className="block" width={130} height={40} unoptimized style={{ width: "clamp(90px,9vw,130px)", height: "auto" }} />
+                                <Image src="/images/banner-watermark.svg" alt="deepSoCal" className="block w-[90px] sm:w-[100px] md:w-[115px] lg:w-[130px] h-auto" width={130} height={40} unoptimized />
                               </div>
                             )}
                           </div>
                           {slide.caption && (
-                            <p className="w-[82%] max-w-[1400px] mx-auto font-quintessential text-[clamp(14px,1.25vw,18px)] text-center tracking-[-1.44px] leading-[1.45] text-black p-0">{slide.caption}</p>
+                            <p className="w-[82%] max-w-[1400px] mx-auto font-quintessential text-[14px] sm:text-[16px] md:text-[18px] text-center tracking-[-1.44px] leading-[1.45] text-black p-0">{slide.caption}</p>
                           )}
                           <div className="flex items-center gap-5 w-full pt-2.5">
                             <div className="flex-1 h-px bg-black"></div>
-                            <p className="shrink-0 max-w-[45%] text-[clamp(14px,1vw,20px)] text-center leading-[1.15] m-0 font-bold">{DESC}</p>
+                            <p className="shrink-0 max-w-[45%] text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] text-center leading-[1.15] m-0 font-bold">{DESC}</p>
                             <div className="flex-1 h-px bg-black"></div>
                           </div>
                         </div>

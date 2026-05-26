@@ -9,8 +9,7 @@ import Drawer, { type DrawerNavItem } from "./Drawer";
 const navItems: DrawerNavItem[] = [
   { label: "Our Work", href: "/#work" },
   { label: "Our Difference", href: "/about" },
-  // Shop hidden per Fas (5/22) — not a priority for launch, can re-enable later
-  // { label: "The Shop", href: "/shop" },
+  { label: "The Shop", href: "/shop" },
 ];
 
 const NAV_PILL_CLASS =
@@ -31,9 +30,11 @@ export default function Header() {
     };
   }, [drawerOpen]);
 
+  const calUrl = "https://cal.com/deepsocal/discovery";
+
   const handleBookCall = () => {
     setDrawerOpen(false);
-    openModal("contact");
+    window.open(calUrl, "_blank", "noopener,noreferrer");
   };
 
   return (

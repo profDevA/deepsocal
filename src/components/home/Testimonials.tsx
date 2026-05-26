@@ -57,9 +57,9 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="bg-dark w-full py-[clamp(60px,9vw,120px)] px-[20px] overflow-hidden relative"
+      className="bg-dark w-full py-[60px] sm:py-[80px] md:py-[100px] lg:py-[120px] px-[20px] overflow-hidden relative"
     >
-      <h2 className="font-bangers text-white text-center text-[clamp(32px,4vw,48px)] leading-[50px] tracking-[1.44px] uppercase m-0 mb-[clamp(40px,6vw,80px)]">
+      <h2 className="font-bangers text-white text-center text-[32px] sm:text-[40px] md:text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0 mb-[40px] sm:mb-[56px] md:mb-[68px] lg:mb-[80px]">
         Trusted by SoCal brands
       </h2>
 
@@ -116,7 +116,7 @@ export default function Testimonials() {
       </div>
 
       {/* Dots */}
-      <div className="flex items-center justify-center gap-[15px] mt-[clamp(30px,4vw,48px)]">
+      <div className="flex items-center justify-center gap-[15px] mt-[30px] sm:mt-[36px] md:mt-[42px] lg:mt-[48px]">
         {testimonials.map((_, i) => (
           <button
             key={i}

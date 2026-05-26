@@ -30,41 +30,46 @@ export default function WhyAreWeDifferent() {
         const section = root.current;
         if (!trackEl || !section) return;
 
-        const PAIR_WIDTH = 386 + 27 + 328;
-        const OUTER_GAP = 44;
+        const PAIR_WIDTH = 386 + 26 + 328;
+        const OUTER_GAP = 50;
         const STEP_WIDTH = PAIR_WIDTH + OUTER_GAP;
-        const STEP_SCROLL = 300;
         const pairCount = socalThemes.length;
+        // px of scroll per pair. (pairCount - 1) pairs to traverse.
+        const STEP_SCROLL = 320;
         const totalScroll = (pairCount - 1) * STEP_SCROLL;
 
-        let currentIndex = 0;
-
-        const goTo = (index: number) => {
-          if (index === currentIndex) return;
-          currentIndex = index;
-          gsap.to(trackEl, {
-            x: -index * STEP_WIDTH,
-            duration: 0.4,
-            ease: "power2.out",
-            overwrite: true,
-          });
-        };
-
-        const st = ScrollTrigger.create({
-          trigger: section,
-          start: "top top",
-          end: `+=${totalScroll}`,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const targetIndex = Math.round(self.progress * (pairCount - 1));
-            goTo(targetIndex);
+        // The track is bound directly to scroll progress via `scrub`, so
+        // direction is mathematically guaranteed: forward scroll = track
+        // shifts left (carousel advances), backward scroll = track shifts
+        // right (carousel reverses). `snap` snaps the carousel to whole
+        // pair boundaries when the user stops scrolling, so the carousel
+        // always rests on an exact pair.
+        const tween = gsap.to(trackEl, {
+          x: -(pairCount - 1) * STEP_WIDTH,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: `+=${totalScroll}`,
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            // scrub:true binds the tween directly to scroll. Lenis already
+            // smooths the scroll itself, so no extra scrub-smoothing needed.
+            scrub: true,
+            snap: {
+              snapTo: 1 / (pairCount - 1),
+              duration: { min: 0.2, max: 0.4 },
+              ease: "power2.inOut",
+              delay: 0.05,
+            },
           },
         });
 
         return () => {
-          st.kill();
+          tween.scrollTrigger?.kill();
+          tween.kill();
         };
       });
     },
@@ -75,11 +80,11 @@ export default function WhyAreWeDifferent() {
     <section
       ref={root}
       id="difference"
-      className="bg-[#e6e6e6] w-full py-[60px] px-0"
+      className="bg-[#e6e6e6] w-full px-0 relative z-30 isolate md:min-h-screen md:flex md:flex-col"
     >
-      <div className="w-full">
+      <div className="w-full md:flex-1 md:flex md:flex-col md:justify-center">
         {/* Heading row */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-x-[50px] gap-y-6 py-[48px] px-[40px]">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-x-[50px] gap-y-6 pt-[60px] pb-[40px] px-[40px]">
           <h2 className="font-bangers text-dark text-[48px] leading-[1.04] tracking-[1.44px] m-0">
             Why are we different?
           </h2>
@@ -104,7 +109,7 @@ export default function WhyAreWeDifferent() {
           <div className="mt-6 md:mt-0 md:absolute md:top-0 md:bottom-0 md:left-[654px] md:right-[40px] z-0 flex items-center overflow-hidden">
             <div
               ref={track}
-              className="flex gap-[44px] items-center will-change-transform"
+              className="flex gap-[50px] items-center will-change-transform"
             >
               {socalThemes.map((theme) => (
                 <CarouselPair key={theme.id} theme={theme} />
@@ -122,7 +127,7 @@ export default function WhyAreWeDifferent() {
 
 function CarouselPair({ theme }: { theme: SoCalTheme }) {
   return (
-    <div className="flex gap-[27px] items-center shrink-0">
+    <div className="flex gap-[26px] items-center shrink-0">
       <PhotoCard src={theme.carouselImage} />
       <ThemeCard theme={theme} />
     </div>

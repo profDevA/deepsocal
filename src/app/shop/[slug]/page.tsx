@@ -38,9 +38,9 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
   const related = getRelatedProducts(slug);
 
   return (
-    <div className="bg-[#e6e6e6] w-full pt-[clamp(20px,3vw,32px)] pb-[clamp(40px,6vw,80px)] px-[clamp(16px,2vw,28px)]">
+    <div className="bg-[#e6e6e6] w-full pt-[20px] sm:pt-[24px] md:pt-[28px] lg:pt-[32px] pb-[40px] sm:pb-[56px] md:pb-[68px] lg:pb-[80px] px-[16px] sm:px-[20px] md:px-[24px] lg:px-[28px]">
       <div className="max-w-[1384px] mx-auto">
-        <article className="bg-[#e6e6e6] rounded-[clamp(20px,2.5vw,30px)] border border-[#c4c4c4] overflow-hidden">
+        <article className="bg-[#e6e6e6] rounded-[20px] sm:rounded-[24px] md:rounded-[30px] border border-[#c4c4c4] overflow-hidden">
           <ProductHero product={product} />
           <ProductMeta product={product} />
         </article>
@@ -59,9 +59,9 @@ function ProductHero({ product }: { product: Product }) {
   const cover = product.images[0];
   const thumbs = product.images.length > 0 ? product.images : [];
   return (
-    <div className="relative grid grid-cols-1 md:grid-cols-[1fr_215px] gap-[clamp(20px,3vw,40px)] p-[clamp(20px,4%,80px)]">
+    <div className="relative grid grid-cols-1 md:grid-cols-[1fr_215px] gap-[20px] sm:gap-[28px] md:gap-[34px] lg:gap-[40px] p-[20px] sm:p-[40px] md:p-[60px] lg:p-[80px]">
       <div
-        className="relative aspect-831/743 rounded-[clamp(20px,2.5vw,30px)] overflow-hidden"
+        className="relative aspect-831/743 rounded-[20px] sm:rounded-[24px] md:rounded-[30px] overflow-hidden"
         style={{
           backgroundColor: product.themeColor,
           backgroundImage: cover
@@ -76,7 +76,7 @@ function ProductHero({ product }: { product: Product }) {
             fill
             priority
             sizes="(max-width: 768px) 100vw, 60vw"
-            className="object-contain p-[clamp(20px,4%,60px)] mix-blend-multiply"
+            className="object-contain p-[20px] sm:p-[32px] md:p-[46px] lg:p-[60px] mix-blend-multiply"
           />
         ) : (
           <>
@@ -88,7 +88,7 @@ function ProductHero({ product }: { product: Product }) {
               }}
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="font-bangers text-dark/30 text-[clamp(48px,7vw,96px)] tracking-[2px] uppercase select-none">
+              <span className="font-bangers text-dark/30 text-[48px] sm:text-[64px] md:text-[80px] lg:text-[96px] tracking-[2px] uppercase select-none">
                 {product.name}
               </span>
             </div>
@@ -98,21 +98,21 @@ function ProductHero({ product }: { product: Product }) {
         <button
           type="button"
           aria-label="Previous image"
-          className="absolute left-[clamp(12px,2%,24px)] top-1/2 -translate-y-1/2 bg-white/90 size-[44px] flex items-center justify-center cursor-pointer hover:bg-white transition-colors rounded-sm"
+          className="absolute left-[12px] sm:left-[16px] md:left-[20px] lg:left-[24px] top-1/2 -translate-y-1/2 bg-white/90 size-[44px] flex items-center justify-center cursor-pointer hover:bg-white transition-colors rounded-sm"
         >
           <FaArrowLeft className="text-dark text-sm" />
         </button>
         <button
           type="button"
           aria-label="Next image"
-          className="absolute right-[clamp(12px,2%,24px)] top-1/2 -translate-y-1/2 bg-white/90 size-[44px] flex items-center justify-center cursor-pointer hover:bg-white transition-colors rounded-sm"
+          className="absolute right-[12px] sm:right-[16px] md:right-[20px] lg:right-[24px] top-1/2 -translate-y-1/2 bg-white/90 size-[44px] flex items-center justify-center cursor-pointer hover:bg-white transition-colors rounded-sm"
         >
           <FaArrowRight className="text-dark text-sm" />
         </button>
 
-        <div className="absolute right-[clamp(16px,3%,32px)] bottom-[clamp(16px,3%,32px)]">
+        <div className="absolute right-[16px] sm:right-[20px] md:right-[26px] lg:right-[32px] bottom-[16px] sm:bottom-[20px] md:bottom-[26px] lg:bottom-[32px]">
           <span
-            className="font-bangers text-white text-[clamp(16px,2vw,24px)] leading-none px-4 py-2 inline-block"
+            className="font-bangers text-white text-[16px] sm:text-[18px] md:text-[22px] lg:text-[24px] leading-none px-4 py-2 inline-block"
             style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
           >
             {`$ ${product.price.toFixed(2)}  ${product.shipping}`}
@@ -128,7 +128,7 @@ function ProductHero({ product }: { product: Product }) {
               key={i}
               type="button"
               aria-label={`Image ${i + 1}`}
-              className="relative shrink-0 size-[88px] sm:size-[clamp(96px,12vw,180px)] md:w-full md:h-auto md:aspect-square rounded-[clamp(12px,1.5vw,20px)] overflow-hidden cursor-pointer border border-[#c4c4c4] hover:border-dark transition-colors"
+              className="relative shrink-0 size-[88px] sm:size-[120px] md:w-full md:h-auto md:aspect-square rounded-[12px] sm:rounded-[16px] md:rounded-[20px] overflow-hidden cursor-pointer border border-[#c4c4c4] hover:border-dark transition-colors"
               style={{
                 backgroundColor: product.themeColor,
                 backgroundImage: src
@@ -156,9 +156,9 @@ function ProductHero({ product }: { product: Product }) {
 
 function ProductMeta({ product }: { product: Product }) {
   return (
-    <div className="bg-[#e6e6e6] px-[clamp(20px,4%,64px)] py-[clamp(40px,5%,60px)] grid grid-cols-1 md:grid-cols-[1fr_1fr_300px] gap-[clamp(32px,4vw,60px)]">
+    <div className="bg-[#e6e6e6] px-[20px] sm:px-[36px] md:px-[50px] lg:px-[64px] py-[40px] sm:py-[48px] md:py-[54px] lg:py-[60px] grid grid-cols-1 md:grid-cols-[1fr_1fr_300px] gap-[32px] sm:gap-[40px] md:gap-[50px] lg:gap-[60px]">
       <div className="flex flex-col gap-[15px]">
-        <h1 className="font-bangers text-dark text-[clamp(32px,4vw,48px)] leading-[1.04] tracking-[1.44px] uppercase m-0">
+        <h1 className="font-bangers text-dark text-[32px] sm:text-[38px] md:text-[44px] lg:text-[48px] leading-[1.04] tracking-[1.44px] uppercase m-0">
           {product.name}
         </h1>
         <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] m-0">
@@ -213,7 +213,7 @@ function AddToCartForm({ product }: { product: Product }) {
       <button
         type="button"
         disabled={!product.inStock}
-        className="bg-dark text-white font-bangers text-[clamp(18px,2vw,24px)] tracking-wide uppercase h-[44px] px-6 inline-flex items-center justify-center cursor-pointer transition-colors hover:bg-[#333] disabled:opacity-50 disabled:cursor-not-allowed border-none"
+        className="bg-dark text-white font-bangers text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] tracking-wide uppercase h-[44px] px-6 inline-flex items-center justify-center cursor-pointer transition-colors hover:bg-[#333] disabled:opacity-50 disabled:cursor-not-allowed border-none"
         aria-label={`Add ${product.name} to cart — Stripe checkout coming soon`}
       >
         {product.inStock ? "Add to Cart" : "Sold out"}
@@ -228,15 +228,15 @@ function AddToCartForm({ product }: { product: Product }) {
 
 function RelatedProducts({ products }: { products: Product[] }) {
   return (
-    <section className="mt-[clamp(40px,5vw,52px)] border-t border-b border-dark py-[clamp(24px,3vw,40px)]">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-[clamp(20px,3vw,40px)]">
+    <section className="mt-[40px] sm:mt-[44px] md:mt-[48px] lg:mt-[52px] border-t border-b border-dark py-[24px] sm:py-[30px] md:py-[36px] lg:py-[40px]">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-[20px] sm:gap-[28px] md:gap-[34px] lg:gap-[40px]">
         {products.map((p) => (
           <Link
             key={p.slug}
             href={`/shop/${p.slug}`}
-            className="group block bg-[#dadada] rounded-[clamp(16px,2vw,26px)] overflow-hidden shadow-[0_4px_10px_rgba(0,0,0,0.1)] transition-transform hover:-translate-y-1 no-underline"
+            className="group block bg-[#dadada] rounded-[16px] sm:rounded-[20px] md:rounded-[26px] overflow-hidden shadow-[0_4px_10px_rgba(0,0,0,0.1)] transition-transform hover:-translate-y-1 no-underline"
           >
-            <article className="flex flex-col h-[clamp(360px,28vw,470px)]">
+            <article className="flex flex-col h-[360px] sm:h-[400px] md:h-[440px] lg:h-[470px]">
               <div
                 className="relative flex-1"
                 style={{
@@ -256,7 +256,7 @@ function RelatedProducts({ products }: { products: Product[] }) {
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="font-bangers text-dark/30 text-[clamp(28px,4vw,48px)] tracking-[1.5px] uppercase select-none">
+                    <span className="font-bangers text-dark/30 text-[28px] sm:text-[36px] md:text-[42px] lg:text-[48px] tracking-[1.5px] uppercase select-none">
                       {p.name}
                     </span>
                   </div>
@@ -270,7 +270,7 @@ function RelatedProducts({ products }: { products: Product[] }) {
               </div>
               <div className="bg-white h-[200px] px-[28px] py-[36px] flex items-end gap-4">
                 <div className="flex flex-col gap-2 flex-1 min-w-0">
-                  <h3 className="font-bangers text-[#303030] text-[clamp(24px,2.5vw,32px)] leading-tight tracking-[1px] m-0 uppercase">
+                  <h3 className="font-bangers text-[#303030] text-[24px] sm:text-[28px] md:text-[32px] leading-tight tracking-[1px] m-0 uppercase">
                     {p.name}
                   </h3>
                   <p className="font-inter text-dark text-[14px] leading-[18px] tracking-[0.4px] m-0 line-clamp-2">
@@ -289,10 +289,10 @@ function RelatedProducts({ products }: { products: Product[] }) {
 
 function BackToShop() {
   return (
-    <div className="mt-[clamp(40px,5vw,52px)] border-b border-dark py-[clamp(24px,3vw,40px)]">
+    <div className="mt-[40px] sm:mt-[44px] md:mt-[48px] lg:mt-[52px] border-b border-dark py-[24px] sm:py-[30px] md:py-[36px] lg:py-[40px]">
       <Link
         href="/shop"
-        className="font-inter font-medium text-dark text-[clamp(18px,2.4vw,24px)] leading-none tracking-[-1.5px] uppercase no-underline inline-flex items-center gap-3 hover:opacity-70 transition-opacity"
+        className="font-inter font-medium text-dark text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] leading-none tracking-[-1.5px] uppercase no-underline inline-flex items-center gap-3 hover:opacity-70 transition-opacity"
       >
         <FaArrowLeft className="text-[18px]" />
         Back to shop

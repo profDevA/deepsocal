@@ -64,8 +64,8 @@ export default function Hero() {
         scrollTrigger: {
           trigger: root.current,
           start: "top top",
-          end: "+=300",
-          scrub: 1,
+          end: "+=400",
+          scrub: 0.3,
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
@@ -85,12 +85,12 @@ export default function Hero() {
     <section
       ref={root}
       id="hero"
-      className="bg-[#e6e6e6] w-full flex flex-col items-center px-[clamp(16px,4vw,32px)] pt-[clamp(60px,12vw,180px)] pb-[clamp(60px,9vw,140px)]"
+      className="bg-[#e6e6e6] w-full flex flex-col items-center px-[16px] sm:px-[24px] md:px-[32px] pt-[80px] sm:pt-[120px] md:pt-[160px] lg:pt-[200px] pb-[120px] sm:pb-[180px] md:pb-[260px] lg:pb-[350px]"
     >
-      <div className="w-full max-w-[1071px] flex flex-col items-center gap-[clamp(20px,3vw,40px)] text-center">
+      <div className="w-full max-w-[1071px] flex flex-col items-center gap-[20px] sm:gap-[28px] md:gap-[40px] text-center">
         <h1
           ref={headlineRef}
-          className="font-bangers tracking-[clamp(0.5px,0.2vw,3px)] leading-[0.94] text-[clamp(36px,8vw,96px)] m-0 wrap-break-word hyphens-auto"
+          className="font-bangers tracking-[1px] sm:tracking-[2px] md:tracking-[3px] leading-[0.94] text-[36px] sm:text-[56px] md:text-[76px] lg:text-[96px] m-0 wrap-break-word hyphens-auto"
         >
           {HEADLINE.split(" ").map((w, i) => (
             <span
@@ -109,8 +109,8 @@ export default function Hero() {
         </p>
       </div>
 
-      <div className="mt-[clamp(40px,7vw,90px)] w-full max-w-[924px] flex flex-col items-center gap-[clamp(20px,3vw,40px)]">
-        <div className="hero-video relative w-full max-w-[535px] aspect-535/271 overflow-hidden rounded-[clamp(8px,1vw,16px)] bg-dark">
+      <div className="mt-[60px] sm:mt-[80px] md:mt-[100px] lg:mt-[120px] w-full max-w-[924px] flex flex-col items-center gap-[60px] sm:gap-[72px] md:gap-[88px] lg:gap-[100px]">
+        <div className="hero-video relative w-full max-w-[535px] aspect-535/271 overflow-hidden rounded-[8px] sm:rounded-[12px] md:rounded-[16px] bg-dark">
           <video
             src="/videos/california.mp4"
             autoPlay
@@ -127,7 +127,7 @@ export default function Hero() {
         <a
           href="#companies"
           aria-label="Scroll to next section"
-          className="hero-arrow inline-flex items-center justify-center w-[clamp(20px,2vw,32px)] h-auto text-dark animate-bounce hover:opacity-70 transition-opacity"
+          className="hero-arrow inline-flex items-center justify-center w-[20px] sm:w-[24px] md:w-[32px] h-auto text-dark animate-bounce hover:opacity-70 transition-opacity"
           style={{ animationDuration: "2.4s" }}
         >
           <Image

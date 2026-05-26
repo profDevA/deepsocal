@@ -37,13 +37,13 @@ export default function WorkFilterDropdown({
   };
 
   return (
-    <div ref={ref} className="relative w-[clamp(240px,30vw,293px)]">
+    <div ref={ref} className="relative w-[240px] sm:w-[260px] md:w-[280px] lg:w-[293px]">
       <button
         type="button"
         onClick={() => setOpen(!open)}
         className="bg-dark border border-[#bdbdbd] flex items-center justify-between w-full h-[53px] px-6 text-brand cursor-pointer"
       >
-        <span className="font-bangers text-[clamp(20px,2vw,28px)] leading-none">
+        <span className="font-bangers text-[20px] sm:text-[24px] md:text-[28px] leading-none">
           {currentLabel}
         </span>
         <svg

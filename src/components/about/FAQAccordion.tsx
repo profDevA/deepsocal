@@ -1,7 +1,7 @@
 "use client";
 
 import * as Accordion from "@radix-ui/react-accordion";
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus, FaMinus } from "react-icons/fa6";
 import { faqs } from "@/data/faqs";
 
 export default function FAQAccordion() {
@@ -20,10 +20,11 @@ export default function FAQAccordion() {
               </span>
               <span
                 aria-hidden="true"
-                className="w-[36px] h-[30.4px] flex items-center justify-center shrink-0 transition-transform group-data-[state=open]:rotate-45"
+                className="w-[36px] h-[30.4px] flex items-center justify-center shrink-0"
                 style={{ backgroundColor: "rgba(2,2,2,0.8)" }}
               >
-                <FaPlus className="text-[#E6E6E6] text-[12px]" />
+                <FaPlus className="text-[#E6E6E6] text-[12px] group-data-[state=open]:hidden" />
+                <FaMinus className="text-[#E6E6E6] text-[12px] hidden group-data-[state=open]:block" />
               </span>
             </Accordion.Trigger>
           </Accordion.Header>

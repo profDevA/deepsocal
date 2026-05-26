@@ -23,7 +23,7 @@ export default function CompaniesMarquee() {
     >
       <div className="mx-[20px] border-t border-b border-dark py-9">
         <div
-          className="flex items-center gap-[clamp(36px,4vw,54px)] whitespace-nowrap animate-marquee"
+          className="flex items-center gap-[36px] sm:gap-[42px] md:gap-[48px] lg:gap-[54px] whitespace-nowrap animate-marquee"
           style={{ width: "max-content" }}
         >
           {[...companies, ...companies].map((company, i) => (
@@ -43,7 +43,7 @@ export default function CompaniesMarquee() {
                   unoptimized
                 />
               ) : (
-                <span className="font-bangers text-dark text-[clamp(20px,2vw,28px)] tracking-[1px] leading-none uppercase">
+                <span className="font-bangers text-dark text-[20px] sm:text-[24px] md:text-[28px] tracking-[1px] leading-none uppercase">
                   {company.name}
                 </span>
               )}

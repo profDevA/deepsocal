@@ -9,8 +9,8 @@ export default function AllSetModal() {
   return (
     <CenterModal open={activeModal === "allset"} onClose={closeModal}>
       <div className="text-center py-[60px] px-10 max-w-[723px] mx-auto">
-        <h2 className="font-[Arial,sans-serif] font-bold text-[clamp(48px,4.7vw,68px)] leading-[1.17] tracking-[-1.37px] uppercase mb-11 text-black">You&apos;re All Set!</h2>
-        <p className="font-[Arial,sans-serif] font-normal text-[clamp(22px,2.4vw,35px)] leading-[1.44] tracking-[-1.05px] max-w-[723px] mx-auto mb-11 text-black">
+        <h2 className="font-[Arial,sans-serif] font-bold text-[48px] sm:text-[56px] md:text-[68px] leading-[1.17] tracking-[-1.37px] uppercase mb-11 text-black">You&apos;re All Set!</h2>
+        <p className="font-[Arial,sans-serif] font-normal text-[22px] sm:text-[28px] md:text-[35px] leading-[1.44] tracking-[-1.05px] max-w-[723px] mx-auto mb-11 text-black">
           You&apos;ve successfully registered for our free scoping workshop.
         </p>
         <div className="flex gap-[38px] justify-center items-center flex-wrap">

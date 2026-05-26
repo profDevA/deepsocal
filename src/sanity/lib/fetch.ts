@@ -9,8 +9,14 @@ import {
 
 type SanityCaseStudy = CaseStudy & { _id: string };
 
+const REVALIDATE = { next: { revalidate: 30 } } as const;
+
 export async function fetchAllCaseStudies(): Promise<CaseStudy[]> {
-  const results: SanityCaseStudy[] = await client.fetch(ALL_CASE_STUDIES_QUERY);
+  const results: SanityCaseStudy[] = await client.fetch(
+    ALL_CASE_STUDIES_QUERY,
+    {},
+    REVALIDATE
+  );
   return results.map(normalizeCaseStudy);
 }
 
@@ -19,13 +25,18 @@ export async function fetchCaseStudyBySlug(
 ): Promise<CaseStudy | undefined> {
   const result: SanityCaseStudy | null = await client.fetch(
     CASE_STUDY_BY_SLUG_QUERY,
-    { slug }
+    { slug },
+    REVALIDATE
   );
   return result ? normalizeCaseStudy(result) : undefined;
 }
 
 export async function fetchCaseStudySlugs(): Promise<string[]> {
-  const results: { slug: string }[] = await client.fetch(CASE_STUDY_SLUGS_QUERY);
+  const results: { slug: string }[] = await client.fetch(
+    CASE_STUDY_SLUGS_QUERY,
+    {},
+    REVALIDATE
+  );
   return results.map((r) => r.slug);
 }
 
@@ -34,7 +45,8 @@ export async function fetchCaseStudiesByService(
 ): Promise<CaseStudy[]> {
   const results: SanityCaseStudy[] = await client.fetch(
     CASE_STUDIES_BY_SERVICE_QUERY,
-    { serviceId }
+    { serviceId },
+    REVALIDATE
   );
   return results.map(normalizeCaseStudy);
 }
@@ -43,7 +55,7 @@ export async function fetchCaseStudiesByService(
 function capImageUrl(url: string | undefined | null, maxWidth = 1920): string {
   if (!url) return "";
   if (url.startsWith("https://cdn.sanity.io/")) {
-    return `${url}?w=${maxWidth}&q=80&auto=format`;
+    return `${url}?w=${maxWidth}&q=80&fit=max`;
   }
   return url;
 }

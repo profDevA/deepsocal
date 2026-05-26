@@ -38,7 +38,7 @@ function ImageCard({
   return (
     <Link
       href={`/works/${caseStudy.slug}`}
-      className="group block w-full max-w-[406px] mx-auto rounded-[24px] overflow-hidden shadow-[0_5px_37px_rgba(0,0,0,0.18)] bg-[#dadada] transition-transform hover:-translate-y-1 no-underline"
+      className="group block w-full max-w-[406px] mx-auto rounded-[24px] overflow-hidden shadow-[0_5.42px_37.4px_rgba(0,0,0,0.25)] bg-[#dadada] transition-transform hover:-translate-y-1 no-underline isolate"
     >
       <article className="relative h-[453px] flex flex-col">
         <div className="relative flex-1 overflow-hidden">
@@ -53,11 +53,11 @@ function ImageCard({
         </div>
 
         <div
-          className="card-bottom-panel h-[204px] rounded-t-[24px] -mt-[24px] relative px-[34px] pt-[16px] pb-[34px] flex flex-col z-10 transition-colors duration-300"
+          className="card-bottom-panel h-[204px] rounded-t-[24px] -mt-[24px] relative px-[34px] pt-[17px] pb-[34px] flex flex-col z-10 transition-colors duration-300"
           style={{ backgroundColor: "white", "--hover-bg": hoverBg } as React.CSSProperties}
         >
           <span
-            className="self-end font-bangers text-white text-[16px] leading-[1.4] px-[13px] py-0.5 whitespace-nowrap uppercase"
+            className="self-end font-bangers text-white text-[20px] leading-[1.4] px-[13px] py-0.5 whitespace-nowrap uppercase"
             style={{ backgroundColor: "rgba(17,17,17,0.8)" }}
           >
             {caseStudy.tag}
@@ -65,7 +65,7 @@ function ImageCard({
 
           <div className="flex items-end gap-[30px] mt-auto">
             <div className="flex flex-col gap-[11px] flex-1 min-w-0">
-              <h3 className="font-bangers text-[#303030] text-[36px] leading-[45px] tracking-[1.08px] m-0 uppercase">
+              <h3 className="font-bangers text-dark text-[36px] leading-[45px] tracking-[1.08px] m-0 uppercase">
                 {caseStudy.title}
               </h3>
               <p className="font-inter text-[#3a3a3a] text-[16px] leading-[20px] tracking-[0.48px] m-0">

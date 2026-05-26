@@ -75,26 +75,26 @@ export default function ServicePageLayout({
       </section>
 
       {/* Tagline */}
-      <section className="px-[1.1vw]! max-[1025px]:px-[15px]! py-[clamp(24px,4vw,40px)]">
+      <section className="px-[1.1vw]! max-[1025px]:px-[15px]! py-[24px] sm:py-[32px] md:py-[40px]">
         <div className="w-full px-[1.1vw] max-[1025px]:px-[15px]">
-          <div className="flex items-center justify-center max-w-[1378px] mx-auto" style={{ gap: 'clamp(24px, 4.9vw, 71px)', flexWrap: 'nowrap' }}>
+          <div className="flex items-center justify-center max-w-[1378px] mx-auto gap-[24px] sm:gap-[40px] md:gap-[56px] lg:gap-[71px] flex-nowrap">
             <span className="flex-[1_1_0] max-w-[315px] h-px bg-dark opacity-85 max-[991px]:hidden!" aria-hidden="true"></span>
-            <p className="shrink-0 w-[clamp(280px,42vw,606px)] font-inter text-[clamp(16px,1.39vw,20px)] font-bold leading-[1.13] tracking-[-0.32px] text-dark text-center mb-0">DeepSoCal is a regional strategic design agency building transformative experiences for SoCal&rsquo;s brands by blending deep research, AI &amp; technology, strategy, design, and technology.</p>
+            <p className="shrink-0 w-[280px] sm:w-[400px] md:w-[500px] lg:w-[606px] font-inter text-[16px] sm:text-[18px] md:text-[20px] font-bold leading-[1.13] tracking-[-0.32px] text-dark text-center mb-0">DeepSoCal is a regional strategic design agency building transformative experiences for SoCal&rsquo;s brands by blending deep research, AI &amp; technology, strategy, design, and technology.</p>
             <span className="flex-[1_1_0] max-w-[315px] h-px bg-dark opacity-85 max-[991px]:hidden!" aria-hidden="true"></span>
           </div>
         </div>
       </section>
 
       {/* Your Ally dropdown */}
-      <section id="your-ally" className="flex flex-wrap items-center px-[1.1vw] max-[1025px]:px-[15px] py-[clamp(40px,12vw,160px)]">
+      <section id="your-ally" className="flex flex-wrap items-center px-[1.1vw] max-[1025px]:px-[15px] py-[40px] sm:py-[80px] md:py-[120px] lg:py-[160px]">
         <div className="w-full">
           <div className="flex flex-wrap">
             <div className="w-full">
               <div className="max-w-[50vw] text-center mx-auto max-[1025px]:max-w-full">
-                <h4 className="font-instrument text-[clamp(20px,2.5vw,36px)] font-normal tracking-[-1.44px] leading-[1.38]">{allyText}</h4>
+                <h4 className="font-instrument text-[20px] sm:text-[26px] md:text-[32px] lg:text-[36px] font-normal tracking-[-1.44px] leading-[1.38]">{allyText}</h4>
                 <div className="relative inline-flex">
                   <button
-                    className="bg-black text-brand border border-[#bdbdbd] rounded-[15px] px-[25px] py-3 font-inter font-light italic text-[clamp(16px,1.6vw,24px)] gap-2.5 min-w-[280px] inline-flex justify-between items-center cursor-pointer no-underline outline-none"
+                    className="bg-black text-brand border border-[#bdbdbd] rounded-[15px] px-[25px] py-3 font-inter font-light italic text-[16px] sm:text-[18px] md:text-[22px] lg:text-[24px] gap-2.5 min-w-[280px] inline-flex justify-between items-center cursor-pointer no-underline outline-none"
                     type="button"
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                     style={dropdownOpen ? { borderRadius: "15px 15px 0 0" } : { borderRadius: "15px" }}
@@ -128,7 +128,7 @@ export default function ServicePageLayout({
           <div className="flex flex-wrap order-1">
             <div className="w-full text-center">
               <div className="font-druk">
-                <h3 className="text-[clamp(40px,7vw,105px)] uppercase leading-[1.1] text-brand max-[767.98px]:text-[clamp(28px,9vw,36px)] max-[767.98px]:leading-[1.05]" dangerouslySetInnerHTML={{ __html: heading }} />
+                <h3 className="text-[28px] sm:text-[48px] md:text-[76px] lg:text-[105px] uppercase leading-[1.1] text-brand max-[767.98px]:leading-[1.05]" dangerouslySetInnerHTML={{ __html: heading }} />
               </div>
             </div>
           </div>
@@ -161,10 +161,10 @@ export default function ServicePageLayout({
             <div className="w-full">
               {categories.map((cat, i) => (
                 <div className={`block ${i === 0 ? "border-t border-dark " : ""}border-b border-dark py-4`} key={i}>
-                  <div className="grid! grid-cols-[30%_30%_40%] gap-x-0 items-center w-full min-h-[clamp(100px,11.4vw,164px)] max-[767.98px]:grid-cols-[15%_35%_50%] max-[767.98px]:min-h-[80px] max-[575px]:grid-cols-[12%_38%_50%]">
-                    <div className="relative text-[clamp(22px,2vw,30px)] leading-normal pr-4 self-stretch flex items-start pt-[clamp(8px,1.6vw,24px)] after:content-[''] after:absolute after:w-px after:bg-dark after:right-0 after:top-0 after:bottom-0 max-[767.98px]:text-sm max-[767.98px]:after:top-[-10px] max-[767.98px]:after:bottom-[-10px] font-druk">{cat.number}</div>
-                    <div className="text-[clamp(22px,4vw,58px)] leading-[0.79] font-medium pl-[clamp(0.75rem,1vw,1rem)] max-[767.98px]:text-[clamp(14px,3.5vw,18px)] max-[767.98px]:leading-[0.95] font-druk" dangerouslySetInnerHTML={{ __html: cat.title }} />
-                    <div className="pl-[clamp(1rem,2vw,2rem)]">
+                  <div className="grid! grid-cols-[30%_30%_40%] gap-x-0 items-center w-full min-h-[100px] sm:min-h-[120px] md:min-h-[142px] lg:min-h-[164px] max-[767.98px]:grid-cols-[15%_35%_50%] max-[767.98px]:min-h-[80px] max-[575px]:grid-cols-[12%_38%_50%]">
+                    <div className="relative text-[22px] sm:text-[24px] md:text-[28px] lg:text-[30px] leading-normal pr-4 self-stretch flex items-start pt-[8px] sm:pt-[14px] md:pt-[20px] lg:pt-[24px] after:content-[''] after:absolute after:w-px after:bg-dark after:right-0 after:top-0 after:bottom-0 max-[767.98px]:text-sm max-[767.98px]:after:top-[-10px] max-[767.98px]:after:bottom-[-10px] font-druk">{cat.number}</div>
+                    <div className="text-[22px] sm:text-[32px] md:text-[46px] lg:text-[58px] leading-[0.79] font-medium pl-[0.75rem] sm:pl-[0.875rem] md:pl-[1rem] max-[767.98px]:text-[14px] max-[767.98px]:leading-[0.95] font-druk" dangerouslySetInnerHTML={{ __html: cat.title }} />
+                    <div className="pl-[1rem] sm:pl-[1.25rem] md:pl-[1.5rem] lg:pl-[2rem]">
                       <p className="m-0 font-inter text-base! font-medium leading-[1.4] tracking-[-0.02em] max-[767.98px]:text-[11px]! max-[767.98px]:leading-[1.35]!">{cat.description}</p>
                     </div>
                   </div>
@@ -182,8 +182,8 @@ export default function ServicePageLayout({
             <div className="flex flex-wrap items-center">
               <div className="w-full lg:w-5/12">
                 <div className="border-l border-r border-brand py-[8vw] px-6 pb-[7vw] max-[1024px]:border-l-0 max-[1024px]:border-r-0 max-[1024px]:border-b max-[1024px]:border-[rgba(227,223,220,0.35)] max-[1024px]:pb-7 max-[1024px]:mb-2 max-[1024px]:pt-0">
-                  <h3 className="font-druk text-[clamp(20px,3.75vw,55px)] mb-0 leading-[1.1]">YOUR <br /> EMBEDDED ALLY</h3>
-                  <p className="font-quintessential text-[clamp(1.15rem,2vw,1.625rem)] leading-[1.35] mb-2">Across Southern California</p>
+                  <h3 className="font-druk text-[20px] sm:text-[32px] md:text-[44px] lg:text-[55px] mb-0 leading-[1.1]">YOUR <br /> EMBEDDED ALLY</h3>
+                  <p className="font-quintessential text-[1.15rem] sm:text-[1.35rem] md:text-[1.5rem] lg:text-[1.625rem] leading-[1.35] mb-2">Across Southern California</p>
                   <p className="font-inter text-base leading-[1.45] tracking-[-0.33px] text-brand mt-4 mb-0">{embeddedAlly.body}</p>
                   {embeddedAlly.body2 && (
                     <p className="font-inter text-base leading-[1.45] tracking-[-0.33px] text-brand mt-3 mb-0">{embeddedAlly.body2}</p>
@@ -192,15 +192,15 @@ export default function ServicePageLayout({
               </div>
               <div className="w-full lg:w-7/12">
                 <div className="border-r border-brand flex flex-col items-center justify-center h-full px-6 py-[8vw] pb-[7vw] max-[1024px]:border-r-0 max-[1024px]:pt-5 max-[1024px]:pb-0 text-center">
-                  <p className="font-inter text-[clamp(1.15rem,2.2vw,1.75rem)] leading-[1.4] text-brand mb-1">{embeddedAlly.prompt}</p>
+                  <p className="font-inter text-[1.15rem] sm:text-[1.35rem] md:text-[1.55rem] lg:text-[1.75rem] leading-[1.4] text-brand mb-1">{embeddedAlly.prompt}</p>
                   <div className="relative inline-flex">
                     <button
-                      className="bg-transparent border-none text-brand font-druk text-[clamp(24px,3.75vw,55px)] leading-[1.1] flex items-center gap-3 cursor-pointer flex-wrap justify-center max-[1024px]:text-[1.15rem] max-[1024px]:gap-[0.65rem]"
+                      className="bg-transparent border-none text-brand font-druk text-[24px] sm:text-[36px] md:text-[46px] lg:text-[55px] leading-[1.1] flex items-center gap-3 cursor-pointer flex-wrap justify-center max-[1024px]:text-[1.15rem] max-[1024px]:gap-[0.65rem]"
                       type="button"
                       onClick={() => setAllyDropdown(!allyDropdown)}
                     >
                       {embeddedAlly.buttonText}
-                      <span className="bg-brand text-dark rounded-full w-[clamp(40px,3.5vw,52px)] h-[clamp(40px,3.5vw,52px)] min-w-[40px] inline-flex items-center justify-center text-[1.1rem] max-[1024px]:w-[37px] max-[1024px]:h-[37px] max-[1024px]:min-w-[37px]">
+                      <span className="bg-brand text-dark rounded-full w-[40px] sm:w-[44px] md:w-[48px] lg:w-[52px] h-[40px] sm:h-[44px] md:h-[48px] lg:h-[52px] min-w-[40px] inline-flex items-center justify-center text-[1.1rem] max-[1024px]:w-[37px] max-[1024px]:h-[37px] max-[1024px]:min-w-[37px]">
                         <FaAngleDown />
                       </span>
                     </button>

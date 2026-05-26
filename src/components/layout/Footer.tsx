@@ -13,11 +13,11 @@ export default function Footer() {
 
   return (
     <footer className="bg-dark w-full">
-      <div className="px-[clamp(20px,5vw,80px)] py-[clamp(40px,5vw,60px)]">
+      <div className="px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] py-[40px] sm:py-[48px] md:py-[54px] lg:py-[60px]">
         <div className="max-w-[1380px] mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[clamp(30px,4vw,60px)]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[30px] sm:gap-[40px] md:gap-[50px] lg:gap-[60px]">
             <div className="flex flex-col gap-2">
-              <span className="font-bangers text-[#d7d7d7] text-[clamp(28px,3vw,38px)] leading-none tracking-[1px]">
+              <span className="font-bangers text-[#d7d7d7] text-[28px] sm:text-[32px] md:text-[38px] leading-none tracking-[1px]">
                 DeepSocal
               </span>
               <span className="font-inter text-[#d7d7d7] text-[14px] leading-[18px] tracking-[0.42px]">
@@ -46,7 +46,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="border-t border-[#c5c5c5] mt-[clamp(30px,4vw,50px)] pt-[18px] flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="border-t border-[#c5c5c5] mt-[30px] sm:mt-[38px] md:mt-[44px] lg:mt-[50px] pt-[18px] flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="font-inter text-[#d7d7d7] text-[16px] leading-[20px] tracking-[0.48px] m-0">
               Copyright &copy; {new Date().getFullYear()} | All rights reserved.
             </p>
