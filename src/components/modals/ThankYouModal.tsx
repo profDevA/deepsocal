@@ -12,14 +12,18 @@ export default function ThankYouModal() {
   return (
     <Dialog.Root open={open} onOpenChange={(v) => !v && closeModal()}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-99998 bg-black/50" />
+        {/* z-999998 / z-999999 — must sit ABOVE `PageFrame` (z-100000) so
+            the decorative rails and the rotated "CONTACT US" button do NOT
+            leak through. Matches the z-index convention used by
+            `CenterModal` / `SideModal`. */}
+        <Dialog.Overlay className="fixed inset-0 z-999998 bg-black/50" />
         <Dialog.Content
           aria-describedby="thankyou-modal-description"
-          className="fixed inset-0 z-99999 bg-[#e6e6e6] flex items-center justify-center overflow-y-auto"
+          className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-999999 bg-[#e6e6e6] w-[1134px] h-[829px] max-w-[calc(100vw-80px)] max-h-[calc(100vh-80px)] flex items-center justify-center overflow-y-auto"
         >
           <Dialog.Close
             aria-label="Close"
-            className="absolute top-7 right-7 w-10 h-10 bg-dark text-white rounded-full inline-flex items-center justify-center text-[22px] cursor-pointer border-none z-10"
+            className="absolute top-[30px] right-[48px] w-10 h-10 bg-dark text-white rounded-full inline-flex items-center justify-center text-[22px] cursor-pointer border-none z-10"
           >
             <FaXmark />
           </Dialog.Close>
@@ -45,7 +49,7 @@ export default function ThankYouModal() {
                 Got it, thanks
               </button>
               <Link
-                href="/#services"
+                href="/#work"
                 onClick={closeModal}
                 className="font-bangers bg-transparent border border-black text-black text-[16px] tracking-[0.24px] uppercase w-[190px] h-[57px] inline-flex items-center justify-center no-underline cursor-pointer transition-colors hover:bg-black hover:text-white"
               >

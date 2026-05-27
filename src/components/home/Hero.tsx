@@ -109,7 +109,7 @@ export default function Hero() {
         </p>
       </div>
 
-      <div className="mt-[60px] sm:mt-[80px] md:mt-[100px] lg:mt-[120px] w-full max-w-[924px] flex flex-col items-center gap-[60px] sm:gap-[72px] md:gap-[88px] lg:gap-[100px]">
+      <div className="mt-[60px] sm:mt-[80px] md:mt-[110px] lg:mt-[143px] w-full max-w-[924px] flex flex-col items-center gap-[60px] sm:gap-[76px] md:gap-[95px] lg:gap-[114px]">
         <div className="hero-video relative w-full max-w-[535px] aspect-535/271 overflow-hidden rounded-[8px] sm:rounded-[12px] md:rounded-[16px] bg-dark">
           <video
             src="/videos/california.mp4"

@@ -38,12 +38,27 @@ export default function WhyAreWeDifferent() {
         const STEP_SCROLL = 320;
         const totalScroll = (pairCount - 1) * STEP_SCROLL;
 
-        // The track is bound directly to scroll progress via `scrub`, so
-        // direction is mathematically guaranteed: forward scroll = track
-        // shifts left (carousel advances), backward scroll = track shifts
-        // right (carousel reverses). `snap` snaps the carousel to whole
-        // pair boundaries when the user stops scrolling, so the carousel
-        // always rests on an exact pair.
+        // ──────────────────────────────────────────────────────────────
+        // Carousel motion config
+        // ──────────────────────────────────────────────────────────────
+        // 1. `scrub: 1` (not `scrub: true`) — adds a 1-second easing
+        //    catch-up between scroll position and track position. This
+        //    is the GSAP equivalent of Framer Motion's spring-smoothed
+        //    `useTransform` (which is what OrthoFX uses for the same
+        //    section). A hard `scrub: true` mapping feels mechanical;
+        //    `scrub: 1` makes the track glide and decelerate naturally.
+        //
+        // 2. `snap` (pair-based) — per Israel's spec the carousel must
+        //    advance "in twos" (one photo + one theme card together),
+        //    not flow continuously. `directional: true` (GSAP 3.10+
+        //    default, made explicit here) snaps in the direction the
+        //    user was scrolling, so it never pulls backward when they
+        //    were going forward and vice-versa. `delay: 0.15` gives
+        //    `scrub: 1` enough time to settle before snap engages, so
+        //    they don't fight each other. The earlier "reverse on
+        //    scroll up" symptom was from a deprecated onUpdate +
+        //    Math.round commit handler, not from snap.
+        // ──────────────────────────────────────────────────────────────
         const tween = gsap.to(trackEl, {
           x: -(pairCount - 1) * STEP_WIDTH,
           ease: "none",
@@ -55,14 +70,14 @@ export default function WhyAreWeDifferent() {
             pinSpacing: true,
             anticipatePin: 1,
             invalidateOnRefresh: true,
-            // scrub:true binds the tween directly to scroll. Lenis already
-            // smooths the scroll itself, so no extra scrub-smoothing needed.
-            scrub: true,
+            scrub: 1,
             snap: {
               snapTo: 1 / (pairCount - 1),
-              duration: { min: 0.2, max: 0.4 },
+              duration: { min: 0.25, max: 0.5 },
               ease: "power2.inOut",
-              delay: 0.05,
+              delay: 0.15,
+              directional: true,
+              inertia: false,
             },
           },
         });
@@ -82,9 +97,17 @@ export default function WhyAreWeDifferent() {
       id="difference"
       className="bg-[#e6e6e6] w-full px-0 relative z-30 isolate md:min-h-screen md:flex md:flex-col"
     >
+      {/* Inner content wrapper — `md:flex-1 md:justify-center` centers
+          the heading + cards block vertically inside the viewport-sized
+          section. This is what produces the **top inset** during pin
+          (visible breathing room between the viewport top / sticky
+          header and the "WHY ARE WE DIFFERENT?" heading) and a matching
+          inset below the cards. Without `min-h-screen` the section
+          collapses to content-height and the heading sits flush against
+          the header — which Israel/Fas explicitly does NOT want. */}
       <div className="w-full md:flex-1 md:flex md:flex-col md:justify-center">
         {/* Heading row */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-x-[50px] gap-y-6 pt-[60px] pb-[40px] px-[40px]">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-x-[50px] gap-y-6 pb-[40px] px-[40px]">
           <h2 className="font-bangers text-dark text-[48px] leading-[1.04] tracking-[1.44px] m-0">
             Why are we different?
           </h2>
@@ -99,7 +122,7 @@ export default function WhyAreWeDifferent() {
         </div>
 
         {/* Cards row — map stays fixed, carousel slides behind it */}
-        <div className="relative mb-[50px] md:pl-[40px]">
+        <div className="relative md:pl-[40px]">
           {/* California map — higher z-index, positioned left, taller than carousel items */}
           <div className="relative z-10 w-full md:w-[614px] h-[421px] rounded-[39px] overflow-hidden">
             <CaliforniaMap className="w-full h-full object-cover block" />
@@ -117,10 +140,12 @@ export default function WhyAreWeDifferent() {
             </div>
           </div>
         </div>
-
-        {/* Bottom border */}
-        <div className="border-b border-dark mx-[40px]" />
       </div>
+
+      {/* Bottom border — at the section's TRUE bottom edge (outside the
+          centered flex column above). Unpinning lands WorkGrid flush
+          against the line — no gap. */}
+      <div className="border-b border-dark mx-[25px]" />
     </section>
   );
 }

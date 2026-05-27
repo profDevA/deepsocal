@@ -10,9 +10,10 @@ import { companies } from "@/data/companies";
  * sitting in exactly the position where the first started, so the snap-back to
  * `0%` is invisible. Result: no gap, no jump, infinite scroll.
  *
- * Edge inset (mx-[40px]) keeps the top/bottom borders from touching the
- * vertical page-frame rails on the home page (which sit at 15px from each
- * viewport edge).
+ * Edge inset (mx-[25px]) matches the site-wide section-divider convention
+ * (see CLAUDE.md): 10px gap to the page-frame vertical rails (which sit at
+ * 15px from each viewport edge), so the top/bottom dividers line up with
+ * every other horizontal section divider on the home page.
  */
 export default function CompaniesMarquee() {
   return (
@@ -21,7 +22,7 @@ export default function CompaniesMarquee() {
       aria-label="Companies we've worked with"
       className="bg-[#e6e6e6] overflow-hidden"
     >
-      <div className="mx-[20px] border-t border-b border-dark py-9">
+      <div className="mx-[25px] border-t border-b border-dark py-9">
         <div
           className="flex items-center gap-[36px] sm:gap-[42px] md:gap-[48px] lg:gap-[54px] whitespace-nowrap animate-marquee"
           style={{ width: "max-content" }}

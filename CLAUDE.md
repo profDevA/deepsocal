@@ -31,14 +31,14 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - `/about` — About page (hero, mission, team grid, "WE'RE SOCAL-LOCAL" community grid, FAQ accordion)
 - `/works/[slug]` — Case study detail (dynamic, `generateStaticParams`)
 - `/services/[slug]` — Service detail (4 services, `generateStaticParams`)
-- `/shop` — Product listing (hidden from nav per 5/22 meeting — not a launch priority)
+- `/shop` — Product listing (re-enabled in nav 5/26 — client needs to see the shop page)
 - `/shop/[slug]` — Product detail
 - `/studio` — Embedded Sanity Studio (content management)
 
 **Key components (`src/components/`):**
 - `home/Hero.tsx` — Full-screen hero with video (`/videos/california.mp4`) and staggered text reveal (GSAP)
-- `home/WhyAreWeDifferent.tsx` — Pinned section with horizontal carousel (map + pair-snap on scroll)
-- `home/WorkGrid.tsx` — Client component; in-place service filtering via dropdown, swaps content without navigation
+- `home/WhyAreWeDifferent.tsx` — Pinned section with horizontal carousel. Uses `scrub: true + snap` so the track position is bound 1:1 to scroll progress — direction is mathematically guaranteed to follow scroll direction. See "WhyAreWeDifferent — Pair-snap scroll animation" below.
+- `home/WorkGrid.tsx` — Client component; in-place service filtering via dropdown + `view all` / `view less` expand toggle (default shows 12 cards, click to reveal the rest with GSAP fade-up animation, staggered)
 - `home/CompaniesMarquee.tsx` — Infinite-scroll client logo marquee
 - `home/Testimonials.tsx` — Custom state-driven 3-card testimonial carousel with smooth scaling
 - `work/CaseStudyCard.tsx` — Dual-variant card (image vs editorial/category); hover shows category color
@@ -47,7 +47,7 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - `layout/PageFrame.tsx` — Fixed-position decorative rails (15px from each edge) + rotated `CONTACT US` button on the right rail. Used on `/` and `/about`. `pointer-events-none` except for the button.
 - `home/BigWordmark.tsx` — Big "DeepSocal" wordmark rendered in root layout (appears on every page). Includes social icon row in bottom-right (Instagram, Dribbble, Threads, X).
 - `about/FAQAccordion.tsx` — Radix Accordion with **plus/minus toggle** (+ when closed, − when open). Asymmetric padding `pt-[13px] pb-[14px]`, button `36×30.4px` matches Figma sizing. Per Fas 5/25 feedback: "when you put a plus, it should be a dash/minus" — no rotation, just swap icons.
-- `shop/ShopHeroCard.tsx` — Client component: GSAP-animated vertical product carousel inside a bordered hero card. Handles wheel scroll, touch/swipe, and dot-click navigation.
+- `shop/ShopHeroCard.tsx` — Client component: hero card with a vertical product track that streams upward via **GSAP ScrollTrigger pin + scrub** as the page scrolls past the section (OrthoFX "3 easy steps" pattern). Pin starts at the header's bottom edge (not behind it). No wheel/touch interception, no pagination dots — page scrolling drives the animation directly, snap gives card-by-card progress feedback.
 - `modals/` — Contact, scoping, partner modals (Radix Dialog)
 - `animation/RevealOnScroll.tsx` — Generic IntersectionObserver reveal wrapper
 
@@ -81,7 +81,7 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 
 - Global tokens live in `src/app/globals.css` under `@theme { ... }`
 - Fonts: `font-bangers` (headlines/titles), `font-inter` (body), `font-quintessential` (section subtitles), `font-druk`, `font-zilla`
-- Base background: `#e3dfdc`, section backgrounds: `#e6e6e6`
+- Base background: `#e6e6e6` (matches section backgrounds — earlier value `#e3dfdc` caused a visible seam when GSAP pinned a section shorter than the viewport)
 - **Prefer fixed pixel values** (matching Figma) over `clamp()` / `vw`. Use Tailwind arbitrary values like `text-[48px]`, `px-[40px]`.
 - Use `clamp()` only when truly needed for responsive sizing; otherwise be explicit so the design matches Figma 1:1.
 - Color tokens: `--color-dark`, `--color-brand`, `--color-primary-sage`, `--color-primary-orange`
@@ -101,17 +101,68 @@ Each image card's `editorialTheme` links it to a category. On hover, the white b
 - Do NOT wrap GSAP-pinned sections in `RevealOnScroll` — `transform` breaks `position: fixed`
 - Register plugins in client components: `if (typeof window !== "undefined") { gsap.registerPlugin(ScrollTrigger); }`
 
-### WhyAreWeDifferent — Pair-snap scroll animation
+### WhyAreWeDifferent — Smooth-scrub + pair-snap horizontal carousel
 
-The horizontal carousel uses **event-based snapping**, not `scrub`. Each pair (photo card + theme card) snaps into place with a slider-like animation:
+The horizontal carousel combines GSAP's `scrub: 1` (spring-smoothed scroll→transform mapping) with `snap` (advance one pair at a time, per Israel's "it goes in twos" design spec).
 
-- `STEP_SCROLL = 300` — vertical pixels of scroll required to advance one pair
+```ts
+const tween = gsap.to(trackEl, {
+  x: -(pairCount - 1) * STEP_WIDTH,
+  ease: "none",
+  scrollTrigger: {
+    trigger: section,
+    start: "top top",
+    end: `+=${(pairCount - 1) * STEP_SCROLL}`,
+    pin: true,
+    pinSpacing: true,
+    anticipatePin: 1,
+    invalidateOnRefresh: true,
+    scrub: 1,
+    snap: {
+      snapTo: 1 / (pairCount - 1),
+      duration: { min: 0.25, max: 0.5 },
+      ease: "power2.inOut",
+      delay: 0.15,
+      directional: true,
+      inertia: false,
+    },
+  },
+});
+```
+
+- `STEP_SCROLL = 320` — vertical pixels of scroll per pair
 - `STEP_WIDTH = PAIR_WIDTH + OUTER_GAP` — horizontal distance the track travels per pair
-- `ScrollTrigger.create({ ..., onUpdate })` watches scroll progress, computes `Math.round(progress * (pairs - 1))`, and triggers `gsap.to()` only when the active index changes
-- Animation runs independently from scroll position — feels like clicking a "next" slider button rather than dragging
 - Total pinned scroll length = `(pairCount - 1) * STEP_SCROLL`
 
-**Do NOT use `scrub`** here — it ties the track to scroll position and creates a laggy, stiff feel. The event-based approach is responsive and smooth.
+**`scrub: 1` (not `scrub: true`):** `scrub: true` is a hard 1:1 mapping with zero smoothing — feels mechanical and exposes Lenis's deceleration as track jitter. `scrub: 1` adds a 1-second easing catch-up, which is the GSAP equivalent of Framer Motion's spring-smoothed `useTransform` (what the OrthoFX precedent site uses). Same underlying technique, same smoothness ceiling — no need to swap libraries.
+
+**`snap` config:**
+- `directional: true` (GSAP 3.10+ default, made explicit) — only snaps in the direction the user was scrolling. So pausing mid-pair while scrolling down snaps to the next pair forward; pausing while scrolling up snaps to the next pair backward. **Never** pulls the wrong direction.
+- `delay: 0.15` — gives the `scrub: 1` smoothing window time to settle before snap engages, so the two animations don't fight each other.
+- `inertia: false` — we don't have the (paid) GSAP InertiaPlugin loaded, and Lenis already provides the momentum feel.
+
+**Earlier (deprecated) approach:** a custom `onUpdate + Math.round(progress * (pairs-1))` commit handler — that's what was producing the "items move opposite direction on scroll up" bug, because Lenis's smooth-scroll easing could briefly push progress across a `Math.round` threshold the "wrong" way during deceleration. The `scrub: 1 + snap` config above does not have this problem because the track's x is a pure linear function of scroll position; direction follows physics.
+
+**Pin layout (min-h-screen + justify-center, REQUIRED):** the section uses `md:min-h-screen md:flex md:flex-col` so it fills the viewport during the pin, and the inner content wrapper uses `md:flex-1 md:flex md:flex-col md:justify-center` to vertically center the heading + cards block. The vertical centering is what produces the visible **top inset** during pin — a comfortable gap between the sticky header and the "WHY ARE WE DIFFERENT?" heading. Israel/Fas specifically asked for this: "the section should be pinned much apart from the top." Do NOT remove `min-h-screen` (the section collapses to content-height and the heading sits flush against the header) and do NOT switch to `justify-start` (all empty space dumps to the bottom). Both have been tried and rejected.
+
+**Body bg alignment (defensive):** `globals.css` sets `body { background: #e6e6e6 }` (was `#e3dfdc`) so that even if a pinned section is ever shorter than the viewport, GSAP's transparent pin-spacer area does not reveal a color seam. Every page already wraps its content in `bg-[#e6e6e6]`, so this has no visible effect outside the pin edge-case.
+
+**Z-index hygiene:** `relative z-30 isolate` on the section + `isolate` on each `CaseStudyCard` `<Link>` keep WorkGrid's `z-10` bottom-panel from leaking up through the pin. `pinSpacing: true` keeps WorkGrid below the pin-spacer (it does not scroll up during the pin).
+
+**Bottom border placement:** the `<div className="border-b border-dark mx-[25px]" />` divider sits **outside** the centered flex column, anchored at the section's true bottom edge. Earlier versions placed it inside the centered flex column, which caused the line to float to the middle of the section once `min-h-screen` made the container taller than its content — leaving empty `#e6e6e6` between the divider and WorkGrid. Keeping it outside means unpinning lands WorkGrid flush against the line.
+
+### WorkGrid — "view all" / "view less" expansion
+
+`WorkGrid` shows the first 12 case studies by default. If there are more, a `view all` button appears beneath the grid. Clicking it animates the rest of the cards in; clicking `view less` animates them out and unmounts them.
+
+Implemented as a **GSAP-driven, three-phase state machine** (`collapsed` → `expanded` → `closing` → `collapsed`):
+
+- Extras render only when `phase !== "collapsed"`. The CSS base class `.work-card-anim` (in `globals.css`) puts each extra at `opacity: 0; transform: translateY(24px)` so there's no flash before GSAP runs.
+- `useGSAP({ dependencies: [phase] })` runs `gsap.to(extras, { opacity: 1, y: 0, duration: 0.55, ease: "power2.out", stagger: 0.06 })` on `expanded`, and the reverse with `stagger: { each: 0.06, from: "end" }` on `closing`.
+- The `closing` phase keeps the extras mounted for `EXIT_DURATION + stagger * (extras-1)` ms so the exit animation can play before unmount.
+- `prefers-reduced-motion: reduce` skips the animation (CSS override sets `opacity: 1; transform: none`).
+
+**Why GSAP, not CSS transitions:** with image-heavy children mounting on the same paint, the browser was deferring CSS transitions ~400 ms (animation stayed `pending` until images settled). GSAP sets inline styles each tick and starts on the next `requestAnimationFrame` — no paint-timing dependency.
 
 ## About Page Layout (Figma node `12:1037`)
 
@@ -149,8 +200,8 @@ Pattern used on both home (`WhyAreWeDifferent`, `CompaniesMarquee`) and about (`
 `src/components/layout/Header.tsx` — `navItems`:
 - **Our Work** → `/#work` (works section on homepage)
 - **Our Difference** → `/about` (NOT `/#difference` — Fas directed in 5/21 review that "Our Difference" should route to the About page since that's where the "WE'RE SOCAL-LOCAL why the community chooses us as embedded allies" content lives)
-- ~~**The Shop** → `/shop`~~ (hidden per 5/22 — not a launch priority)
-- **Book a call** → opens contact modal (no route)
+- **The Shop** → `/shop` (re-enabled 5/26 — client wants to see the shop page; was hidden 5/22 → 5/26)
+- **Book a call** → opens `https://cal.com/deepsocal/discovery` in a new tab via `window.open` (5/25 fix — both desktop nav and mobile drawer route there; the contact modal stays bound to "Contact Us" / open-contact-form buttons, not Book a call)
 
 ## Services Dropdown (In-Place Content Swap)
 
@@ -168,10 +219,52 @@ Do **not** route to `/services/[slug]` from the homepage filter — the dropdown
 The shop page uses a server component (`src/app/shop/page.tsx`) for metadata + title, and a client component (`src/components/shop/ShopHeroCard.tsx`) for the interactive product carousel.
 
 1. **Hero header** (outside the card) — `Shop the Look` (Bangers 96px) + 482px wide intro paragraph, centered. 80px top padding, 60px bottom padding.
-2. **Product card container** — `max-w-[1384px]` rounded `30px` card with `border border-[#c4c4c4]` and `overflow-hidden`. Fixed `h-[1162px]` on desktop so only ~2.5 product cards are visible — the rest are clipped by overflow.
+2. **Product card container** — `max-w-[1384px]` rounded `30px` card with `border border-[#c4c4c4]` and `overflow-hidden`. Desktop height is `lg:h-[calc(100vh-64px)]` (viewport minus the sticky header), so the card always fills the screen — per Fas 5/27: "scroll box should fill the whole page, bottom should match screen bottom." The 64px MUST match `HEADER_OFFSET` in `ShopHeroCard.tsx` so the pin start, the section top, and the section bottom all align with the viewport.
+
+   **Where the bottom gap comes from:** Fixed-height approaches (e.g. capping at `685px`) made the section card stop short of the viewport bottom on tall screens — Fas rejected that. Instead, GSAP computes `totalTranslate` against the live section height at runtime:
+
+   ```
+   totalTranslate = trackContentBottom - sectionHeight + BOTTOM_GAP
+   ```
+
+   Where `trackContentBottom = TOP_GAP + N*CARD_HEIGHT + (N-1)*CARD_GAP` (last card's bottom edge in track-local coordinates) and `BOTTOM_GAP = 120`. So at progress=1, the last card's bottom always sits exactly 120px above the section's bottom edge — symmetric with the top gap (`pt-[120px]` on the track) on every viewport. Both `y` and `end` in the ScrollTrigger config are passed as functions so `invalidateOnRefresh: true` re-evaluates them on resize.
    - **Hero background** — `Image fill` covers the entire card behind the products. Uses `shop-main-bg.png` (woman with DeepSoCal bottle). `-z-10` so it sits behind the product column.
-   - **Vertical pagination dots** — one dot per product, 5th filled by default. Positioned at `right-[26px]` of the card, `-rotate-90` so they read vertically. White dots with white border. Hidden below `lg` breakpoint. Dots are interactive — clicking scrolls to that product.
-   - **Product cards column** — absolutely positioned at `right-[91px] top-[85px] w-[399px]`, floating over the hero image. GSAP-animated vertical slider (`power2.out` ease, 0.55s duration). Supports mouse wheel (500ms cooldown), touch/swipe, and dot-click navigation.
+   - **Product cards column** — absolutely positioned at `right-[91px] top-0 bottom-0 w-[399px]`, floating over the hero image. The column has **no background**, so anything behind it (the hero `Image fill`, z=-10) shows through wherever the column's contents don't paint. The TRACK inside the column has `pt-[120px]` — that's the visible gap. At rest, the track's top 120px is just empty padding (no children there to paint), and the hero shows through it cleanly.
+
+     **Behaviour during scroll (matches OrthoFX):** GSAP scrub translates the track upward. The padding moves with the track; once it scrolls past the column's top edge, `overflow-hidden` on the column clips it and the first card naturally takes its place — fulfilling Fas 5/27: "the gap should be shown at first, if I scroll, scrolling items take the place, [the gap] should not be shown." No mask needed; the gap is a real layout space (track padding) that simply gets scrolled away.
+
+     **Why `pt-[120px]` on the TRACK rather than `top-[XXpx]` on the COLUMN, or a CSS mask?** Earlier iterations tried `top-[85px]`/`top-[180px]` to push the entire column down inside the section, and a CSS `mask-image` linear-gradient that hid the top of the column. Fas rejected both:
+     - `top-[185px]` push-down: column no longer spans the full section, hero band ABOVE the column doesn't behave like the OrthoFX "cards scroll up and past the top edge" mental model. Quoted: "we have to remove top 185px, top should be 0, it's not solution for this."
+     - CSS mask: the mask is fixed on the column — it permanently hides whatever is in that zone. That made the gap behave as a static "hole" rather than a real space that cards visibly travel into and through. The user wanted the cards to actually take the gap's place during scroll, not to be hidden by a mask.
+     - Track `pt-[120px]`: real layout space that the GSAP track translation actually consumes. Both the static "gap visible at rest" and dynamic "cards fill the gap on scroll" requirements are satisfied with one simple Tailwind class.
+   - **No pagination dots.** An earlier implementation had vertical dots on the right; they've been removed per Fas's 5/27 review since the snap behavior already gives clear card-by-card progress feedback and the dots cluttered the right margin.
+
+### Pin + scroll-driven track (OrthoFX precedent)
+
+The scroll behavior mirrors OrthoFX's "3 easy steps to a confident smile" section, which uses a sticky/pinned hero with cards that translate vertically as the page scrolls past the section. Their HTML:
+
+```html
+<section style="height: calc(100svh + 125.984svh)">  <!-- scroll runway -->
+  <div class="fullscreenWrapper" style="position:absolute; top:0">
+    <!-- pinned background + cards animating up -->
+  </div>
+</section>
+```
+
+Our GSAP equivalent in `ShopHeroCard.tsx`:
+
+- `HEADER_OFFSET = 64` — pin starts at `top ${HEADER_OFFSET}px` (not `top top`), matching the header's `min-h-[64px]`. The card's top edge lands flush against the bottom edge of the sticky header instead of pinning behind it. Per Fas: "the bottom line of the header and top line of the section should be matched."
+- `TOP_GAP = 120` / `BOTTOM_GAP = 120` — visible breathing room above the topmost-visible card / below the last card at end-of-scroll. `TOP_GAP` is applied as Tailwind `pt-[120px]` on the track div (real layout space). `BOTTOM_GAP` is achieved by translating the track at end-of-scroll so the last card's bottom sits exactly `BOTTOM_GAP` above the section bottom — see math below.
+- Total translate = `trackContentBottom - sectionHeight + BOTTOM_GAP`, where `trackContentBottom = TOP_GAP + N*CARD_HEIGHT + (N-1)*CARD_GAP`. Computed at runtime against the live section height so the bottom gap is constant (120px) regardless of viewport.
+- Snap intervals = `1 / (N - 1)`, so one snap per card transition. On most desktop viewports each snap moves the track by ~CARD_STEP px; on very tall viewports each snap moves slightly less because there's less total translate to distribute — the cards still animate smoothly through the column, just with a tighter per-snap delta.
+- Earlier iterations used a static `END_VISIBLE` constant + `steps * CARD_STEP` translate. That worked when the section card was capped at a fixed height (`685px`), but left a 400px+ "dead zone" below the last card on tall viewports — Fas's "too big space, decrease height" feedback. Switching to a runtime calc against `sectionHeight` lets the section keep filling the viewport while still locking the bottom gap to 120px.
+- `STEP_SCROLL = 500` — px of page scroll per card transition. Total pin distance = `(cards - END_VISIBLE) * STEP_SCROLL`.
+- `CARD_STEP = CARD_HEIGHT (445) + CARD_GAP (37) = 482`px — vertical distance the track moves per card.
+- `pin: true` on the hero card (`root.current`), `pinSpacing: true` so the rest of the page stays below the pin-spacer.
+- `scrub: 1` — 1s easing catch-up for the spring-smoothed feel (same as `WhyAreWeDifferent`).
+- `snap` with `snapTo: 1 / (cards - END_VISIBLE)`, `directional: true`, `delay: 0.15`, `inertia: false` — same config as the home carousel. Snaps one card-step at a time, only in the user's scroll direction.
+
+**Earlier (deprecated) approach:** the previous implementation intercepted `wheel` events with a `WHEEL_COOLDOWN = 500ms` cooldown and called `gsap.to()` per-tick. This blocked normal page scroll (couldn't scroll past the section using a single trackpad swipe) and didn't match the OrthoFX inertia feel. The pin+scrub approach above lets the page scroll naturally — the track moves because the page scrolled, not because we hijacked the wheel.
 
 ### Product card (`<ProductCard />`)
 

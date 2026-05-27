@@ -70,7 +70,13 @@
 @layer base {
   body {
     font-size: 1.2vw;
-    background: #e3dfdc;
+    /* Matches the homepage section background (#e6e6e6) so that when
+       GSAP pins `WhyAreWeDifferent` and the section is shorter than the
+       viewport, the pin-spacer's transparent area below the pinned
+       section does NOT reveal a color seam. Every page wraps its
+       content in bg-[#e6e6e6] anyway, so this change has no visible
+       effect outside of the pin edge-case. */
+    background: #e6e6e6;
     color: #000;
   }
   img { max-width: 100%; }

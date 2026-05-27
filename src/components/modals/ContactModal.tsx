@@ -9,7 +9,7 @@ export default function ContactModal() {
   const { activeModal, closeModal, switchModal } = useModal();
   const { submit, isSubmitting } = useFormSubmit("/api/contact");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -29,14 +29,14 @@ export default function ContactModal() {
   return (
     <Dialog.Root open={open} onOpenChange={(v) => !v && closeModal()}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-99998 bg-black/50" />
+        <Dialog.Overlay className="fixed inset-0 z-999998 bg-black/50" />
         <Dialog.Content
           aria-describedby="contact-modal-description"
-          className="fixed top-0 right-0 z-99999 h-full w-[485px] max-w-[90vw] bg-white overflow-y-auto rounded-l-[62px] shadow-[0_5px_15px_rgba(0,0,0,0.25)] animate-slide-in flex flex-col"
+          className="fixed top-0 bottom-0 right-0 my-auto z-999999 h-[819px] max-h-[calc(100vh-40px)] w-[453px] max-w-[90vw] bg-white overflow-y-auto rounded-l-[62px] shadow-[0_5px_15px_rgba(0,0,0,0.25)] animate-slide-in flex flex-col"
         >
           <Dialog.Close
             aria-label="Close"
-            className="absolute top-7 right-7 w-10 h-10 bg-dark text-white rounded-full inline-flex items-center justify-center text-[22px] cursor-pointer border-none z-10"
+            className="absolute top-[28px] right-[34px] w-10 h-10 bg-dark text-white rounded-full inline-flex items-center justify-center text-[22px] cursor-pointer border-none z-10"
           >
             <FaXmark />
           </Dialog.Close>
