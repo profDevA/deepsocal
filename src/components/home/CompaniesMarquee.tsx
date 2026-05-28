@@ -1,20 +1,9 @@
 import Image from "next/image";
 import { companies } from "@/data/companies";
 
-/**
- * Continuous logo marquee.
- *
- * Loop trick: render two identical copies of the logo list inside a single
- * `width: max-content` flex track, then animate the track by `translateX(-50%)`
- * (= the width of one copy). As the animation completes, the second copy is
- * sitting in exactly the position where the first started, so the snap-back to
- * `0%` is invisible. Result: no gap, no jump, infinite scroll.
- *
- * Edge inset (mx-[25px]) matches the site-wide section-divider convention
- * (see CLAUDE.md): 10px gap to the page-frame vertical rails (which sit at
- * 15px from each viewport edge), so the top/bottom dividers line up with
- * every other horizontal section divider on the home page.
- */
+// Infinite-loop trick: render the logo list twice in a `width: max-content`
+// track, then translate by -50%. The second copy lands where the first
+// started, so the snap back to 0% is invisible.
 export default function CompaniesMarquee() {
   return (
     <section
@@ -44,7 +33,7 @@ export default function CompaniesMarquee() {
                   unoptimized
                 />
               ) : (
-                <span className="font-bangers text-dark text-[20px] sm:text-[24px] md:text-[28px] tracking-[1px] leading-none uppercase">
+                <span className="font-acumin-condensed text-dark text-[20px] sm:text-[24px] md:text-[28px] tracking-[1px] leading-none uppercase">
                   {company.name}
                 </span>
               )}

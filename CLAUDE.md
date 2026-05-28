@@ -2,6 +2,55 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Brand direction (5/27 PM pivot) — typography + corner refactor
+
+Fas pivoted the visual direction on **May 27, 2026** (evening Figma walkthrough with brand specialist — see `.cursor/meeting-notes/transcript_2026-05-27.md` + the 230-frame capture in `frames-2026-05-27/`). The pivot replaces the typographic and rounded-corner system. Layout / sections / colour palette / images / animations / GSAP choreography all **stay** — this is a typographic + corner + logo refactor, not a redesign.
+
+Reference brand Fas is modeling: **[Buck Mason](https://www.buckmason.com/)** — quiet, refined, minimal-rounded. He explicitly doesn't want a "streetwear" feel; he's positioning for government and large-corporate contracts.
+
+### What's shipped (5/27 PM session)
+
+| Area | Status | Notes |
+|---|---|---|
+| Headline / title / wordmark font | ✅ Acumin Pro Condensed token live | Sourced from **Barlow Condensed** (Google Fonts) as stand-in until Israel ships licensed Acumin WOFFs. See `src/app/fonts.ts` for swap procedure — the Tailwind utility `font-acumin-condensed` and CSS variable `--nf-acumin-condensed` are intentionally **brand-named** so the font source can swap in one line without touching any component. |
+| Body font | ✅ `font-acumin` aliased to Inter | Inter is the closest free match for Acumin Pro Regular. Same swap procedure when real Acumin lands. |
+| `font-bangers` → `font-acumin-condensed` | ✅ Done across 22 files, 53 occurrences | Mechanical one-pass swap. `bangers` is still loaded as a fallback but **deprecated** — don't add new references. Remove after Fas signs off on the new font. |
+| Default headline weight | `font-acumin-condensed { font-weight: 500 }` via base layer | Barlow Condensed at Regular 400 reads dramatically lighter than Bangers (single-weight display face); Medium 500 lands closest to Bangers' visual mass. Components needing extra heft (Hero / BigWordmark) can override with `font-semibold` / `font-bold`. |
+| Rounded corners → square | ✅ Done | All `rounded-[Xpx]` removed from cards, hero containers, badges, side drawers (`rounded-l-[62px]`), case-study hero (`rounded-t-[30px]`), shop hero (`rounded-[30.593px]`), about hero (`rounded-[27px]`), etc. **Kept rounded**: `rounded-full` circles (close buttons, social icons, dots, badge circles), small `rounded-sm` tactile arrow buttons, and dropdown menus (`WorkFilterDropdown` at `rounded-[23px]`, `WorksFilter` at `rounded-[10px]`, `ServicePageLayout` selector at `rounded-[15px]` / `rounded-lg`) — dropdowns are UI primitives, not cards. |
+| Testimonials placement | ✅ Already correct | Per transcript: "move testimonial down… centered here… then the footer." Code already has `Testimonials` at the bottom of the home-page sections (above the globally-rendered `BigWordmark` + `Footer`). No change needed. |
+| Testimonials redesign | ✅ Done | Per Fas (5/28, Figma node `545:3909`): replaces the 3-card white-card carousel with a dark editorial 2-column layout (`bg-[#1e1e1e]`, white top/bottom borders). Left column = title (`Trusted by SoCal Brands`, Acumin Pro Condensed Bold 42px / leading 50px / tracking 1.26px / uppercase, white) + ghost nav buttons (`35×38px`, `bg-[#1e1e1e]` so same as section, distinguished only by the `drop-shadow-[0_0_8.15px_rgba(0,0,0,0.25)]` halo; `hover:bg-[#2a2a2a]` for affordance). Right column = inline quote glyph + italic quote text (Acumin/Inter italic 26px) + 62px circular avatar + author name italic. No card backgrounds, no rounded corners (avatar circles excepted), no dots indicator. Single-quote-at-a-time pattern with 180ms opacity fade on `prev` / `next`. The earlier 533:1277 Figma node is an OrthoFX reference screenshot — intentionally **not** the implementation target. |
+| CompaniesMarquee → bottom | ✅ Done | Per transcript (para 32): "*this is very noisy. Let's make this simple… we also move this down*" — and para 46: "*[Testimonials] moving it down and then **this** goes next*". The client-logo strip moves from after `Hero` to be the **last** home section (after `Testimonials`, before the globally-rendered `BigWordmark`). Order is now: `Hero` → `WhyAreWeDifferent` → `WorkGrid` → `Testimonials` → `CompaniesMarquee`. |
+| WorkGrid card colors → simplified | ✅ Done | Per Fas (5/28, Figma node `566:1642`): "*our works, we don't use many colors, just simple color, clean*" — then clarified: editorial cards use `#EDECE1` bg + `1px solid #B0B0B0` border; image-card bottom panels stay **white**. Replaces the previous 6-color STEEPC palette (ocean/mental/commerce/culture/climate/ai). Editorial card title also drops from `text-[60px]` / `leading-[60px]` → `text-[40px] / leading-[42px]` to match Figma. **`socal-themes.ts` `bgColor` field is preserved** — still consumed by `WhyAreWeDifferent`'s horizontal carousel theme cards. Only the work-grid stopped reading it. The `.group:hover .card-bottom-panel { --hover-bg }` rule was removed from `globals.css` — replaced with an explanatory comment so the absence is intentional, not a regression. |
+| WorkGrid section subtitle font | ✅ Done | `How We work with SoCal Builders` swapped from `font-quintessential` (decorative serif/cursive) → `font-acumin` (Inter stand-in for Acumin Pro Regular). Tracking relaxed from `-1.4px` → `-0.7px` — tight kerning suited the serif display face but reads as squashed on Inter. |
+
+### What's still open
+
+- **Logo swap — done.** Three wordmark variants now sit in `public/images/`:
+  - `deepsocal-wordmark.svg` — Header use. viewBox 182×41, fill `#333333`, **includes the trailing `(*)` mark**. Optimized path geometry for small-size rendering.
+  - `deepsocal-wordmark-large.svg` — BigWordmark use. viewBox 1379×393, fill `#1E1E1E`, **no `(*)` mark** (would look misplaced at this scale). Higher-resolution source geometry for sharp rendering at full-viewport width.
+  - `DeepSoCal-banner.svg` — Footer use. White-fill variant of the older artwork for the dark footer background. Will eventually need a white-fill version of the new artwork if footer is meant to match exactly.
+
+  All three are font-independent vectors — the wordmark surfaces don't care which font ships in the Acumin/Barlow stand-in.
+- **Real Acumin Pro WOFFs** — Israel said he has them; Fas to forward. When they arrive, drop them in `src/fonts/` and flip the `acuminCondensed` export in `fonts.ts` from `Barlow_Condensed({...})` to `localFont({ src: [...] })`. The CSS variable and Tailwind class don't change.
+- **Per-element weight tuning** — `font-weight: 500` is a safe default. After Fas reviews, some elements may want `600`/`700` (Hero, BigWordmark) or `400` (small editorial labels).
+- **Mobile pass** — Israel is producing mobile mocks in Figma. Hold the desktop implementation until those frames land.
+
+### Type-system reference (Figma inspector spec)
+
+Source of truth for headline rendering:
+
+```css
+font-family: 'Acumin Pro Condensed';
+font-size: 42px;
+font-weight: 700;
+line-height: 50px;
+letter-spacing: 1.26px;
+text-transform: uppercase;
+color: #333;
+```
+
+Full verbatim transcript quotes, brand-specialist context, and the complete component-by-component swap list are logged in the May 27 PM entry in `meeting_notes.md`.
+
 ## Local Development
 
 ```bash
@@ -27,7 +76,7 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - Email: Resend
 
 **Pages (`src/app/`):**
-- `/` — Homepage (Hero, CompaniesMarquee, WhyAreWeDifferent, WorkGrid, Testimonials, BannerCarousel)
+- `/` — Homepage (`Hero` → `WhyAreWeDifferent` → `WorkGrid` → `Testimonials` → `CompaniesMarquee`, then the globally-rendered `BigWordmark` + `Footer`). `BannerCarousel.tsx` exists on disk but is not currently imported — kept as dead code in case it returns to the layout later.
 - `/about` — About page (hero, mission, team grid, "WE'RE SOCAL-LOCAL" community grid, FAQ accordion)
 - `/works/[slug]` — Case study detail (dynamic, `generateStaticParams`)
 - `/services/[slug]` — Service detail (4 services, `generateStaticParams`)
@@ -40,7 +89,7 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - `home/WhyAreWeDifferent.tsx` — Pinned section with horizontal carousel. Uses `scrub: true + snap` so the track position is bound 1:1 to scroll progress — direction is mathematically guaranteed to follow scroll direction. See "WhyAreWeDifferent — Pair-snap scroll animation" below.
 - `home/WorkGrid.tsx` — Client component; in-place service filtering via dropdown + `view all` / `view less` expand toggle (default shows 12 cards, click to reveal the rest with GSAP fade-up animation, staggered)
 - `home/CompaniesMarquee.tsx` — Infinite-scroll client logo marquee
-- `home/Testimonials.tsx` — Custom state-driven 3-card testimonial carousel with smooth scaling
+- `home/Testimonials.tsx` — Dark editorial 2-column section (Figma node `545:3909`). Title + ghost nav buttons on the left, single italic quote + 62px avatar + author on the right. `prev` / `next` swap testimonials in place with a 180ms opacity fade. Replaces the older 3-card white-card carousel.
 - `work/CaseStudyCard.tsx` — Dual-variant card (image vs editorial/category); hover shows category color
 - `work/WorkFilterDropdown.tsx` — Service filter dropdown; emits `onChange(serviceId | null)` for in-place content swap
 - `layout/Header.tsx` / `Footer.tsx` / `PageFrame.tsx` — Shared shell
@@ -80,7 +129,12 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 ## CSS Conventions
 
 - Global tokens live in `src/app/globals.css` under `@theme { ... }`
-- Fonts: `font-bangers` (headlines/titles), `font-inter` (body), `font-quintessential` (section subtitles), `font-druk`, `font-zilla`
+- Fonts (post 5/27 brand pivot — in-flight refactor):
+  - **Active going forward:** `font-acumin-condensed` (headlines/titles/wordmark), `font-acumin` (body)
+  - **Deprecated, do not add new references:** `font-bangers` (was: headlines/titles — being replaced)
+  - **Still in use:** `font-inter` (body fallback), `font-quintessential` (section subtitles), `font-druk`, `font-zilla`
+  - See the "Brand direction (5/27 PM)" notice at the top of this file for the full pivot context.
+- **Rounded corners removed** (5/27 pivot) on cards / modals / hero containers / badges / side drawers. New components default to square corners — do not add `rounded-[Xpx]` unless the Figma frame explicitly draws rounding. **Exceptions kept rounded**: `rounded-full` circles (avatars / close buttons / dots / social icons), dropdown menu panels (`WorkFilterDropdown`, `WorksFilter`, `ServicePageLayout` selectors), and explicit Figma-rounded buttons.
 - Base background: `#e6e6e6` (matches section backgrounds — earlier value `#e3dfdc` caused a visible seam when GSAP pinned a section shorter than the viewport)
 - **Prefer fixed pixel values** (matching Figma) over `clamp()` / `vw`. Use Tailwind arbitrary values like `text-[48px]`, `px-[40px]`.
 - Use `clamp()` only when truly needed for responsive sizing; otherwise be explicit so the design matches Figma 1:1.
@@ -90,10 +144,10 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 ## Work Grid Structure
 
 Cards are ordered by the `order` field in `case-studies.ts`. The grid follows a pattern:
-- **Category card** (editorial variant, no `thumbnailImage`) — colored background, SVG icon, big title
-- **Content items** (image variant, has `thumbnailImage`) — photo top, white bottom panel
+- **Category card** (editorial variant, no `thumbnailImage`) — `#EDECE1` cream background, `1px solid #B0B0B0` border, SVG badge icon, title (Acumin Condensed 40px / 42px)
+- **Content items** (image variant, has `thumbnailImage`) — photo top, **white** bottom panel (no border-top — sits flush against the image)
 
-Each image card's `editorialTheme` links it to a category. On hover, the white bottom panel transitions to that category's `bgColor`.
+**Card backgrounds simplified (5/27 brand pivot, 5/28 Figma node `566:1642` confirmation).** Editorial cards use the same cream `#EDECE1` (no per-category colors); image-card bottom panels stay white. No hover color change — the only hover affordance is a 1px vertical lift on the card link. Per Fas: "*we don't use many colors, just simple color, clean*". The per-theme `bgColor` field in `socal-themes.ts` is preserved but no longer consumed by the work grid — it still drives the colored theme cards in `WhyAreWeDifferent`'s horizontal carousel.
 
 ## GSAP Notes
 

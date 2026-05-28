@@ -19,7 +19,7 @@ export default function ShopPage() {
       {/* Title + Description */}
       <section className="w-full px-[40px] pt-[80px] pb-[60px] flex flex-col items-center">
         <div className="flex flex-col items-center gap-[49px] text-center max-w-[799px]">
-          <h1 className="font-bangers text-dark text-[96px] leading-[90px] tracking-[2.88px] uppercase">
+          <h1 className="font-acumin-condensed text-dark text-[96px] leading-[90px] tracking-[2.88px] uppercase">
             Shop the look
           </h1>
           <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[482px]">

@@ -45,7 +45,7 @@ export default function AboutPage() {
       {/* HERO — heading + description + image + CTA */}
       <section className="w-full px-[40px] pt-[80px] pb-[60px] flex flex-col items-center">
         <div className="w-full max-w-[1380px] flex flex-col items-center gap-[49px] text-center">
-          <h1 className="font-bangers text-dark text-[96px] leading-[90px] tracking-[2.88px] uppercase m-0 max-w-[799px]">
+          <h1 className="font-acumin-condensed text-dark text-[96px] leading-[90px] tracking-[2.88px] uppercase m-0 max-w-[799px]">
             socal-local
           </h1>
           <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[703px] m-0">
@@ -56,7 +56,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="w-full max-w-[1358px] mt-[49px] aspect-1358/725 rounded-[27px] overflow-hidden relative bg-[#1f1f1f]">
+        <div className="w-full max-w-[1358px] mt-[49px] aspect-1358/725 overflow-hidden relative bg-[#1f1f1f]">
           <Image
             src="/images/about/hero-socal-local.png"
             alt="Southern California coastline"
@@ -72,12 +72,12 @@ export default function AboutPage() {
 
         <ContactCTAButton
           label="DISCOVER OUR APPROACH"
-          className="font-bangers bg-dark text-white text-[18px] leading-normal tracking-normal w-[201px] h-[43px] inline-flex items-center justify-center cursor-pointer transition-colors hover:bg-[#333] border-none uppercase"
+          className="font-acumin-condensed bg-dark text-white text-[18px] leading-normal tracking-normal w-[201px] h-[43px] inline-flex items-center justify-center cursor-pointer transition-colors hover:bg-[#333] border-none uppercase"
         />
 
         <div style={{ height: "128px" }} aria-hidden="true" />
 
-        <h2 className="font-bangers text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0 max-w-[1164px] text-center">
+        <h2 className="font-acumin-condensed text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0 max-w-[1164px] text-center">
           WE ARE Designers and researchers shaping Southern California&rsquo;s
           future through community and impact.
         </h2>
@@ -88,7 +88,7 @@ export default function AboutPage() {
         <div className="border-t border-b border-dark mx-[25px] py-[60px]">
           <div className="max-w-[1395px] mx-auto grid grid-cols-1 md:grid-cols-[421px_1fr] gap-[173px] items-start">
             <div className="flex flex-col gap-[24px]">
-              <h2 className="font-bangers text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0">
+              <h2 className="font-acumin-condensed text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0">
                 team
               </h2>
               <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[510px] m-0">
@@ -128,7 +128,7 @@ export default function AboutPage() {
       {/* WE'RE SOCAL-LOCAL — community grid */}
       <section className="w-full px-[40px] pt-[100px] pb-[80px]">
         <div className="max-w-[1380px] mx-auto flex flex-col items-center gap-[26px] text-center">
-          <h2 className="font-bangers text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0 max-w-[995px]">
+          <h2 className="font-acumin-condensed text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0 max-w-[995px]">
             WE&rsquo;RE SOCAL-LOCAL.
             <br />
             WHY the community CHOOSEs US AS EMBEDDED ALLIES
@@ -145,13 +145,13 @@ export default function AboutPage() {
 
         <div className="max-w-[1068px] mx-auto mt-[60px] flex flex-col gap-[33px]">
           <div className="grid grid-cols-3 gap-[20px] text-center">
-            <h3 className="font-bangers text-dark text-[36px] leading-[45px] tracking-[1.08px] m-0">
+            <h3 className="font-acumin-condensed text-dark text-[36px] leading-[45px] tracking-[1.08px] m-0">
               Community
             </h3>
-            <h3 className="font-bangers text-dark text-[36px] leading-[45px] tracking-[1.08px] m-0">
+            <h3 className="font-acumin-condensed text-dark text-[36px] leading-[45px] tracking-[1.08px] m-0">
               Growth
             </h3>
-            <h3 className="font-bangers text-dark text-[36px] leading-[45px] tracking-[1.08px] m-0">
+            <h3 className="font-acumin-condensed text-dark text-[36px] leading-[45px] tracking-[1.08px] m-0">
               Impact
             </h3>
           </div>
@@ -160,7 +160,7 @@ export default function AboutPage() {
             {gridImages.map((image, i) => (
               <div
                 key={i}
-                className={`relative aspect-square rounded-[26px] overflow-hidden border border-[#adadad] shadow-[0px_4px_10.2px_0px_rgba(0,0,0,0.05)] ${
+                className={`relative aspect-square overflow-hidden border border-[#adadad] shadow-[0px_4px_10.2px_0px_rgba(0,0,0,0.05)] ${
                   image.instagram ? "bg-white" : ""
                 }`}
               >
@@ -224,7 +224,7 @@ export default function AboutPage() {
         <div className="border-t border-b border-dark mx-[25px] py-[40px]">
           <div className="max-w-[1404px] mx-auto grid grid-cols-1 md:grid-cols-[461px_1fr] items-stretch">
             <div className="flex flex-col gap-[33px] justify-center pl-[22px] pr-[14px] py-[40px]">
-              <h2 className="font-bangers text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0">
+              <h2 className="font-acumin-condensed text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0">
                 FAQS
               </h2>
               <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[324px] m-0">

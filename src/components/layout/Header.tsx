@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { FaBars } from "react-icons/fa6";
 import { useModal } from "@/components/modals/ModalProvider";
@@ -13,11 +14,10 @@ const navItems: DrawerNavItem[] = [
 ];
 
 const NAV_PILL_CLASS =
-  "font-bangers bg-[#111] text-[#d7d7d7] text-[16px] leading-[1.4] px-4 py-1 no-underline whitespace-nowrap inline-flex items-center justify-center transition-colors hover:bg-[#333]";
+  "font-acumin-condensed text-black text-[16px] uppercase leading-[1.4] px-4 py-1 no-underline whitespace-nowrap inline-flex items-center justify-center hover:underline underline-offset-[5px] decoration-1";
 
 export default function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { openModal } = useModal();
 
   useEffect(() => {
     if (drawerOpen) {
@@ -47,10 +47,22 @@ export default function Header() {
           <nav className="flex items-center justify-between min-h-[64px]">
             <Link
               href="/"
-              aria-label="DeepSocal home"
-              className="font-bangers text-dark text-[38.905px] leading-none tracking-[1px] no-underline"
+              aria-label="deepSoCal home"
+              className="inline-flex items-center no-underline shrink-0"
             >
-              DeepSocal
+              {/* Original `deepsocal.com` wordmark (per 5/27 brand pivot).
+                  Uses the bespoke SVG so casing + kerning match the brand
+                  mark exactly. SVG viewBox is 182×41 (~4.44:1 aspect, fill
+                  #333333, includes the trailing `(*)` mark Fas referenced
+                  in the meeting). Height 30px gives ~133px wide. */}
+              <Image
+                src="/images/deepsocal-wordmark.svg"
+                alt="deepSoCal"
+                width={182}
+                height={41}
+                priority
+                className="h-[30px] w-auto select-none"
+              />
             </Link>
 
             <button

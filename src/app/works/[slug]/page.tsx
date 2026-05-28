@@ -73,7 +73,7 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
 function CaseStudyHero({ caseStudy }: { caseStudy: CaseStudy }) {
   const heroSrc = caseStudy.heroImage || caseStudy.thumbnailImage;
   return (
-    <div className="relative w-full aspect-1440/764 bg-[#1f1f1f] rounded-t-[30px] overflow-hidden border-t border-x border-[#c4c4c4]">
+    <div className="relative w-full aspect-1440/764 bg-[#1f1f1f] overflow-hidden border-t border-x border-[#c4c4c4]">
       {heroSrc ? (
         <Image
           src={heroSrc}
@@ -100,7 +100,7 @@ function CaseStudyHero({ caseStudy }: { caseStudy: CaseStudy }) {
           {caseStudy.tags.map((t, i) => (
             <span
               key={`${t}-${i}`}
-              className="font-bangers text-[#d7d7d7] text-[20px] leading-[1.4] px-[13px] py-[2px] whitespace-nowrap"
+              className="font-acumin-condensed text-[#d7d7d7] text-[20px] leading-[1.4] px-[13px] py-[2px] whitespace-nowrap"
               style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
             >
               {t}
@@ -114,10 +114,10 @@ function CaseStudyHero({ caseStudy }: { caseStudy: CaseStudy }) {
 
 function CaseStudyMeta({ caseStudy }: { caseStudy: CaseStudy }) {
   return (
-    <div className="relative bg-[#e6e6e6] rounded-t-[30px] -mt-[128px] z-1 px-[64px] pt-[88px] pb-[64px]">
+    <div className="relative bg-[#e6e6e6] -mt-[128px] z-1 px-[64px] pt-[88px] pb-[64px]">
       {/* Title + subtitle — sits above the content grid */}
       <div className="flex flex-col gap-[15px] max-w-[533px] mb-[52px]">
-        <h1 className="font-bangers text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0">
+        <h1 className="font-acumin-condensed text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0">
           {caseStudy.title}
         </h1>
         <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] m-0">
@@ -191,7 +191,7 @@ function CaseStudyGallery({ caseStudy }: { caseStudy: CaseStudy }) {
       {images.slice(0, 2).map((src, i) => (
         <div
           key={src}
-          className="w-full aspect-1380/728 rounded-[30px] overflow-hidden relative bg-[#eee]"
+          className="w-full aspect-1380/728 overflow-hidden relative bg-[#eee]"
         >
           <Image
             src={src}

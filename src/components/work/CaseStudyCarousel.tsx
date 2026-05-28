@@ -27,7 +27,7 @@ export default function CaseStudyCarousel({
 
   return (
     <div className="flex flex-col gap-[24px]">
-      <div className="relative aspect-642/399 rounded-[30px] overflow-hidden bg-[#828282]">
+      <div className="relative aspect-642/399 overflow-hidden bg-[#828282]">
         {images.map((src, i) => (
           <Image
             key={src}

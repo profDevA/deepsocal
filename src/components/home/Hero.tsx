@@ -39,23 +39,9 @@ export default function Hero() {
         .to(".hero-video", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
         .to(".hero-arrow", { opacity: 1, y: 0, duration: 0.5 }, "-=0.3");
 
-      // Per-word color reveal mapped 1:1 to scroll progress during the pin.
-      //
-      // Timing math (7 words): duration=0.8, stagger.each=0.4
-      //   total = (count-1) * each + duration = 6*0.4 + 0.8 = 3.2 units
-      //   each word overlaps the next by (duration - each) = 0.4 units
-      //
-      // The overlap is what makes the handoff fluid (Attio-like) instead of
-      // discrete-step. Words crossfade through each other rather than each
-      // playing alone in its own slot with dead zones between.
-      //
-      // The total animation length is mapped to the full pin range below, so
-      // there is no dead scroll at the start (first word starts at t=0) or end
-      // (last word finishes at t=3.2 = full progress).
-      //
-      // scrub: 1 (vs `true`) gives a 1-second catch-up easing on the scroll →
-      // animation mapping, which is what eliminates the rigid snap-to-scroll
-      // feel and produces the fluid scroll behaviour seen on attio.com.
+      // Per-word color reveal pinned to scroll progress. `stagger.each: 0.4`
+      // < `duration: 0.8` means consecutive words overlap by 0.4 — gives the
+      // Attio-style crossfade instead of discrete word-by-word steps.
       const wordReveal = gsap.to(".hero-word", {
         color: BRIGHT_COLOR,
         ease: "power2.out",
@@ -90,7 +76,7 @@ export default function Hero() {
       <div className="w-full max-w-[1071px] flex flex-col items-center gap-[20px] sm:gap-[28px] md:gap-[40px] text-center">
         <h1
           ref={headlineRef}
-          className="font-bangers tracking-[1px] sm:tracking-[2px] md:tracking-[3px] leading-[0.94] text-[36px] sm:text-[56px] md:text-[76px] lg:text-[96px] m-0 wrap-break-word hyphens-auto"
+          className="font-acumin-condensed tracking-[1px] sm:tracking-[2px] md:tracking-[3px] leading-[0.94] text-[36px] uppercase sm:text-[56px] md:text-[76px] lg:text-[96px] m-0 wrap-break-word hyphens-auto"
         >
           {HEADLINE.split(" ").map((w, i) => (
             <span
@@ -110,7 +96,7 @@ export default function Hero() {
       </div>
 
       <div className="mt-[60px] sm:mt-[80px] md:mt-[110px] lg:mt-[143px] w-full max-w-[924px] flex flex-col items-center gap-[60px] sm:gap-[76px] md:gap-[95px] lg:gap-[114px]">
-        <div className="hero-video relative w-full max-w-[535px] aspect-535/271 overflow-hidden rounded-[8px] sm:rounded-[12px] md:rounded-[16px] bg-dark">
+        <div className="hero-video relative w-full max-w-[535px] aspect-535/271 overflow-hidden bg-dark">
           <video
             src="/videos/california.mp4"
             autoPlay

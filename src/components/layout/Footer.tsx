@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 const COL_TITLE = "font-inter font-semibold text-[#d7d7d7] text-[18px] leading-[28px] uppercase m-0";
@@ -17,9 +18,15 @@ export default function Footer() {
         <div className="max-w-[1380px] mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[30px] sm:gap-[40px] md:gap-[50px] lg:gap-[60px]">
             <div className="flex flex-col gap-2">
-              <span className="font-bangers text-[#d7d7d7] text-[28px] sm:text-[32px] md:text-[38px] leading-none tracking-[1px]">
-                DeepSocal
-              </span>
+              {/* Original `deepsocal.com` wordmark, white-fill variant for
+                  dark footer background (5/27 brand pivot). */}
+              <Image
+                src="/images/DeepSoCal-banner.svg"
+                alt="deepSoCal"
+                width={1010}
+                height={294}
+                className="h-[28px] sm:h-[32px] md:h-[38px] w-auto select-none"
+              />
               <span className="font-inter text-[#d7d7d7] text-[14px] leading-[18px] tracking-[0.42px]">
                 Your embedded ally across Southern California.
               </span>

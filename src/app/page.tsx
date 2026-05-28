@@ -13,10 +13,10 @@ export default async function Home() {
     <>
       <PageFrame />
       <Hero />
-      <CompaniesMarquee />
       <WhyAreWeDifferent />
       <WorkGrid caseStudies={caseStudies} />
       <Testimonials />
+      <CompaniesMarquee />
     </>
   );
 }

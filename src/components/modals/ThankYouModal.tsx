@@ -29,7 +29,7 @@ export default function ThankYouModal() {
           </Dialog.Close>
 
           <div className="flex flex-col gap-11 items-center text-center max-w-[723px] w-full px-6 py-16">
-            <Dialog.Title className="font-bangers text-black uppercase m-0 text-[48px] sm:text-[64px] md:text-[80px] lg:text-[96px] leading-[0.83] tracking-[-1.37px]">
+            <Dialog.Title className="font-acumin-condensed text-black uppercase m-0 text-[48px] sm:text-[64px] md:text-[80px] lg:text-[96px] leading-[0.83] tracking-[-1.37px]">
               Thank You!
             </Dialog.Title>
             <p
@@ -44,14 +44,14 @@ export default function ThankYouModal() {
               <button
                 type="button"
                 onClick={closeModal}
-                className="font-bangers bg-black text-white text-[16px] tracking-[0.24px] uppercase w-[190px] h-[57px] inline-flex items-center justify-center border-none cursor-pointer transition-colors hover:bg-[#333]"
+                className="font-acumin-condensed bg-black text-white text-[16px] tracking-[0.24px] uppercase w-[190px] h-[57px] inline-flex items-center justify-center border-none cursor-pointer transition-colors hover:bg-[#333]"
               >
                 Got it, thanks
               </button>
               <Link
                 href="/#work"
                 onClick={closeModal}
-                className="font-bangers bg-transparent border border-black text-black text-[16px] tracking-[0.24px] uppercase w-[190px] h-[57px] inline-flex items-center justify-center no-underline cursor-pointer transition-colors hover:bg-black hover:text-white"
+                className="font-acumin-condensed bg-transparent border border-black text-black text-[16px] tracking-[0.24px] uppercase w-[190px] h-[57px] inline-flex items-center justify-center no-underline cursor-pointer transition-colors hover:bg-black hover:text-white"
               >
                 Browse Services
               </Link>

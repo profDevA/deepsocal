@@ -17,7 +17,7 @@ interface DrawerProps {
 }
 
 const DRAWER_PILL_CLASS =
-  "font-bangers bg-[#111] text-[#d7d7d7] text-[20px] leading-[1.4] px-5 py-2 no-underline inline-flex items-center justify-center transition-colors hover:bg-[#333]";
+  "font-acumin-condensed bg-[#111] text-[#d7d7d7] text-[20px] leading-[1.4] px-5 py-2 no-underline inline-flex items-center justify-center transition-colors hover:bg-[#333]";
 
 export default function Drawer({ open, onClose, navItems, onBookCall }: DrawerProps) {
   return (
@@ -26,10 +26,10 @@ export default function Drawer({ open, onClose, navItems, onBookCall }: DrawerPr
         <Dialog.Overlay className="fixed inset-0 z-99998 bg-black/50" />
         <Dialog.Content
           aria-describedby={undefined}
-          className="fixed top-0 right-0 z-99999 h-full w-[85vw] max-w-[453px] bg-[#e6e6e6] overflow-y-auto rounded-l-[62px] shadow-[0_5px_15px_rgba(0,0,0,0.25)] animate-slide-in flex flex-col p-12 max-[1025px]:p-8"
+          className="fixed top-0 right-0 z-99999 h-full w-[85vw] max-w-[453px] bg-[#e6e6e6] overflow-y-auto shadow-[0_5px_15px_rgba(0,0,0,0.25)] animate-slide-in flex flex-col p-12 max-[1025px]:p-8"
         >
           <div className="flex items-center justify-between mb-12">
-            <Dialog.Title className="font-bangers text-dark text-[32px] leading-none m-0">
+            <Dialog.Title className="font-acumin-condensed text-dark text-[32px] leading-none m-0">
               Menu
             </Dialog.Title>
             <Dialog.Close

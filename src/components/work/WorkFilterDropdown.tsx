@@ -43,7 +43,7 @@ export default function WorkFilterDropdown({
         onClick={() => setOpen(!open)}
         className="bg-dark border border-[#bdbdbd] flex items-center justify-between w-full h-[53px] px-6 text-brand cursor-pointer"
       >
-        <span className="font-bangers text-[20px] sm:text-[24px] md:text-[28px] leading-none">
+        <span className="font-acumin-condensed text-[20px] sm:text-[24px] md:text-[28px] leading-none">
           {currentLabel}
         </span>
         <svg

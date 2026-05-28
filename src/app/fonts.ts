@@ -63,3 +63,39 @@ export const bangers = Bangers({
   variable: "--nf-bangers",
   display: "swap",
 });
+
+// Acumin Pro Condensed — headlines / titles / wordmark. Israel's one .woff2
+// from onlinewebfonts.com is visually Bold (matches Figma's
+// `Acumin Pro Condensed: Bold` spec). Declared as the 400–700 range so the
+// same file serves any weight request in that band without faux-bolding;
+// swap in the full licensed family later without touching components.
+export const acuminCondensed = localFont({
+  src: "../fonts/AcuminProCondensed.woff2",
+  weight: "400 700",
+  style: "normal",
+  variable: "--nf-acumin-condensed",
+  display: "swap",
+});
+
+// Acumin Pro — body / italic / bold. Regular + Italic + Bold + Bold
+// Italic OTFs from Israel.
+export const acuminPro = localFont({
+  src: [
+    { path: "../fonts/AcuminPro-Regular.otf", weight: "400", style: "normal" },
+    { path: "../fonts/AcuminPro-Italic.otf", weight: "400", style: "italic" },
+    { path: "../fonts/AcuminPro-Bold.otf", weight: "700", style: "normal" },
+    { path: "../fonts/AcuminPro-BoldItalic.otf", weight: "700", style: "italic" },
+  ],
+  variable: "--nf-acumin",
+  display: "swap",
+});
+
+// Overpass Mono — accent / numeric / mono text. Variable font (single
+// file, full 300-700 weight range).
+export const overpassMono = localFont({
+  src: "../fonts/OverpassMono.ttf",
+  weight: "300 700",
+  style: "normal",
+  variable: "--nf-overpass-mono",
+  display: "swap",
+});

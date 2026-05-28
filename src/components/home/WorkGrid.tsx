@@ -13,18 +13,12 @@ interface WorkGridProps {
 }
 
 const PREVIEW_LIMIT = 12;
-const ENTER_DURATION = 0.55; // seconds
+const ENTER_DURATION = 0.55;
 const EXIT_DURATION = 0.4;
 const STAGGER = 0.06;
 
-/**
- * Three-phase state machine. `closing` keeps the extras mounted just long
- * enough for the exit animation to finish before they unmount.
- *  - collapsed  → only the first 12 cards rendered
- *  - expanded   → all cards rendered; GSAP enter animation runs on mount
- *  - closing    → all cards still rendered; GSAP exit animation runs, then
- *                 a setTimeout flips phase to `collapsed`
- */
+// `closing` keeps the extras mounted long enough for the exit animation
+// to finish before they unmount.
 type Phase = "collapsed" | "expanded" | "closing";
 
 export default function WorkGrid({ caseStudies }: WorkGridProps) {
@@ -46,11 +40,6 @@ export default function WorkGrid({ caseStudies }: WorkGridProps) {
   const expanded = phase === "expanded";
   const extraCount = Math.max(0, filteredCards.length - PREVIEW_LIMIT);
 
-  // Drive the enter / exit animations off the `phase` value. GSAP is reliable
-  // across React's reconciliation: when phase flips to "expanded" the extras
-  // are freshly mounted (they read the CSS `.work-card-anim` starting state of
-  // opacity:0 / translateY(24)), and gsap.to() animates them to the open state.
-  // On "closing" we reverse it before the unmount fires.
   useGSAP(
     () => {
       const grid = gridRef.current;
@@ -73,7 +62,6 @@ export default function WorkGrid({ caseStudies }: WorkGridProps) {
           y: 24,
           duration: EXIT_DURATION,
           ease: "power2.in",
-          // Reverse stagger so the last card leaves first.
           stagger: { each: STAGGER, from: "end" },
           overwrite: true,
         });
@@ -113,7 +101,7 @@ export default function WorkGrid({ caseStudies }: WorkGridProps) {
     >
       <div className="max-w-[1380px] mx-auto flex flex-col items-center gap-[40px] sm:gap-[56px] md:gap-[72px] lg:gap-[86px]">
         <div className="flex flex-col items-center gap-[10px] w-full max-w-[623px] text-center">
-          <h2 className="font-quintessential text-dark text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] leading-[1.4] tracking-[-1.4px] m-0">
+          <h2 className="font-acumin text-dark text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] leading-[1.4] tracking-[-0.7px] m-0">
             How We work with SoCal Builders
           </h2>
           <WorkFilterDropdown
@@ -124,7 +112,7 @@ export default function WorkGrid({ caseStudies }: WorkGridProps) {
 
         {service && (
           <div className="w-full border-t border-dark pt-[30px] sm:pt-[40px] md:pt-[50px] flex flex-col gap-[16px] sm:gap-[20px] md:gap-[24px] transition-opacity duration-500">
-            <h3 className="font-bangers text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0">
+            <h3 className="font-acumin-condensed text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0">
               {service.name}
             </h3>
             <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[742px] m-0">
@@ -156,7 +144,7 @@ export default function WorkGrid({ caseStudies }: WorkGridProps) {
           <button
             type="button"
             onClick={toggle}
-            className="inline-flex items-center justify-center w-[172px] h-[48px] bg-[#1e1e1e] text-white font-bangers text-[18px] leading-normal hover:opacity-90 transition-opacity cursor-pointer"
+            className="inline-flex items-center justify-center w-[172px] h-[48px] bg-[#1e1e1e] text-white font-acumin-condensed text-[18px] leading-normal hover:opacity-90 transition-opacity cursor-pointer"
           >
             {expanded ? "view less" : "view all"}
           </button>

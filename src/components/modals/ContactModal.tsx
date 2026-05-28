@@ -32,7 +32,7 @@ export default function ContactModal() {
         <Dialog.Overlay className="fixed inset-0 z-999998 bg-black/50" />
         <Dialog.Content
           aria-describedby="contact-modal-description"
-          className="fixed top-0 bottom-0 right-0 my-auto z-999999 h-[819px] max-h-[calc(100vh-40px)] w-[453px] max-w-[90vw] bg-white overflow-y-auto rounded-l-[62px] shadow-[0_5px_15px_rgba(0,0,0,0.25)] animate-slide-in flex flex-col"
+          className="fixed top-0 bottom-0 right-0 my-auto z-999999 h-[819px] max-h-[calc(100vh-40px)] w-[453px] max-w-[90vw] bg-white overflow-y-auto shadow-[0_5px_15px_rgba(0,0,0,0.25)] animate-slide-in flex flex-col"
         >
           <Dialog.Close
             aria-label="Close"
@@ -42,7 +42,7 @@ export default function ContactModal() {
           </Dialog.Close>
 
           <div className="flex flex-col gap-7 px-[46px] pt-[88px] pb-[50px] max-[600px]:px-8 max-[600px]:pt-16">
-            <Dialog.Title className="font-bangers text-black text-[58px] leading-[0.9] uppercase m-0">
+            <Dialog.Title className="font-acumin-condensed text-black text-[58px] leading-[0.9] uppercase m-0">
               Contact us
             </Dialog.Title>
             <p
@@ -101,7 +101,7 @@ export default function ContactModal() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="font-bangers bg-dark text-white text-[16px] tracking-[0.24px] uppercase px-8 py-3 h-[43px] min-w-[170px] inline-flex items-center justify-center border-none cursor-pointer transition-colors hover:bg-[#333] disabled:opacity-50"
+                  className="font-acumin-condensed bg-dark text-white text-[16px] tracking-[0.24px] uppercase px-8 py-3 h-[43px] min-w-[170px] inline-flex items-center justify-center border-none cursor-pointer transition-colors hover:bg-[#333] disabled:opacity-50"
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </button>

@@ -36,7 +36,6 @@ export type CaseStudy = {
 };
 
 export const caseStudies: CaseStudy[] = [
-  // --- Category 1: Ocean & Environment ---
   {
     slug: "ocean-environment",
     title: "Ocean & Environment",
@@ -117,7 +116,6 @@ export const caseStudies: CaseStudy[] = [
     impactMetrics: "",
     order: 3,
   },
-  // --- Category 2: Mental Health Access ---
   {
     slug: "concrete-dreams",
     title: "Concrete Dreams",
@@ -184,7 +182,6 @@ export const caseStudies: CaseStudy[] = [
     impactMetrics: "",
     order: 6,
   },
-  // --- Category 3: Local Commerce ---
   {
     slug: "local-commerce",
     title: "Local Commerce",
@@ -251,7 +248,6 @@ export const caseStudies: CaseStudy[] = [
     impactMetrics: "",
     order: 9,
   },
-  // --- Category 4: Creative Culture ---
   {
     slug: "creative-culture",
     title: "Creative Culture",
@@ -296,7 +292,6 @@ export const caseStudies: CaseStudy[] = [
     impactMetrics: "",
     order: 11,
   },
-  // --- Category 5: Climate Resilience ---
   {
     slug: "climate-resilience",
     title: "Climate Resilience",

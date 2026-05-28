@@ -1,7 +1,18 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { druk, esAllianz, zillaSlab, instrumentSerif, inter, quintessential, bangers } from "./fonts";
+import {
+  druk,
+  esAllianz,
+  zillaSlab,
+  instrumentSerif,
+  inter,
+  quintessential,
+  bangers,
+  acuminCondensed,
+  acuminPro,
+  overpassMono,
+} from "./fonts";
 import { ModalProvider } from "@/components/modals/ModalProvider";
 import Modals from "@/components/modals/Modals";
 import Header from "@/components/layout/Header";
@@ -10,7 +21,18 @@ import BigWordmark from "@/components/home/BigWordmark";
 import LayoutShell from "./LayoutShell";
 import SmoothScroll from "@/components/animation/SmoothScroll";
 
-const fontVars = [druk, esAllianz, zillaSlab, instrumentSerif, inter, quintessential, bangers]
+const fontVars = [
+  druk,
+  esAllianz,
+  zillaSlab,
+  instrumentSerif,
+  inter,
+  quintessential,
+  bangers,
+  acuminCondensed,
+  acuminPro,
+  overpassMono,
+]
   .map((f) => f.variable)
   .join(" ");
 
