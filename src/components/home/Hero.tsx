@@ -39,8 +39,9 @@ export default function Hero() {
         .to(".hero-video", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
         .to(".hero-arrow", { opacity: 1, y: 0, duration: 0.5 }, "-=0.3");
 
-      // Words start black. Scroll dims them from the start so the final
-      // phrase ("FUTURES FOR SOUTHERN CALIFORNIA") stays bright — matching Figma.
+      // Words start black; scroll dims them from the start so the final phrase
+      // ("FUTURES FOR SOUTHERN CALIFORNIA") stays bright — matching Figma.
+      // Hero pins at the top (first position) on all sizes while the words dim.
       const wordReveal = gsap.to(".hero-word", {
         color: DIM_COLOR,
         ease: "power2.out",
