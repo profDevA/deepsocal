@@ -40,7 +40,7 @@ function ImageCard({
   return (
     <Link
       href={`/works/${caseStudy.slug}`}
-      className="group block w-full max-w-[406px] mx-auto overflow-hidden shadow-[0_5.42px_37.4px_rgba(0,0,0,0.25)] bg-[#dadada] transition-transform hover:-translate-y-1 no-underline isolate"
+      className="group block w-full max-w-[406px] mx-auto overflow-hidden bg-[#dadada] border border-[#b0b0b0] transition-transform hover:-translate-y-1 no-underline isolate"
     >
       <article className="relative h-[453px] flex flex-col">
         <div className="relative flex-1 overflow-hidden">
@@ -52,22 +52,23 @@ function ImageCard({
             className="object-cover"
             priority={priority}
           />
+          {caseStudy.tag && (
+            <span
+              className="absolute top-[30px] right-[15px] font-acumin-condensed text-white text-[14px] leading-[1.4] px-[10px] py-[4px] whitespace-nowrap uppercase z-10"
+              style={{ backgroundColor: "rgba(51,51,51,0.8)" }}
+            >
+              {caseStudy.tag}
+            </span>
+          )}
         </div>
 
         <div className="card-bottom-panel h-[204px] -mt-[24px] relative px-[34px] pt-[17px] pb-[34px] flex flex-col z-10 bg-white">
-          <span
-            className="self-end font-acumin-condensed text-white text-[20px] leading-[1.4] px-[13px] py-0.5 whitespace-nowrap uppercase"
-            style={{ backgroundColor: "rgba(17,17,17,0.8)" }}
-          >
-            {caseStudy.tag}
-          </span>
-
           <div className="flex items-end gap-[30px] mt-auto">
             <div className="flex flex-col gap-[11px] flex-1 min-w-0">
-              <h3 className="font-acumin-condensed text-dark text-[36px] leading-[45px] tracking-[1.08px] m-0 uppercase">
+              <h3 className="font-acumin-condensed text-[#1e1e1e] text-[32px] leading-[28px] m-0 uppercase">
                 {caseStudy.title}
               </h3>
-              <p className="font-inter text-[#3a3a3a] text-[16px] leading-[20px] tracking-[0.48px] m-0">
+              <p className="font-acumin font-normal text-[#1e1e1e] text-[16px] leading-[20px] tracking-[0.48px] m-0">
                 {caseStudy.subtitle}
               </p>
             </div>
@@ -92,7 +93,7 @@ function EditorialCard({ caseStudy }: { caseStudy: CaseStudy }) {
   return (
     <Link
       href={`/works/${caseStudy.slug}`}
-      className="group block w-full max-w-[406px] mx-auto overflow-hidden shadow-[0_5px_37px_rgba(0,0,0,0.18)] border transition-transform hover:-translate-y-1 no-underline"
+      className="group block w-full max-w-[406px] mx-auto overflow-hidden border transition-transform hover:-translate-y-1 no-underline"
       style={{ backgroundColor: EDITORIAL_BG, borderColor: EDITORIAL_BORDER }}
     >
       <article className="relative h-[453px] p-[31px] flex flex-col">
@@ -106,10 +107,10 @@ function EditorialCard({ caseStudy }: { caseStudy: CaseStudy }) {
           />
         </div>
 
-        <h3 className="font-acumin-condensed text-dark text-[40px] leading-[42px] tracking-[1.2px] uppercase m-0 max-w-[329px] mt-auto">
+        <h3 className="font-acumin-condensed text-[#1e1e1e] text-[40px] leading-[42px] uppercase m-0 max-w-[329px] mt-auto">
           {caseStudy.title}
         </h3>
-        <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] m-0 max-w-[321px] mt-4">
+        <p className="font-acumin font-normal text-[#1e1e1e] text-[16px] leading-[20px] tracking-[0.48px] m-0 max-w-[321px] mt-4">
           {caseStudy.subtitle}
         </p>
       </article>

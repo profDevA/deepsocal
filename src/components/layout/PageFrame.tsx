@@ -27,7 +27,8 @@ export default function PageFrame() {
         type="button"
         onClick={() => openModal("contact")}
         aria-label="Open contact form"
-        className="pointer-events-auto absolute right-[15px] top-1/2 -translate-y-1/2 translate-x-1/2 rotate-90 origin-center font-acumin-condensed bg-dark text-white text-[13px] tracking-[2px] uppercase px-5 py-[6px] leading-none whitespace-nowrap cursor-pointer transition-colors hover:bg-[#333] border-none shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
+        className="pointer-events-auto absolute right-0 top-1/2 -translate-y-1/2 font-acumin-condensed bg-[#1e1e1e] text-[#d7d7d7] text-[16px] leading-[1.4] uppercase px-[16px] py-[4px] whitespace-nowrap cursor-pointer border-none hover:bg-[#333] transition-colors"
+        style={{ writingMode: "vertical-rl", transform: "translateY(-50%) rotate(180deg)" }}
       >
         Contact us
       </button>

@@ -51,7 +51,7 @@ export default function WorkFilterDropdown({
           height="24"
           viewBox="0 0 23 24"
           fill="none"
-          className={`transition-transform duration-300 ${open ? "rotate-[-90deg]" : "rotate-90"}`}
+          className={`transition-transform duration-300 ${open ? "-rotate-90" : "rotate-90"}`}
         >
           <path
             d="M8.5 4.5L15.5 12L8.5 19.5"

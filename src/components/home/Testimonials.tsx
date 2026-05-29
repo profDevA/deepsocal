@@ -122,7 +122,7 @@ function Slide({ testimonial }: { testimonial: Testimonial }) {
     <div className="flex flex-col gap-[50px] lg:gap-[60px]">
       <div className="flex items-start gap-[10px]">
         <QuoteGlyph />
-        <p className="font-acumin italic text-white text-[20px] sm:text-[22px] lg:text-[26px] leading-[1.4] m-0 flex-1">
+        <p className="font-acumin italic font-normal text-white text-[26px] leading-[140%] m-0 flex-1">
           {testimonial.quote}
         </p>
       </div>

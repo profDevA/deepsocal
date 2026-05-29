@@ -77,7 +77,7 @@ export default function WhyAreWeDifferent() {
     <section
       ref={root}
       id="difference"
-      className="bg-[#e6e6e6] w-full px-0 relative z-30 isolate md:min-h-screen md:flex md:flex-col"
+      className="bg-white w-full px-0 relative z-30 isolate md:min-h-screen md:flex md:flex-col"
     >
       {/* `min-h-screen` + `justify-center` produce the top inset between
           the sticky header and the heading during pin — do not remove. */}

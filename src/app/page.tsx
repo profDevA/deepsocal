@@ -15,8 +15,8 @@ export default async function Home() {
       <Hero />
       <WhyAreWeDifferent />
       <WorkGrid caseStudies={caseStudies} />
-      <Testimonials />
       <CompaniesMarquee />
+      <Testimonials />
     </>
   );
 }

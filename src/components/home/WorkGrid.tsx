@@ -97,11 +97,11 @@ export default function WorkGrid({ caseStudies }: WorkGridProps) {
   return (
     <section
       id="work"
-      className="bg-[#e6e6e6] w-full px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] py-[60px] sm:py-[80px] md:py-[80px] lg:py-[80px]"
+      className="bg-white w-full px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] py-[60px] sm:py-[80px] md:py-[80px] lg:py-[80px]"
     >
-      <div className="max-w-[1380px] mx-auto flex flex-col items-center gap-[40px] sm:gap-[56px] md:gap-[72px] lg:gap-[86px]">
+      <div className="max-w-[1380px] mx-auto flex flex-col items-center">
         <div className="flex flex-col items-center gap-[10px] w-full max-w-[623px] text-center">
-          <h2 className="font-acumin text-dark text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] leading-[1.4] tracking-[-0.7px] m-0">
+          <h2 className="font-acumin font-normal text-[#1e1e1e] text-[28px] leading-[49.546px] tracking-[-1.441px] text-center m-0">
             How We work with SoCal Builders
           </h2>
           <WorkFilterDropdown
@@ -111,7 +111,7 @@ export default function WorkGrid({ caseStudies }: WorkGridProps) {
         </div>
 
         {service && (
-          <div className="w-full border-t border-dark pt-[30px] sm:pt-[40px] md:pt-[50px] flex flex-col gap-[16px] sm:gap-[20px] md:gap-[24px] transition-opacity duration-500">
+          <div className="w-full border-t border-dark mt-[40px] pt-[30px] sm:pt-[40px] md:pt-[50px] flex flex-col gap-[16px] sm:gap-[20px] md:gap-[24px] transition-opacity duration-500">
             <h3 className="font-acumin-condensed text-dark text-[48px] leading-[50px] tracking-[1.44px] uppercase m-0">
               {service.name}
             </h3>
@@ -123,7 +123,7 @@ export default function WorkGrid({ caseStudies }: WorkGridProps) {
 
         <div
           ref={gridRef}
-          className="work-grid-hover grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px] sm:gap-[36px] md:gap-[48px] lg:gap-[57px] w-full"
+          className="work-grid-hover grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[24px] gap-y-[24px] sm:gap-x-[36px] sm:gap-y-[28px] md:gap-x-[48px] md:gap-y-[36px] lg:gap-x-[57px] lg:gap-y-[40px] w-full mt-[168px]"
         >
           {visibleCards.map((cs, i) => {
             const isExtra = i >= PREVIEW_LIMIT;
@@ -144,7 +144,7 @@ export default function WorkGrid({ caseStudies }: WorkGridProps) {
           <button
             type="button"
             onClick={toggle}
-            className="inline-flex items-center justify-center w-[172px] h-[48px] bg-[#1e1e1e] text-white font-acumin-condensed text-[18px] leading-normal hover:opacity-90 transition-opacity cursor-pointer"
+            className="mt-[77px] inline-flex items-center justify-center w-[172px] h-[48px] bg-[#1e1e1e] text-white font-acumin-condensed text-[18px] uppercase leading-normal hover:opacity-90 transition-opacity cursor-pointer"
           >
             {expanded ? "view less" : "view all"}
           </button>

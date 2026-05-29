@@ -9,9 +9,9 @@ export default function CompaniesMarquee() {
     <section
       id="companies"
       aria-label="Companies we've worked with"
-      className="bg-[#e6e6e6] overflow-hidden"
+      className="bg-white"
     >
-      <div className="mx-[25px] border-t border-b border-dark py-9">
+      <div className="mx-[20px] border-t border-b border-dark py-9 overflow-hidden">
         <div
           className="flex items-center gap-[36px] sm:gap-[42px] md:gap-[48px] lg:gap-[54px] whitespace-nowrap animate-marquee"
           style={{ width: "max-content" }}

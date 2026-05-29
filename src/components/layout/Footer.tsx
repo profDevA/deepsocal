@@ -1,10 +1,16 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
+import { FaInstagram, FaLinkedinIn, FaFacebook, FaXTwitter } from "react-icons/fa6";
 
-const COL_TITLE = "font-inter font-semibold text-[#d7d7d7] text-[18px] leading-[28px] uppercase m-0";
-const COL_LINK = "font-inter text-[#d7d7d7] text-[16px] leading-[20px] tracking-[0.48px] no-underline hover:opacity-80";
+const COL_TITLE = "font-acumin-condensed text-[#d7d7d7] text-[18px] leading-[28px] uppercase m-0";
+const COL_BODY = "font-acumin font-normal text-[#d7d7d7] text-[16px] leading-[20px] tracking-[0.48px] no-underline hover:opacity-70 transition-opacity";
+
+const socialLinks = [
+  { icon: FaInstagram, href: "#", label: "Instagram", bg: false },
+  { icon: FaLinkedinIn, href: "#", label: "LinkedIn", bg: true },
+  { icon: FaFacebook, href: "#", label: "Facebook", bg: false },
+  { icon: FaXTwitter, href: "#", label: "X / Twitter", bg: false },
+];
 
 export default function Footer() {
   const handleBackToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -13,60 +19,115 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-dark w-full">
-      <div className="px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] py-[40px] sm:py-[48px] md:py-[54px] lg:py-[60px]">
-        <div className="max-w-[1380px] mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[30px] sm:gap-[40px] md:gap-[50px] lg:gap-[60px]">
-            <div className="flex flex-col gap-2">
-              {/* Original `deepsocal.com` wordmark, white-fill variant for
-                  dark footer background (5/27 brand pivot). */}
-              <Image
-                src="/images/DeepSoCal-banner.svg"
-                alt="deepSoCal"
-                width={1010}
-                height={294}
-                className="h-[28px] sm:h-[32px] md:h-[38px] w-auto select-none"
-              />
-              <span className="font-inter text-[#d7d7d7] text-[14px] leading-[18px] tracking-[0.42px]">
-                Your embedded ally across Southern California.
+    <footer className="bg-[#1e1e1e] w-full">
+
+      {/* Main content — pt=41, bottom bar starts at y=174 so pb≈33 before bar */}
+      <div className="px-[25px] lg:px-[88px] pt-[41px] pb-[33px]">
+
+        {/* Desktop: 3-col grid [tagline 288px] [gap] [3 columns 690px] */}
+        {/* Mobile: single column stack */}
+        <div className="flex flex-col lg:flex-row lg:items-center gap-[40px]">
+
+          {/* Left — tagline (288px wide on desktop) */}
+          <div className="flex flex-col items-start gap-0 w-full lg:w-[288px] shrink-0">
+            {/* YOUR — centered above the pill */}
+            <div className="w-full flex justify-center">
+              <span
+                className="font-acumin-condensed font-bold text-[#d7d7d7] text-[25.614px] leading-[25.881px] whitespace-nowrap inline-block text-center"
+                style={{ transform: "rotate(-3.36deg)" }}
+              >
+                YOUR
               </span>
             </div>
-
-            <div className="flex flex-col gap-3">
-              <h3 className={COL_TITLE}>Contact Us</h3>
-              <a href="mailto:create@deepsocal.com" className={COL_LINK}>create@deepsocal.com</a>
-              <a href="mailto:careers@deepsocal.com" className={COL_LINK}>careers@deepsocal.com</a>
+            {/* EMBEDDED ALLY pill */}
+            <div className="w-full flex justify-center mt-[9px]">
+              <span
+                className="font-acumin-condensed font-bold text-[#d7d7d7] text-[25.614px] leading-[25.881px] whitespace-nowrap inline-block"
+                style={{ transform: "rotate(-2.27deg)" }}
+              >
+                EMBEDDED ALLY
+              </span>
             </div>
-
-            <div className="flex flex-col gap-3">
-              <h3 className={COL_TITLE}>Visit Us</h3>
-              <span className={COL_LINK}>Southern California</span>
-              <span className={COL_LINK}>Orange County, CA</span>
-            </div>
-
-            <div className="flex flex-col gap-3">
-              <h3 className={COL_TITLE}>Follow Us</h3>
-              <Link href="#" className={COL_LINK}>Instagram</Link>
-              <Link href="#" className={COL_LINK}>LinkedIn</Link>
-              <Link href="/about" className={COL_LINK}>About</Link>
-              <Link href="/about#faqs" className={COL_LINK}>FAQs</Link>
+            {/* Across Southern California */}
+            <div className="w-full mt-[8px] flex justify-center">
+              <span
+                className="font-acumin font-normal text-[#d7d7d7] text-[16px] leading-[20px] whitespace-nowrap inline-block"
+                style={{ transform: "rotate(-2.54deg)" }}
+              >
+                Across Southern California
+              </span>
             </div>
           </div>
 
-          <div className="border-t border-[#c5c5c5] mt-[30px] sm:mt-[38px] md:mt-[44px] lg:mt-[50px] pt-[18px] flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="font-inter text-[#d7d7d7] text-[16px] leading-[20px] tracking-[0.48px] m-0">
-              Copyright &copy; {new Date().getFullYear()} | All rights reserved.
-            </p>
-            <a
-              href="#"
-              onClick={handleBackToTop}
-              className="font-inter text-[#d7d7d7] text-[16px] leading-[20px] tracking-[0.48px] no-underline hover:opacity-80"
-            >
-              Back to top &uarr;
-            </a>
+          {/* Spacer — pushes columns to the right on desktop */}
+          <div className="hidden lg:block flex-1" />
+
+          {/* Right — 3 columns */}
+          <div className="flex flex-wrap gap-y-[30px] items-start shrink-0" style={{ gap: "49px" }}>
+
+            {/* Contact Us */}
+            <div className="flex flex-col gap-[14px] w-[207px]">
+              <h3 className={COL_TITLE}>Contact Us</h3>
+              <div className="flex flex-col gap-[6px]">
+                <a href="mailto:create@deepsocal.com" className={COL_BODY}>create@deepSoCol.com</a>
+                <a href="mailto:careers@deepsocal.com" className={COL_BODY}>careers@deepsocal.com</a>
+              </div>
+            </div>
+
+            {/* Visit Us */}
+            <div className="flex flex-col gap-[14px] w-[206px]">
+              <h3 className={COL_TITLE}>Visit Us</h3>
+              <div className="flex flex-col gap-[6px]">
+                <a href="https://behance.com/deepSoCal" target="_blank" rel="noopener noreferrer" className={COL_BODY}>Behance.com/deepSoCal/</a>
+                <a href="https://dribbble.com/deepSoCal" target="_blank" rel="noopener noreferrer" className={COL_BODY}>Dribble.com/deepSoCal/</a>
+              </div>
+            </div>
+
+            {/* Follow Us */}
+            <div className="flex flex-col gap-[14px] w-[179px]">
+              <h3 className={COL_TITLE}>Follow Us</h3>
+              <div className="flex items-center gap-[7px]">
+                {socialLinks.map(({ icon: Icon, href, label, bg }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    aria-label={label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center hover:opacity-70 transition-opacity"
+                  >
+                    {bg ? (
+                      <span className="bg-white rounded-[4px] w-[18px] h-[18px] flex items-center justify-center">
+                        <Icon size={12} color="#000" />
+                      </span>
+                    ) : (
+                      <Icon size={18} color="#d7d7d7" />
+                    )}
+                  </a>
+                ))}
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
+
+      {/* Bottom bar — nearly full-width (24px margin each side matching Figma x=24, w=1402) */}
+      <div className="mx-[24px] border-t border-[#c5c5c5]">
+        <div className="mx-[36px] py-[19px] flex items-center justify-between gap-3 flex-wrap">
+          <p className="font-acumin font-normal text-[#d7d7d7] text-[16px] leading-[20px] tracking-[0.48px] m-0">
+            Copyright &copy; {new Date().getFullYear()} | All rights reserved.
+          </p>
+          <a
+            href="#"
+            onClick={handleBackToTop}
+            className="font-acumin font-normal text-[#d7d7d7] text-[16px] leading-[20px] tracking-[0.48px] no-underline hover:opacity-70 transition-opacity"
+          >
+            Back to top ↑
+          </a>
+        </div>
+      </div>
+
     </footer>
   );
 }

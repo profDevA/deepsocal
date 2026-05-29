@@ -41,10 +41,10 @@ export default function Header() {
     <>
       <header
         id="header"
-        className="fixed top-0 left-0 right-0 z-9999 bg-[#e6e6e6] border-b border-dark"
+        className="fixed top-0 left-0 right-0 z-9999 bg-white border-b border-dark"
       >
         <div className="w-full px-[80px] max-[1025px]:px-[20px]">
-          <nav className="flex items-center justify-between min-h-[64px]">
+          <nav className="flex items-center justify-between h-[82px]">
             <Link
               href="/"
               aria-label="deepSoCal home"
@@ -75,8 +75,10 @@ export default function Header() {
               <FaBars className="text-xl text-dark" />
             </button>
 
-            <ul className="flex items-center gap-[25px] list-none m-0 p-0 max-md:hidden">
-              {navItems.map((item) => (
+            {/* Per Figma node 632:5209 — Book a call sits between
+                Our Difference and The Shop (3rd of 4), not at the end. */}
+            <ul className="flex items-center gap-[16px] list-none m-0 p-0 max-md:hidden">
+              {navItems.slice(0, 2).map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className={NAV_PILL_CLASS}>
                     {item.label}
@@ -92,6 +94,13 @@ export default function Header() {
                   Book a call
                 </button>
               </li>
+              {navItems.slice(2).map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className={NAV_PILL_CLASS}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>

@@ -40,8 +40,10 @@ export default function Drawer({ open, onClose, navItems, onBookCall }: DrawerPr
             </Dialog.Close>
           </div>
           <nav className="flex-1">
+            {/* Order matches the desktop Header: Our Work / Our Difference /
+                Book a call / The Shop (Figma node 632:5209). */}
             <ul className="flex flex-col gap-4 list-none m-0 p-0 items-start">
-              {navItems.map((item) => (
+              {navItems.slice(0, 2).map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} onClick={onClose} className={DRAWER_PILL_CLASS}>
                     {item.label}
@@ -57,6 +59,13 @@ export default function Drawer({ open, onClose, navItems, onBookCall }: DrawerPr
                   Book a call
                 </button>
               </li>
+              {navItems.slice(2).map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} onClick={onClose} className={DRAWER_PILL_CLASS}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
         </Dialog.Content>

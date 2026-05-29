@@ -72,8 +72,10 @@
   body {
     font-size: 1.2vw;
     /* Must match the section bg or GSAP's pin-spacer reveals a color
-       seam below `WhyAreWeDifferent` on tall viewports. */
-    background: #e6e6e6;
+       seam below `WhyAreWeDifferent` on tall viewports. Page is white
+       per Figma node 632:4808 — the grey only appears in the
+       BigWordmark band near the footer. */
+    background: #ffffff;
     color: #000;
   }
   img { max-width: 100%; }
