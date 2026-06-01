@@ -36,6 +36,12 @@ export default function SmoothScroll() {
       if (!link) return;
       const hash = link.getAttribute("href");
       if (!hash || hash === "#") return;
+      // "#top" = smooth scroll to the very top (used by the footer's "Back to top").
+      if (hash === "#top") {
+        e.preventDefault();
+        lenis.scrollTo(0, { duration: 1.8 });
+        return;
+      }
       const target = document.querySelector(hash);
       if (!target) return;
       e.preventDefault();

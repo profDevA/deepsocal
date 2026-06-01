@@ -76,7 +76,6 @@ export const socalThemes: SoCalTheme[] = [
     bgColor: "#CCDCDB",
     carouselImage: "/images/themes/ai-digital-access.png",
     badgeImage: "/images/badges/ai-digital-access.svg",
-    iconBgColor: "#DEE8E9",
   },
 ];
 

@@ -83,7 +83,7 @@ export default function WhyAreWeDifferent() {
           the sticky header and the heading during pin — do not remove. */}
       <div className="w-full md:flex-1 md:flex md:flex-col md:justify-center">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-x-[50px] gap-y-6 pb-[40px] px-[40px]">
-          <h2 className="font-acumin-condensed text-dark text-[48px] leading-[1.04] tracking-[1.44px] m-0">
+          <h2 className="font-acumin-condensed text-dark uppercase text-[48px] leading-[1.04] tracking-[1.44px] m-0">
             Why are we different?
           </h2>
           <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] max-w-[742px] m-0">

@@ -123,7 +123,7 @@ export default function WorkGrid({ caseStudies }: WorkGridProps) {
 
         <div
           ref={gridRef}
-          className="work-grid-hover grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[24px] gap-y-[24px] sm:gap-x-[36px] sm:gap-y-[28px] md:gap-x-[48px] md:gap-y-[36px] lg:gap-x-[57px] lg:gap-y-[40px] w-full mt-[168px]"
+          className="work-grid-hover grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[24px] gap-y-[50px] sm:gap-x-[36px] md:gap-x-[48px] md:gap-y-[36px] lg:gap-x-[57px] lg:gap-y-[40px] w-full mt-[60px] sm:mt-[90px] md:mt-[120px] lg:mt-[168px]"
         >
           {visibleCards.map((cs, i) => {
             const isExtra = i >= PREVIEW_LIMIT;

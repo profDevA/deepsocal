@@ -71,7 +71,7 @@ export default function Testimonials() {
       id="testimonials"
       className="bg-[#1e1e1e] border-t border-b border-white w-full"
     >
-      <div className="mx-auto max-w-[1380px] px-[40px] py-[120px] lg:py-[160px]">
+      <div className="mx-auto max-w-[1380px] px-[40px] py-[80px] sm:py-[120px] lg:py-[160px]">
         <div className="grid gap-[60px] lg:grid-cols-[1fr_1.35fr] lg:gap-[140px] items-start">
           <div className="flex flex-col gap-[60px] lg:gap-[80px]">
             <h2 className="font-acumin-condensed text-white text-[36px] sm:text-[40px] lg:text-[42px] leading-[50px] tracking-[1.26px] uppercase m-0 max-w-[377px]">
@@ -122,7 +122,7 @@ function Slide({ testimonial }: { testimonial: Testimonial }) {
     <div className="flex flex-col gap-[50px] lg:gap-[60px]">
       <div className="flex items-start gap-[10px]">
         <QuoteGlyph />
-        <p className="font-acumin italic font-normal text-white text-[26px] leading-[140%] m-0 flex-1">
+        <p className="font-acumin italic font-normal text-white text-[18px] sm:text-[22px] lg:text-[26px] leading-[140%] m-0 flex-1">
           {testimonial.quote}
         </p>
       </div>
@@ -155,7 +155,7 @@ function NavButton({
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="bg-[#2a2a2a] hover:bg-[#3a3a3a] transition-colors flex items-center justify-center w-[35px] h-[38px] cursor-pointer drop-shadow-[0_0_8.15px_rgba(0,0,0,0.25)]"
+      className="flex items-center justify-center w-[35px] h-[38px] cursor-pointer hover:opacity-60 transition-opacity"
     >
       <ArrowGlyph direction={direction} />
     </button>

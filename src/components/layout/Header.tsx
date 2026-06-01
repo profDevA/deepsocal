@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FaBars } from "react-icons/fa6";
-import { useModal } from "@/components/modals/ModalProvider";
 import Drawer, { type DrawerNavItem } from "./Drawer";
 
 const navItems: DrawerNavItem[] = [
@@ -13,11 +13,21 @@ const navItems: DrawerNavItem[] = [
   { label: "The Shop", href: "/shop" },
 ];
 
+// Hover = black background with white text (Figma prototype).
 const NAV_PILL_CLASS =
-  "font-acumin-condensed text-black text-[16px] uppercase leading-[1.4] px-4 py-1 no-underline whitespace-nowrap inline-flex items-center justify-center hover:underline underline-offset-[5px] decoration-1";
+  "font-acumin-condensed text-black text-[16px] uppercase leading-[1.4] px-4 py-1 no-underline whitespace-nowrap inline-flex items-center justify-center transition-colors hover:bg-black hover:text-white";
+
+function getMobilePageLabel(pathname: string): string {
+  if (pathname.startsWith("/about")) return "Our Difference";
+  if (pathname.startsWith("/shop")) return "The Shop";
+  if (pathname.startsWith("/works") || pathname.startsWith("/services"))
+    return "Our Work";
+  return "";
+}
 
 export default function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (drawerOpen) {
@@ -43,18 +53,14 @@ export default function Header() {
         id="header"
         className="fixed top-0 left-0 right-0 z-9999 bg-white border-b border-dark"
       >
-        <div className="w-full px-[80px] max-[1025px]:px-[20px]">
+        {/* Desktop nav */}
+        <div className="hidden md:block w-full px-[80px]">
           <nav className="flex items-center justify-between h-[82px]">
             <Link
               href="/"
               aria-label="deepSoCal home"
               className="inline-flex items-center no-underline shrink-0"
             >
-              {/* Original `deepsocal.com` wordmark (per 5/27 brand pivot).
-                  Uses the bespoke SVG so casing + kerning match the brand
-                  mark exactly. SVG viewBox is 182×41 (~4.44:1 aspect, fill
-                  #333333, includes the trailing `(*)` mark Fas referenced
-                  in the meeting). Height 30px gives ~133px wide. */}
               <Image
                 src="/images/deepsocal-wordmark.svg"
                 alt="deepSoCal"
@@ -65,19 +71,9 @@ export default function Header() {
               />
             </Link>
 
-            <button
-              type="button"
-              className="hidden max-md:flex p-2 items-center justify-center cursor-pointer"
-              onClick={() => setDrawerOpen(true)}
-              aria-label="Open menu"
-              aria-expanded={drawerOpen}
-            >
-              <FaBars className="text-xl text-dark" />
-            </button>
-
             {/* Per Figma node 632:5209 — Book a call sits between
                 Our Difference and The Shop (3rd of 4), not at the end. */}
-            <ul className="flex items-center gap-[16px] list-none m-0 p-0 max-md:hidden">
+            <ul className="flex items-center gap-[16px] list-none m-0 p-0">
               {navItems.slice(0, 2).map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className={NAV_PILL_CLASS}>
@@ -102,6 +98,42 @@ export default function Header() {
                 </li>
               ))}
             </ul>
+          </nav>
+        </div>
+
+        {/* Mobile nav — logo mark | page name | hamburger */}
+        <div className="flex md:hidden w-full px-[20px]">
+          <nav className="flex items-center justify-between h-[64px] w-full relative">
+            <Link
+              href="/"
+              aria-label="deepSoCal home"
+              className="inline-flex items-center no-underline shrink-0"
+            >
+              <Image
+                src="/images/deepsocal-mark.png"
+                alt="deepSoCal"
+                width={37}
+                height={35}
+                priority
+                className="h-[35px] w-auto select-none"
+              />
+            </Link>
+
+            {getMobilePageLabel(pathname) && (
+              <span className="absolute left-1/2 -translate-x-1/2 font-acumin-condensed font-bold text-dark text-[24px] uppercase leading-[1.4] whitespace-nowrap pointer-events-none">
+                {getMobilePageLabel(pathname)}
+              </span>
+            )}
+
+            <button
+              type="button"
+              className="flex p-2 items-center justify-center cursor-pointer"
+              onClick={() => setDrawerOpen(true)}
+              aria-label="Open menu"
+              aria-expanded={drawerOpen}
+            >
+              <FaBars className="text-[20px] text-dark" />
+            </button>
           </nav>
         </div>
       </header>

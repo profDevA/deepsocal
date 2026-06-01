@@ -14,11 +14,6 @@ const socialLinks = [
 ];
 
 export default function Footer() {
-  const handleBackToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <footer className="bg-[#1e1e1e] w-full">
 
@@ -120,8 +115,7 @@ export default function Footer() {
             Copyright &copy; {new Date().getFullYear()} | All rights reserved.
           </p>
           <a
-            href="#"
-            onClick={handleBackToTop}
+            href="#top"
             className="font-acumin font-normal text-[#d7d7d7] text-[16px] leading-[20px] tracking-[0.48px] no-underline hover:opacity-70 transition-opacity"
           >
             Back to top ↑

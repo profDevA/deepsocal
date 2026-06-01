@@ -64,7 +64,7 @@ export default function WorkFilterDropdown({
       </button>
 
       <div
-        className={`absolute z-50 left-1/2 -translate-x-1/2 top-[calc(100%+15px)] w-[343px] bg-[#e6e6e6] border border-[#8e8e8e] rounded-[23px] shadow-[0_4px_28px_rgba(0,0,0,0.1)] overflow-hidden transition-all duration-300 origin-top ${
+        className={`absolute z-50 left-1/2 -translate-x-1/2 top-[calc(100%+15px)] w-[343px] bg-white border border-[#8e8e8e] rounded-[23px] shadow-[0_4px_28px_rgba(0,0,0,0.1)] overflow-hidden transition-all duration-300 origin-top ${
           open
             ? "opacity-100 scale-y-100 pointer-events-auto"
             : "opacity-0 scale-y-0 pointer-events-none"

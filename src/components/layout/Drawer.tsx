@@ -16,56 +16,54 @@ interface DrawerProps {
   onBookCall: () => void;
 }
 
-const DRAWER_PILL_CLASS =
-  "font-acumin-condensed bg-[#111] text-[#d7d7d7] text-[20px] leading-[1.4] px-5 py-2 no-underline inline-flex items-center justify-center transition-colors hover:bg-[#333]";
+const LINK_CLASS =
+  "font-acumin-condensed font-bold text-black text-[36px] leading-[1.4] uppercase px-[24px] py-[6px] no-underline inline-block transition-opacity hover:opacity-60";
 
 export default function Drawer({ open, onClose, navItems, onBookCall }: DrawerProps) {
   return (
     <Dialog.Root open={open} onOpenChange={(v) => !v && onClose()}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-99998 bg-black/50" />
         <Dialog.Content
           aria-describedby={undefined}
-          className="fixed top-0 right-0 z-99999 h-full w-[85vw] max-w-[453px] bg-[#e6e6e6] overflow-y-auto shadow-[0_5px_15px_rgba(0,0,0,0.25)] animate-slide-in flex flex-col p-12 max-[1025px]:p-8"
+          className="fixed inset-0 z-99999 bg-white"
         >
-          <div className="flex items-center justify-between mb-12">
-            <Dialog.Title className="font-acumin-condensed text-dark text-[32px] leading-none m-0">
-              Menu
-            </Dialog.Title>
-            <Dialog.Close
-              aria-label="Close menu"
-              className="w-10 h-10 bg-dark text-white rounded-full inline-flex items-center justify-center text-[22px] cursor-pointer border-none"
-            >
-              <FaXmark />
-            </Dialog.Close>
-          </div>
-          <nav className="flex-1">
-            {/* Order matches the desktop Header: Our Work / Our Difference /
-                Book a call / The Shop (Figma node 632:5209). */}
-            <ul className="flex flex-col gap-4 list-none m-0 p-0 items-start">
-              {navItems.slice(0, 2).map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} onClick={onClose} className={DRAWER_PILL_CLASS}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+          <Dialog.Title className="sr-only">Navigation menu</Dialog.Title>
+
+          {/* X close button — top right, matches Figma top:40px right:~24px */}
+          <Dialog.Close
+            aria-label="Close menu"
+            className="absolute top-[40px] right-[24px] w-[21px] h-[20px] flex items-center justify-center cursor-pointer border-none bg-transparent text-black text-[20px]"
+          >
+            <FaXmark />
+          </Dialog.Close>
+
+          {/* Nav links — left-aligned, starting 160px from top */}
+          <nav className="pt-[160px] pl-[27px]">
+            <ul className="flex flex-col gap-[20px] list-none m-0 p-0 items-start">
+              <li>
+                <Link href="/#work" onClick={onClose} className={LINK_CLASS}>
+                  Our Work
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" onClick={onClose} className={LINK_CLASS}>
+                  Our Difference
+                </Link>
+              </li>
               <li>
                 <button
                   type="button"
                   onClick={onBookCall}
-                  className={`${DRAWER_PILL_CLASS} border-none`}
+                  className={`${LINK_CLASS} border-none cursor-pointer p-0 px-[24px] py-[6px]`}
                 >
                   Book a call
                 </button>
               </li>
-              {navItems.slice(2).map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} onClick={onClose} className={DRAWER_PILL_CLASS}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/shop" onClick={onClose} className={LINK_CLASS}>
+                  The Shop
+                </Link>
+              </li>
             </ul>
           </nav>
         </Dialog.Content>
