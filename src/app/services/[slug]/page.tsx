@@ -36,7 +36,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
   const filtered = await fetchCaseStudiesByService(service.id);
 
   return (
-    <div className="bg-[#e6e6e6] w-full">
+    <div className="bg-white w-full">
       <section className="w-full px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] pt-[40px] sm:pt-[56px] md:pt-[68px] lg:pt-[80px] pb-[20px] sm:pb-[28px] md:pb-[34px] lg:pb-[40px]">
         <div className="max-w-[1380px] mx-auto flex flex-col items-center gap-[10px] text-center">
           <h2 className="font-quintessential text-dark text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] leading-[1.4] tracking-[-1.4px] m-0">

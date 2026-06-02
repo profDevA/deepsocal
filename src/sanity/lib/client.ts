@@ -5,5 +5,7 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true,
+  // Live API (not the cached CDN) so published edits appear right away.
+  // The page-level `revalidate: 30` in fetch.ts still provides Next caching.
+  useCdn: false,
 });

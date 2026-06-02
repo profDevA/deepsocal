@@ -19,10 +19,10 @@ export const ALL_CASE_STUDIES_QUERY = groq`
     summary2,
     impactMetrics,
     order,
-    "heroImage": heroImage.asset->url,
-    "thumbnailImage": thumbnailImage.asset->url,
-    "gallery": gallery[].asset->url,
-    "carouselImages": carouselImages[].asset->url,
+    heroImage,
+    thumbnailImage,
+    gallery,
+    carouselImages,
   }
 `;
 
@@ -45,10 +45,10 @@ export const CASE_STUDY_BY_SLUG_QUERY = groq`
     summary2,
     impactMetrics,
     order,
-    "heroImage": heroImage.asset->url,
-    "thumbnailImage": thumbnailImage.asset->url,
-    "gallery": gallery[].asset->url,
-    "carouselImages": carouselImages[].asset->url,
+    heroImage,
+    thumbnailImage,
+    gallery,
+    carouselImages,
   }
 `;
 
@@ -70,7 +70,7 @@ export const CASE_STUDIES_BY_SERVICE_QUERY = groq`
     services,
     servicesLabel,
     order,
-    "heroImage": heroImage.asset->url,
-    "thumbnailImage": thumbnailImage.asset->url,
+    heroImage,
+    thumbnailImage,
   }
 `;

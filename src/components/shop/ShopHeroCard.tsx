@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa6";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -13,7 +12,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const CARD_HEIGHT = 445;
+const CARD_HEIGHT = 453;
 const CARD_GAP = 37;
 const STEP_SCROLL = 500;
 // Pin start point must equal the sticky Header's min-h so the card top
@@ -103,9 +102,11 @@ export default function ShopHeroCard({
   return (
     <div
       ref={root}
-      className="max-w-[1384px] mx-auto h-auto lg:h-[calc(100vh-64px)] border border-[#c4c4c4] overflow-hidden relative isolate"
+      className="max-w-[1384px] mx-auto h-auto lg:h-[calc(100vh-64px)] lg:border lg:border-[#c4c4c4] overflow-hidden relative isolate"
     >
-      <div className="absolute inset-0 -z-10 bg-[#1f1f1f]">
+      {/* Hero lifestyle background — desktop only. On mobile the page is a
+          clean white stacked product list (no Israel mobile design for shop). */}
+      <div className="hidden lg:block absolute inset-0 -z-10 bg-[#1f1f1f]">
         <Image
           src={heroImage}
           alt="DeepSoCal merch lifestyle"
@@ -131,8 +132,8 @@ export default function ShopHeroCard({
         </div>
       </div>
 
-      {/* Mobile fallback — no pin/scrub, just a stacked list. */}
-      <div className="lg:hidden flex flex-col gap-[20px] p-[20px] relative z-10">
+      {/* Mobile — no pin/scrub, just a clean stacked list on white. */}
+      <div className="lg:hidden flex flex-col gap-[20px] relative z-10">
         {products.map((product) => (
           <ProductCard key={product.slug} product={product} />
         ))}
@@ -147,7 +148,7 @@ function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/shop/${product.slug}`}
-      className="group relative block w-full h-[445px] bg-[#dadada] overflow-hidden shadow-[0_4px_10.2px_rgba(0,0,0,0.05)] no-underline shrink-0"
+      className="group relative block w-full h-[453px] bg-[#dadada] border border-[#b0b0b0] overflow-hidden no-underline shrink-0"
     >
       {cover ? (
         <Image
@@ -169,23 +170,29 @@ function ProductCard({ product }: { product: Product }) {
       )}
 
       <span
-        className="absolute top-[39px] left-[228px] inline-flex items-center justify-center px-[10.5px] font-acumin-condensed text-[#d7d7d7] text-[20px] leading-[1.4] whitespace-pre z-10"
-        style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
+        className="absolute top-[20px] right-[20px] inline-flex items-center justify-center h-[24px] px-[10px] font-acumin-condensed text-white text-[14px] leading-[1.4] uppercase whitespace-pre z-10"
+        style={{ backgroundColor: "rgba(51,51,51,0.8)" }}
       >
         {`$ ${product.price.toFixed(2)}  ${product.shipping}`}
       </span>
 
-      <div className="absolute inset-x-0 bottom-0 h-[200px] bg-white overflow-hidden z-5">
-        <div className="absolute top-[49px] left-[33px] right-[33px] flex items-end gap-[29.5px]">
-          <div className="flex flex-col gap-[11px] flex-1 min-w-0">
-            <h3 className="font-acumin-condensed text-[#303030] text-[36px] leading-[45px] tracking-[1.08px] uppercase m-0">
+      <div className="absolute inset-x-0 bottom-0 h-[204px] bg-white overflow-hidden z-5">
+        <div className="absolute top-[44px] left-[34px] right-[34px] flex items-end gap-[55px]">
+          <div className="flex flex-col gap-[20px] flex-1 min-w-0">
+            <h3 className="font-acumin-condensed text-[#1e1e1e] text-[32px] leading-[37px] uppercase m-0">
               {product.name}
             </h3>
-            <p className="font-inter text-dark text-[16px] leading-[20px] tracking-[0.48px] m-0 line-clamp-3">
+            <p className="font-acumin font-normal text-[#1e1e1e] text-[16px] leading-[20px] tracking-[0.48px] m-0 line-clamp-3">
               {product.description}
             </p>
           </div>
-          <FaArrowRight className="text-dark text-[28px] shrink-0 transition-transform group-hover:translate-x-1" />
+          <Image
+            src="/images/icons/arrow-right-down.svg"
+            alt=""
+            width={35}
+            height={31}
+            className="shrink-0 transition-transform group-hover:translate-x-1"
+          />
         </div>
       </div>
     </Link>

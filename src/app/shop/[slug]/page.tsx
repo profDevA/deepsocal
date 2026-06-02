@@ -38,9 +38,9 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
   const related = getRelatedProducts(slug);
 
   return (
-    <div className="bg-[#e6e6e6] w-full pt-[20px] sm:pt-[24px] md:pt-[28px] lg:pt-[32px] pb-[40px] sm:pb-[56px] md:pb-[68px] lg:pb-[80px] px-[16px] sm:px-[20px] md:px-[24px] lg:px-[28px]">
+    <div className="bg-white w-full pt-[20px] sm:pt-[24px] md:pt-[28px] lg:pt-[32px] pb-[40px] sm:pb-[56px] md:pb-[68px] lg:pb-[80px] px-[16px] sm:px-[20px] md:px-[24px] lg:px-[28px]">
       <div className="max-w-[1384px] mx-auto">
-        <article className="bg-[#e6e6e6] border border-[#c4c4c4] overflow-hidden">
+        <article className="bg-white border border-[#c4c4c4] overflow-hidden">
           <ProductHero product={product} />
           <ProductMeta product={product} />
         </article>
@@ -156,7 +156,7 @@ function ProductHero({ product }: { product: Product }) {
 
 function ProductMeta({ product }: { product: Product }) {
   return (
-    <div className="bg-[#e6e6e6] px-[20px] sm:px-[36px] md:px-[50px] lg:px-[64px] py-[40px] sm:py-[48px] md:py-[54px] lg:py-[60px] grid grid-cols-1 md:grid-cols-[1fr_1fr_300px] gap-[32px] sm:gap-[40px] md:gap-[50px] lg:gap-[60px]">
+    <div className="bg-white px-[20px] sm:px-[36px] md:px-[50px] lg:px-[64px] py-[40px] sm:py-[48px] md:py-[54px] lg:py-[60px] grid grid-cols-1 md:grid-cols-[1fr_1fr_300px] gap-[32px] sm:gap-[40px] md:gap-[50px] lg:gap-[60px]">
       <div className="flex flex-col gap-[15px]">
         <h1 className="font-acumin-condensed text-dark text-[32px] sm:text-[38px] md:text-[44px] lg:text-[48px] leading-[1.04] tracking-[1.44px] uppercase m-0">
           {product.name}

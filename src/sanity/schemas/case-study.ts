@@ -160,7 +160,7 @@ export default defineType({
       title: "Gallery Images",
       type: "array",
       of: [{ type: "image", options: { hotspot: true } }],
-      description: "Large parallax images between the meta block and video section (up to 2).",
+      description: "Large parallax images between the meta block and video section (add as many as you like — they stack vertically).",
       group: "media",
     }),
     defineField({

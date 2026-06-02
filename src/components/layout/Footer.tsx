@@ -81,7 +81,7 @@ export default function Footer() {
             {/* Follow Us */}
             <div className="flex flex-col items-center text-center gap-[14px] w-full lg:w-[179px] lg:items-start lg:text-left">
               <h3 className={COL_TITLE}>Follow Us</h3>
-              <div className="flex items-center gap-[7px]">
+              <div className="flex items-center gap-[10px]">
                 {socialLinks.map(({ icon: Icon, href, label, bg }) => (
                   <a
                     key={label}
@@ -93,10 +93,10 @@ export default function Footer() {
                   >
                     {bg ? (
                       <span className="bg-white rounded-[4px] w-[18px] h-[18px] flex items-center justify-center">
-                        <Icon size={12} color="#000" />
+                        <Icon size={14} color="#000" />
                       </span>
                     ) : (
-                      <Icon size={18} color="#d7d7d7" />
+                      <Icon size={18} color="#ffffff" />
                     )}
                   </a>
                 ))}
