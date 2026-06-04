@@ -17,15 +17,16 @@ interface DrawerProps {
 }
 
 const LINK_CLASS =
-  "font-acumin-condensed font-bold text-black text-[36px] leading-[1.4] uppercase px-[24px] py-[6px] no-underline inline-block transition-opacity hover:opacity-60";
-
+  "font-acumin-condensed font-bold text-black text-[26px] sm:text-[32px] leading-[1.4] uppercase whitespace-nowrap px-[24px] py-[6px] no-underline inline-block transition-opacity hover:opacity-60";
+ 
 export default function Drawer({ open, onClose, navItems, onBookCall }: DrawerProps) {
   return (
     <Dialog.Root open={open} onOpenChange={(v) => !v && onClose()}>
       <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 z-999998 bg-black/40 data-[state=open]:animate-[overlayFadeIn_0.4s_ease] data-[state=closed]:animate-[overlayFadeOut_0.3s_ease]" />
         <Dialog.Content
           aria-describedby={undefined}
-          className="fixed inset-0 z-99999 bg-white"
+          className="fixed inset-y-0 right-0 z-999999 w-[72%] max-w-[340px] bg-white shadow-[-8px_0_24px_rgba(0,0,0,0.12)] data-[state=open]:animate-[drawerSlideIn_0.4s_ease] data-[state=closed]:animate-[drawerSlideOut_0.3s_ease]"
         >
           <Dialog.Title className="sr-only">Navigation menu</Dialog.Title>
 

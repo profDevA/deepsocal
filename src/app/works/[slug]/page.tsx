@@ -99,7 +99,7 @@ function CaseStudyMeta({ caseStudy }: { caseStudy: CaseStudy }) {
       </div>
 
       {/* Content row: client info | summary | summary */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-[39px] lg:gap-[117px]">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-[39px] lg:gap-[70px]">
         <dl className="font-acumin font-normal text-[#1e1e1e] text-[14px] lg:text-[16px] leading-[20px] tracking-[0.42px] lg:tracking-[0.48px] m-0 flex flex-col gap-[2px]">
           {caseStudy.client && (
             <div className="flex flex-wrap gap-1">
@@ -190,26 +190,37 @@ function CaseStudyGallery({ caseStudy }: { caseStudy: CaseStudy }) {
 }
 
 function CaseStudyVideoBlock({ caseStudy }: { caseStudy: CaseStudy }) {
-  const carouselSrcs = caseStudy.carouselImages.length > 0
-    ? caseStudy.carouselImages
-    : caseStudy.gallery[0] ? [caseStudy.gallery[0]] : caseStudy.heroImage ? [caseStudy.heroImage] : [];
+  // Only show the slider when Sanity actually has carousel images — no
+  // hero/gallery fallback.
+  const carouselSrcs = caseStudy.carouselImages.filter(Boolean);
+  const hasCarousel = carouselSrcs.length > 0;
 
   return (
     <section className="w-full pb-[60px]">
       {/* Dark band per Figma 632:6244 — full-width, white text */}
       <div className="bg-[#1e1e1e] border-t-[0.75px] border-b-[0.75px] border-[#1e1e1e] px-[23px] py-[60px] lg:px-[41px] lg:py-[54px]">
-        <div className="grid grid-cols-1 lg:grid-cols-[642px_1fr] gap-[41px] lg:gap-[19px]">
-          {/* Left — image carousel + pagination dots */}
-          <div>
-            <CaseStudyCarousel
-              images={carouselSrcs}
-              title={caseStudy.title}
-              onDark
-            />
-          </div>
+        <div
+          className={`grid grid-cols-1 gap-[41px] lg:gap-[19px] ${
+            hasCarousel ? "lg:grid-cols-[642px_1fr]" : ""
+          }`}
+        >
+          {/* Left — image carousel + pagination dots (omitted when no images) */}
+          {hasCarousel && (
+            <div>
+              <CaseStudyCarousel
+                images={carouselSrcs}
+                title={caseStudy.title}
+                onDark
+              />
+            </div>
+          )}
 
           {/* Right — Impact Metrics + Services (vertical white divider on desktop) */}
-          <div className="flex flex-col gap-[18px] lg:border-l-[0.75px] lg:border-white lg:pl-[14px]">
+          <div
+            className={`flex flex-col gap-[18px] ${
+              hasCarousel ? "lg:border-l-[0.75px] lg:border-white lg:pl-[14px]" : ""
+            }`}
+          >
             <div className="flex flex-col gap-[15px]">
               <h2 className="font-acumin-condensed text-white text-[16px] lg:text-[18px] leading-[20px] tracking-[0.48px] lg:tracking-[0.54px] uppercase m-0">
                 Impact Metrics

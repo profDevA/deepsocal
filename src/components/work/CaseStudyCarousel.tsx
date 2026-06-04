@@ -32,7 +32,7 @@ export default function CaseStudyCarousel({
       <div className="relative aspect-350/403 lg:aspect-642/399 overflow-hidden bg-[#828282]">
         {images.map((src, i) => (
           <Image
-            key={src}
+            key={i}
             src={src}
             alt={`${title} — slide ${i + 1}`}
             fill

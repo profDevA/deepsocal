@@ -7,7 +7,11 @@ const COL_TITLE = "font-acumin-condensed text-[#d7d7d7] text-[24px] leading-[32p
 const COL_BODY = "font-acumin font-normal text-[#d7d7d7] text-[14px] lg:text-[16px] leading-[20px] tracking-[0.48px] no-underline hover:opacity-70 transition-opacity";
 
 const socialLinks = [
-  { icon: FaInstagram, href: "#", label: "Instagram", bg: false },
+  // FaInstagram's viewBox is 448x512 (taller than wide) vs the square 512x512
+  // of Facebook/X, so "meet" scaling letterboxes its glyph — at size 18 the
+  // drawn path only reaches ~15.7px. Bump to 21 (18 * 512/448) so the visible
+  // glyph renders ~18px square, matching the other icons.
+  { icon: FaInstagram, href: "#", label: "Instagram", bg: false, size: 21 },
   { icon: FaLinkedinIn, href: "#", label: "LinkedIn", bg: true },
   { icon: FaFacebook, href: "#", label: "Facebook", bg: false },
   { icon: FaXTwitter, href: "#", label: "X / Twitter", bg: false },
@@ -82,7 +86,7 @@ export default function Footer() {
             <div className="flex flex-col items-center text-center gap-[14px] w-full lg:w-[179px] lg:items-start lg:text-left">
               <h3 className={COL_TITLE}>Follow Us</h3>
               <div className="flex items-center gap-[10px]">
-                {socialLinks.map(({ icon: Icon, href, label, bg }) => (
+                {socialLinks.map(({ icon: Icon, href, label, bg, size }) => (
                   <a
                     key={label}
                     href={href}
@@ -96,7 +100,7 @@ export default function Footer() {
                         <Icon size={14} color="#000" />
                       </span>
                     ) : (
-                      <Icon size={18} color="#ffffff" />
+                      <Icon size={size ?? 18} color="#ffffff" />
                     )}
                   </a>
                 ))}

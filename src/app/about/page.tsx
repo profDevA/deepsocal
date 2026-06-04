@@ -4,6 +4,7 @@ import { teamGroups } from "@/data/team";
 import FAQAccordion from "@/components/about/FAQAccordion";
 import ContactCTAButton from "@/components/modals/ContactCTAButton";
 import PageFrame from "@/components/layout/PageFrame";
+import { fetchLookBookImages } from "@/sanity/lib/fetch";
 
 const communityValueTags = [
   "Connection",
@@ -22,22 +23,11 @@ export const metadata: Metadata = {
     "DeepSoCal is a multidisciplinary team of researchers, designers, engineers, and systems thinkers based in Southern California.",
 };
 
-type GridImage = { src: string; alt: string; instagram?: boolean };
+export default async function AboutPage() {
+  // Sanity-managed look book images (with static fallback). Replaces the old
+  // Instagram-feed grid — see src/data/look-book.ts.
+  const gridImages = await fetchLookBookImages();
 
-const gridImages: GridImage[] = [
-  { src: "/images/about/grid-community-1.png", alt: "" },
-  {
-    src: "/images/about/grid-instagram-slide.png",
-    alt: "",
-    instagram: true,
-  },
-  { src: "/images/about/grid-community-2.png", alt: "" },
-  { src: "/images/about/grid-handsome-man.png", alt: "" },
-  { src: "/images/about/grid-malibu.png", alt: "" },
-  { src: "/images/about/grid-community-3.png", alt: "" },
-];
-
-export default function AboutPage() {
   return (
     <div className="w-full">
       <PageFrame />
@@ -201,48 +191,15 @@ export default function AboutPage() {
             {gridImages.map((image, i) => (
               <div
                 key={i}
-                className={`relative aspect-square overflow-hidden border border-[#adadad] shadow-[0px_4px_10.2px_0px_rgba(0,0,0,0.05)] ${
-                  image.instagram ? "bg-white" : ""
-                }`}
+                className="relative aspect-square overflow-hidden border border-[#adadad] shadow-[0px_4px_10.2px_0px_rgba(0,0,0,0.05)]"
               >
                 <Image
                   src={image.src}
                   alt={image.alt}
                   fill
                   sizes="(max-width: 768px) 50vw, 342px"
-                  className={
-                    image.instagram ? "object-contain" : "object-cover"
-                  }
+                  className="object-cover"
                 />
-                {image.instagram && (
-                  <span className="absolute bottom-[6px] right-[6px] lg:bottom-[12px] lg:right-[24px] z-10 inline-flex items-center justify-center w-[10px] h-[10px] lg:w-[24px] lg:h-[24px] text-dark">
-                    <svg
-                      width="100%"
-                      height="100%"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect
-                        x="2"
-                        y="2"
-                        width="20"
-                        height="20"
-                        rx="5"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      />
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="5"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      />
-                      <circle cx="17.5" cy="6.5" r="1.25" fill="currentColor" />
-                    </svg>
-                  </span>
-                )}
               </div>
             ))}
           </div>

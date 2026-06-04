@@ -32,16 +32,32 @@ export default function SmoothScroll() {
     gsap.ticker.lagSmoothing(0);
 
     function handleAnchorClick(e: MouseEvent) {
-      const link = (e.target as HTMLElement).closest<HTMLAnchorElement>("a[href^='#']");
+      const link = (e.target as HTMLElement).closest<HTMLAnchorElement>("a[href]");
       if (!link) return;
-      const hash = link.getAttribute("href");
-      if (!hash || hash === "#") return;
+      const href = link.getAttribute("href");
+      if (!href) return;
+
+      // Pull the hash out of links like "#work" or "/#work".
+      const hashIndex = href.indexOf("#");
+      if (hashIndex === -1) return;
+      const hash = href.slice(hashIndex);
+      if (hash === "#") return;
+
       // "#top" = smooth scroll to the very top (used by the footer's "Back to top").
       if (hash === "#top") {
         e.preventDefault();
         lenis.scrollTo(0, { duration: 1.8 });
         return;
       }
+
+      // Only hijack the click when the target lives on the current page —
+      // e.g. "/#work" clicked while already on "/". Cross-page links (like
+      // "/#work" from /about) fall through so Next can navigate first.
+      const path = href.slice(0, hashIndex);
+      const samePage =
+        path === "" || path === window.location.pathname;
+      if (!samePage) return;
+
       const target = document.querySelector(hash);
       if (!target) return;
       e.preventDefault();

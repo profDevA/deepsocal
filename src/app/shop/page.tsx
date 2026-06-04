@@ -23,17 +23,81 @@ export default function ShopPage() {
             Shop the look
           </h1>
           <p className="font-inter text-[#1e1e1e] text-[14px] leading-[16px] lg:text-[16px] lg:leading-[20px] tracking-[0.42px] lg:tracking-normal max-w-[350px] lg:max-w-[751px]">
-            Deep SoCal is a design-led technology studio working with local
-            businesses, startups, and communities to solve real challenges
-            across the region from coastlines to culture to commerce.
+            Deep Local and SoCal Local are the ideas behind this collection —
+            objects, uniforms, and everyday essentials inspired by Southern
+            California.
           </p>
         </div>
       </section>
 
       {/* Hero card with scrollable product carousel */}
-      <section className="w-full px-[20px] lg:px-[28px] pb-[60px] lg:pb-[80px]">
+      <section className="w-full px-0 lg:px-[28px] pb-[60px] lg:pb-[80px]">
         <ShopHeroCard products={products} heroImage={HERO_IMAGE} />
       </section>
+
+      {/* Editorial brand sections — mobile only (Figma 821:4066). Desktop has
+          no design for these yet. */}
+      <ShopStory />
     </div>
+  );
+}
+
+function ShopStory() {
+  return (
+    <section className="lg:hidden w-full bg-[#1e1e1e] text-white">
+      {/* WHY THIS EXISTS */}
+      <div className="flex flex-col items-center gap-[10px] text-center px-[22px] pt-[108px] pb-[60px]">
+        <h2 className="font-acumin-condensed text-[42px] leading-[50px] tracking-[1.26px] uppercase m-0">
+          Why this exists
+        </h2>
+        <p className="font-acumin font-normal text-[16px] leading-[20px] max-w-[357px] m-0">
+          These are not random agency products. The shop holds two connected
+          ideas: Deep Local, a personal identity rooted in place, and SoCal
+          Local, a community layer celebrating the people, businesses, and
+          culture that shape Southern California.
+        </p>
+      </div>
+
+      {/* DEEP LOCAL + SOCAL LOCAL — inside a top/bottom white-bordered band */}
+      <div className="border-t border-b border-white mx-[12px] px-[12px] py-[40px] flex flex-col gap-[40px]">
+        <div className="flex flex-col gap-[14px]">
+          <h3 className="font-acumin-condensed text-[40px] leading-[50px] tracking-[1.2px] uppercase m-0">
+            Deep Local
+          </h3>
+          <div className="font-acumin font-normal text-[16px] leading-[20px] tracking-[0.48px] flex flex-col gap-[20px] m-0">
+            <p className="m-0">Deep Local is about belonging to a place.</p>
+            <p className="m-0">
+              Not just living here, but understanding the people, systems,
+              stories, and environments that shape Southern California.
+            </p>
+            <p className="m-0">
+              These pieces are designed for people who feel connected to where
+              they are and invested in where it is going.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-[14px]">
+          <h3 className="font-acumin-condensed text-[40px] leading-[50px] tracking-[1.2px] uppercase m-0">
+            SoCal Local
+          </h3>
+          <div className="font-acumin font-normal text-[16px] leading-[20px] tracking-[0.48px] flex flex-col gap-[20px] m-0">
+            <p className="m-0">
+              SoCal Local celebrates the communities that make Southern
+              California unique.
+            </p>
+            <ul className="list-disc ps-[24px] flex flex-col m-0">
+              <li>Local makers.</li>
+              <li>Local businesses.</li>
+              <li>Local culture.</li>
+              <li>Local stories.</li>
+            </ul>
+            <p className="m-0">
+              Every piece is a small expression of that connection.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

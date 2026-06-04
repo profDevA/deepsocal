@@ -10,10 +10,16 @@ import {
   type ServiceId,
 } from "@/data/case-studies";
 import {
+  lookBookImages as localLookBook,
+  type LookBookImage,
+  type LookBookCategory,
+} from "@/data/look-book";
+import {
   ALL_CASE_STUDIES_QUERY,
   CASE_STUDY_BY_SLUG_QUERY,
   CASE_STUDY_SLUGS_QUERY,
   CASE_STUDIES_BY_SERVICE_QUERY,
+  LOOK_BOOK_QUERY,
 } from "./queries";
 
 // The GROQ queries return raw Sanity image objects (asset ref + crop + hotspot)
@@ -96,6 +102,37 @@ export async function fetchCaseStudiesByService(
   } catch (err) {
     logSanityFallback("fetchCaseStudiesByService", err);
     return localGetByService(serviceId);
+  }
+}
+
+type SanityLookBookImage = {
+  _id: string;
+  image?: SanityImageSource | null;
+  alt?: string | null;
+  category?: string | null;
+};
+
+// Look book images for the About page community grid. Managed in the Studio as
+// `lookBookImage` documents; falls back to the static set in
+// `src/data/look-book.ts` when none exist yet (or Sanity is unreachable).
+export async function fetchLookBookImages(): Promise<LookBookImage[]> {
+  try {
+    const results: SanityLookBookImage[] = await client.fetch(
+      LOOK_BOOK_QUERY,
+      {},
+      REVALIDATE
+    );
+    const mapped = results
+      .map((r) => ({
+        src: imageUrl(r.image),
+        alt: r.alt ?? "",
+        category: (r.category ?? undefined) as LookBookCategory | undefined,
+      }))
+      .filter((img) => img.src);
+    return mapped.length > 0 ? mapped : localLookBook;
+  } catch (err) {
+    logSanityFallback("fetchLookBookImages", err);
+    return localLookBook;
   }
 }
 

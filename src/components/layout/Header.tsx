@@ -17,12 +17,30 @@ const navItems: DrawerNavItem[] = [
 const NAV_PILL_CLASS =
   "font-acumin-condensed text-black text-[16px] uppercase leading-[1.4] px-4 py-1 no-underline whitespace-nowrap inline-flex items-center justify-center transition-colors hover:bg-black hover:text-white";
 
+function titleizeSlug(slug: string): string {
+  return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 function getMobilePageLabel(pathname: string): string {
+  const segments = pathname.split("/").filter(Boolean);
+
+  if (pathname === "/") return "Home";
   if (pathname.startsWith("/about")) return "Our Difference";
   if (pathname.startsWith("/shop")) return "The Shop";
-  if (pathname.startsWith("/works") || pathname.startsWith("/services"))
+  if (pathname.startsWith("/studio")) return "Studio";
+
+  // Case study / service single pages show the item's own name (from the
+  // slug); the listing routes fall back to "Our Work".
+  if (pathname.startsWith("/works") || pathname.startsWith("/services")) {
+    if (segments.length > 1) return titleizeSlug(segments[1]);
     return "Our Work";
-  return "";
+  }
+
+  // Fallback: derive a readable label from the first path segment so every
+  // mobile view shows a centered page title.
+  const segment = segments[0] ?? "";
+  if (!segment) return "";
+  return titleizeSlug(segment);
 }
 
 export default function Header() {

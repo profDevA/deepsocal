@@ -58,6 +58,16 @@ export const CASE_STUDY_SLUGS_QUERY = groq`
   }
 `;
 
+export const LOOK_BOOK_QUERY = groq`
+  *[_type == "lookBookImage" && defined(image)] | order(order asc) {
+    _id,
+    image,
+    alt,
+    category,
+    order,
+  }
+`;
+
 export const CASE_STUDIES_BY_SERVICE_QUERY = groq`
   *[_type == "caseStudy" && $serviceId in services] | order(order asc) {
     _id,

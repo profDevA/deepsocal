@@ -69,9 +69,9 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="bg-[#1e1e1e] border-t border-b border-white w-full"
+      className="bg-[#1e1e1e] border-t border-b border-white w-full min-h-svh flex items-center"
     >
-      <div className="mx-auto max-w-[1380px] px-[40px] py-[80px] sm:py-[120px] lg:py-[160px]">
+      <div className="w-full mx-auto max-w-[1380px] px-[40px] py-[80px] sm:py-[120px] lg:py-[160px]">
         <div className="grid gap-[60px] lg:grid-cols-[1fr_1.35fr] lg:gap-[140px] items-start">
           <div className="flex flex-col gap-[60px] lg:gap-[80px]">
             <h2 className="font-acumin-condensed text-white text-[36px] sm:text-[40px] lg:text-[42px] leading-[50px] tracking-[1.26px] uppercase m-0 max-w-[377px]">

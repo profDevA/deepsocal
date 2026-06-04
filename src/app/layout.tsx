@@ -15,11 +15,7 @@ import {
 } from "./fonts";
 import { ModalProvider } from "@/components/modals/ModalProvider";
 import Modals from "@/components/modals/Modals";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import BigWordmark from "@/components/home/BigWordmark";
-import LayoutShell from "./LayoutShell";
-import SmoothScroll from "@/components/animation/SmoothScroll";
+import SiteChrome from "./SiteChrome";
 
 const fontVars = [
   druk,
@@ -59,11 +55,7 @@ export default function RootLayout({
       <head />
       <body>
         <ModalProvider>
-          <SmoothScroll />
-          <Header />
-          <LayoutShell>{children}</LayoutShell>
-          <BigWordmark />
-          <Footer />
+          <SiteChrome>{children}</SiteChrome>
           <Modals />
         </ModalProvider>
       </body>
