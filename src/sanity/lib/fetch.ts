@@ -15,6 +15,11 @@ import {
   type LookBookCategory,
 } from "@/data/look-book";
 import {
+  categories as localCategories,
+  type Category,
+} from "@/data/categories";
+import {
+  ALL_CATEGORIES_QUERY,
   ALL_CASE_STUDIES_QUERY,
   CASE_STUDY_BY_SLUG_QUERY,
   CASE_STUDY_SLUGS_QUERY,
@@ -26,13 +31,23 @@ import {
 // for the image fields so `urlFor` can bake the Studio crop into the URL.
 type SanityCaseStudy = Omit<
   CaseStudy,
-  "heroImage" | "thumbnailImage" | "gallery" | "carouselImages"
+  "heroImage" | "thumbnailImage" | "gallery" | "carouselImages" | "categorySlug"
 > & {
   _id: string;
+  categorySlug?: string | null;
   heroImage?: SanityImageSource | null;
   thumbnailImage?: SanityImageSource | null;
   gallery?: (SanityImageSource | null)[] | null;
   carouselImages?: (SanityImageSource | null)[] | null;
+};
+
+type SanityCategory = Omit<
+  Category,
+  "badgeImage" | "carouselImage"
+> & {
+  _id: string;
+  badge?: SanityImageSource | null;
+  carouselImage?: SanityImageSource | null;
 };
 
 const REVALIDATE = { next: { revalidate: 30 } } as const;
@@ -105,6 +120,37 @@ export async function fetchCaseStudiesByService(
   }
 }
 
+// Categories (parent layer over case studies). Managed in the Studio as
+// `category` documents; falls back to the static set in `src/data/categories.ts`.
+export async function fetchCategories(): Promise<Category[]> {
+  try {
+    const results: SanityCategory[] = await client.fetch(
+      ALL_CATEGORIES_QUERY,
+      {},
+      REVALIDATE
+    );
+    if (results.length === 0) return localCategories;
+    return results.map(normalizeCategory);
+  } catch (err) {
+    logSanityFallback("fetchCategories", err);
+    return localCategories;
+  }
+}
+
+function normalizeCategory(raw: SanityCategory): Category {
+  return {
+    slug: raw.slug ?? "",
+    name: raw.name ?? "",
+    subtitle: raw.subtitle ?? "",
+    description: raw.description ?? "",
+    steepc: raw.steepc ?? "social",
+    bgColor: raw.bgColor ?? "#D9DDD1",
+    carouselImage: imageUrl(raw.carouselImage),
+    badgeImage: imageUrl(raw.badge),
+    order: raw.order ?? 0,
+  };
+}
+
 type SanityLookBookImage = {
   _id: string;
   image?: SanityImageSource | null;
@@ -156,7 +202,7 @@ function normalizeCaseStudy(raw: SanityCaseStudy): CaseStudy {
     subtitle: raw.subtitle ?? "",
     tag: raw.tag ?? "",
     tags: raw.tags ?? [],
-    editorialTheme: raw.editorialTheme ?? "ocean-environment",
+    categorySlug: raw.categorySlug ?? "",
     services: raw.services ?? [],
     servicesLabel: raw.servicesLabel ?? "",
     client: raw.client ?? "",

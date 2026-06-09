@@ -41,6 +41,9 @@ export default function WorkFilterDropdown({
       <button
         type="button"
         onClick={() => setOpen(!open)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={`Filter works by service. Current: ${currentLabel}`}
         className="bg-dark border border-[#bdbdbd] flex items-center justify-between w-full h-[53px] px-6 text-brand cursor-pointer"
       >
         <span className="font-acumin-condensed text-[20px] sm:text-[24px] md:text-[28px] leading-none">
@@ -51,6 +54,7 @@ export default function WorkFilterDropdown({
           height="24"
           viewBox="0 0 23 24"
           fill="none"
+          aria-hidden="true"
           className={`transition-transform duration-300 ${open ? "-rotate-90" : "rotate-90"}`}
         >
           <path
@@ -64,6 +68,8 @@ export default function WorkFilterDropdown({
       </button>
 
       <div
+        role="listbox"
+        aria-label="Filter works by service"
         className={`absolute z-50 left-1/2 -translate-x-1/2 top-[calc(100%+15px)] w-[343px] bg-white border border-[#8e8e8e] rounded-[23px] shadow-[0_4px_28px_rgba(0,0,0,0.1)] overflow-hidden transition-all duration-300 origin-top ${
           open
             ? "opacity-100 scale-y-100 pointer-events-auto"
@@ -73,6 +79,8 @@ export default function WorkFilterDropdown({
         <div className="flex flex-col items-center py-[30px] px-[14px]">
           <button
             type="button"
+            role="option"
+            aria-selected={!current}
             onClick={() => select(null)}
             className={`w-full py-[20px] border-b border-[#c8c8c8] font-inter font-light italic text-[22px] tracking-[-0.66px] text-[#1f1c06] text-center cursor-pointer bg-transparent hover:bg-black/5 transition-colors ${
               !current ? "font-medium" : ""
@@ -84,6 +92,8 @@ export default function WorkFilterDropdown({
             <button
               key={s.id}
               type="button"
+              role="option"
+              aria-selected={current === s.id}
               onClick={() => select(s.id)}
               className={`w-full py-[20px] font-inter font-light italic text-[22px] tracking-[-0.66px] text-[#1f1c06] text-center cursor-pointer bg-transparent hover:bg-black/5 transition-colors ${
                 s.id === services[services.length - 1].id ? "" : "border-b border-[#c8c8c8]"

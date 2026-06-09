@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-
-
 import type { CaseStudy } from "@/data/case-studies";
 import CaseStudyCarousel from "@/components/work/CaseStudyCarousel";
 import PageFrame from "@/components/layout/PageFrame";
@@ -28,7 +26,7 @@ export async function generateMetadata({
   if (!cs) return { title: "Case study not found" };
   return {
     title: cs.title,
-    description: cs.summary,
+    description: cs.summary || cs.subtitle,
   };
 }
 

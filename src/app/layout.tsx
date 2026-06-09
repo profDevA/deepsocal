@@ -43,6 +43,23 @@ export const metadata: Metadata = {
   icons: {
     icon: "/images/DeepSoCal-Favicon.png",
   },
+  // TODO: add a dedicated 1200×630 share image (openGraph.images / twitter.images)
+  // once brand provides one.
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://deepsocal.com",
+    siteName: "DeepSoCal",
+    title: "DeepSoCal",
+    description:
+      "DeepSoCal is a regional strategic design agency building transformative experiences for Southern California's brands.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DeepSoCal",
+    description:
+      "DeepSoCal is a regional strategic design agency building transformative experiences for Southern California's brands.",
+  },
 };
 
 export default function RootLayout({

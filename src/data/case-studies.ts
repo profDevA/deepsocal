@@ -1,16 +1,10 @@
+import { categories, getCategoryBySlug, type Category } from "./categories";
+
 export type ServiceId =
   | "brand-strategy"
   | "identity-systems"
   | "digital-experiences"
   | "next-gen-innovations";
-
-export type EditorialTheme =
-  | "ocean-environment"
-  | "mental-health"
-  | "local-commerce"
-  | "culture"
-  | "climate-resilience"
-  | "ai-digital-access";
 
 export type CaseStudy = {
   slug: string;
@@ -18,7 +12,8 @@ export type CaseStudy = {
   subtitle: string;
   tag: string;
   tags: string[];
-  editorialTheme: EditorialTheme;
+  /** Slug of the parent category (see src/data/categories.ts). */
+  categorySlug: string;
   services: ServiceId[];
   servicesLabel: string;
   client: string;
@@ -32,43 +27,23 @@ export type CaseStudy = {
   summary: string;
   summary2: string;
   impactMetrics: string;
+  /** Position WITHIN the case study's category (ascending). */
   order: number;
 };
 
-// NOTE: This array is the OFFLINE FALLBACK only. Sanity is the source of truth
-// (see src/sanity/lib/fetch.ts). Keep it in sync with `scripts/seed-case-studies.mjs`.
-// The grid renders a diagonal cascade: category cards (no thumbnailImage) land on
-// slots 1, 5, 9, 11, 13, 17; case studies fill the gaps (3/3/1/1/3/1 per category).
+// OFFLINE FALLBACK only. Sanity is the source of truth (see
+// src/sanity/lib/fetch.ts). Keep in sync with scripts/seed-case-studies.mjs.
+// Each case study belongs to a category (categorySlug) and is ordered within it;
+// the work grid is derived by buildWorkGrid() below (category card, then its
+// studies), which reproduces the Figma diagonal cascade automatically.
 export const caseStudies: CaseStudy[] = [
-  {
-    slug: "ocean-environment",
-    title: "Ocean & Environment",
-    subtitle: "The landscape, coast, and environmental wellbeing we design within",
-    tag: "Theme",
-    tags: [],
-    editorialTheme: "ocean-environment",
-    services: ["brand-strategy", "identity-systems"],
-    servicesLabel: "",
-    client: "",
-    industry: "",
-    scope: "",
-    teamLabel: "",
-    heroImage: "",
-    thumbnailImage: "",
-    gallery: [],
-    carouselImages: [],
-    summary: "",
-    summary2: "",
-    impactMetrics: "",
-    order: 1,
-  },
   {
     slug: "oc-navigator",
     title: "OC Resource Navigator",
     subtitle: "Public-interest systems design",
     tag: "Design + Research",
     tags: ["Design + Research", "Design + Research", "Design + Research"],
-    editorialTheme: "ocean-environment",
+    categorySlug: "ocean-environment",
     services: ["brand-strategy", "digital-experiences"],
     servicesLabel: "Strategy + Branding +",
     client: "CityLeaks",
@@ -96,7 +71,7 @@ export const caseStudies: CaseStudy[] = [
       "DeepSoCal used surf culture to connect California communities with global humanitarian causes. Documentary crews captured community stories that reflected local identity. Influencer partnerships expanded their reach, while community events turned narratives into action.",
     impactMetrics:
       "We helped position the U.S. Surf Open as a platform for lasting community connection. Our research-driven storytelling and strategic engagement strengthened ties within California surf culture and secured the brand's presence in the community.",
-    order: 2,
+    order: 1,
   },
   {
     slug: "surf-magazine",
@@ -104,7 +79,7 @@ export const caseStudies: CaseStudy[] = [
     subtitle: "Editorial and growth storytelling",
     tag: "Strategy + Content",
     tags: ["Strategy + Content"],
-    editorialTheme: "ocean-environment",
+    categorySlug: "ocean-environment",
     services: ["brand-strategy", "identity-systems"],
     servicesLabel: "Strategy + Branding",
     client: "",
@@ -118,7 +93,7 @@ export const caseStudies: CaseStudy[] = [
     summary: "",
     summary2: "",
     impactMetrics: "",
-    order: 3,
+    order: 2,
   },
   {
     slug: "concrete-dreams",
@@ -126,7 +101,7 @@ export const caseStudies: CaseStudy[] = [
     subtitle: "Issue card the landscape, coast, and environmental wellbeing",
     tag: "Brand + Content",
     tags: ["Brand + Content"],
-    editorialTheme: "ocean-environment",
+    categorySlug: "ocean-environment",
     services: ["digital-experiences", "next-gen-innovations"],
     servicesLabel: "Strategy + Branding",
     client: "",
@@ -140,29 +115,7 @@ export const caseStudies: CaseStudy[] = [
     summary: "",
     summary2: "",
     impactMetrics: "",
-    order: 4,
-  },
-  {
-    slug: "mental-health-access",
-    title: "Mental Health Access",
-    subtitle: "Research, care, and transformation designing better pathways to healing",
-    tag: "Theme",
-    tags: [],
-    editorialTheme: "mental-health",
-    services: ["digital-experiences"],
-    servicesLabel: "",
-    client: "",
-    industry: "",
-    scope: "",
-    teamLabel: "",
-    heroImage: "",
-    thumbnailImage: "",
-    gallery: [],
-    carouselImages: [],
-    summary: "",
-    summary2: "",
-    impactMetrics: "",
-    order: 5,
+    order: 3,
   },
   {
     slug: "coral-health",
@@ -170,7 +123,7 @@ export const caseStudies: CaseStudy[] = [
     subtitle: "Human-centered growth design",
     tag: "Strategy + Influencers",
     tags: ["Strategy + Influencers"],
-    editorialTheme: "mental-health",
+    categorySlug: "mental-health",
     services: ["brand-strategy", "digital-experiences"],
     servicesLabel: "Strategy + Branding",
     client: "",
@@ -184,7 +137,7 @@ export const caseStudies: CaseStudy[] = [
     summary: "",
     summary2: "",
     impactMetrics: "",
-    order: 6,
+    order: 1,
   },
   {
     slug: "salt-and-sand",
@@ -192,7 +145,7 @@ export const caseStudies: CaseStudy[] = [
     subtitle: "Editorial and growth storytelling",
     tag: "Strategy + Influencers",
     tags: ["Strategy + Influencers"],
-    editorialTheme: "mental-health",
+    categorySlug: "mental-health",
     services: ["identity-systems", "brand-strategy"],
     servicesLabel: "Strategy + Branding",
     client: "",
@@ -206,7 +159,7 @@ export const caseStudies: CaseStudy[] = [
     summary: "",
     summary2: "",
     impactMetrics: "",
-    order: 7,
+    order: 2,
   },
   {
     slug: "luku-watches",
@@ -214,7 +167,7 @@ export const caseStudies: CaseStudy[] = [
     subtitle: "Editorial and growth storytelling",
     tag: "Design + Research",
     tags: ["Design + Research"],
-    editorialTheme: "mental-health",
+    categorySlug: "mental-health",
     services: ["identity-systems", "brand-strategy"],
     servicesLabel: "Strategy + Branding",
     client: "",
@@ -228,29 +181,7 @@ export const caseStudies: CaseStudy[] = [
     summary: "",
     summary2: "",
     impactMetrics: "",
-    order: 8,
-  },
-  {
-    slug: "local-commerce",
-    title: "Local Commerce",
-    subtitle: "For entrepreneurs and community-rooted brands building something real",
-    tag: "Theme",
-    tags: [],
-    editorialTheme: "local-commerce",
-    services: ["brand-strategy"],
-    servicesLabel: "",
-    client: "",
-    industry: "",
-    scope: "",
-    teamLabel: "",
-    heroImage: "",
-    thumbnailImage: "",
-    gallery: [],
-    carouselImages: [],
-    summary: "",
-    summary2: "",
-    impactMetrics: "",
-    order: 9,
+    order: 3,
   },
   {
     slug: "harbor-market",
@@ -258,7 +189,7 @@ export const caseStudies: CaseStudy[] = [
     subtitle: "Brand and growth for a coastal marketplace",
     tag: "Design + Research",
     tags: ["Design + Research"],
-    editorialTheme: "local-commerce",
+    categorySlug: "local-commerce",
     services: ["brand-strategy", "identity-systems"],
     servicesLabel: "Strategy + Branding",
     client: "",
@@ -272,29 +203,7 @@ export const caseStudies: CaseStudy[] = [
     summary: "",
     summary2: "",
     impactMetrics: "",
-    order: 10,
-  },
-  {
-    slug: "creative-culture",
-    title: "Creative Culture",
-    subtitle: "Social innovation, community wellbeing, and the stories worth telling",
-    tag: "Theme",
-    tags: [],
-    editorialTheme: "culture",
-    services: ["brand-strategy", "identity-systems"],
-    servicesLabel: "",
-    client: "",
-    industry: "",
-    scope: "",
-    teamLabel: "",
-    heroImage: "",
-    thumbnailImage: "",
-    gallery: [],
-    carouselImages: [],
-    summary: "",
-    summary2: "",
-    impactMetrics: "",
-    order: 11,
+    order: 1,
   },
   {
     slug: "press-play",
@@ -302,7 +211,7 @@ export const caseStudies: CaseStudy[] = [
     subtitle: "Editorial and growth storytelling",
     tag: "Brand + Content",
     tags: ["Brand + Content"],
-    editorialTheme: "culture",
+    categorySlug: "culture",
     services: ["brand-strategy", "digital-experiences"],
     servicesLabel: "Strategy + Branding",
     client: "",
@@ -316,29 +225,7 @@ export const caseStudies: CaseStudy[] = [
     summary: "",
     summary2: "",
     impactMetrics: "",
-    order: 12,
-  },
-  {
-    slug: "climate-resilience",
-    title: "Climate Resilience",
-    subtitle: "Social innovation, community wellbeing, and the stories worth telling",
-    tag: "Theme",
-    tags: [],
-    editorialTheme: "climate-resilience",
-    services: ["next-gen-innovations"],
-    servicesLabel: "",
-    client: "",
-    industry: "",
-    scope: "",
-    teamLabel: "",
-    heroImage: "",
-    thumbnailImage: "",
-    gallery: [],
-    carouselImages: [],
-    summary: "",
-    summary2: "",
-    impactMetrics: "",
-    order: 13,
+    order: 1,
   },
   {
     slug: "tide-line",
@@ -346,7 +233,7 @@ export const caseStudies: CaseStudy[] = [
     subtitle: "Resilience storytelling for coastal communities",
     tag: "Design + Research",
     tags: ["Design + Research"],
-    editorialTheme: "climate-resilience",
+    categorySlug: "climate-resilience",
     services: ["brand-strategy", "digital-experiences"],
     servicesLabel: "Strategy + Branding",
     client: "",
@@ -360,7 +247,7 @@ export const caseStudies: CaseStudy[] = [
     summary: "",
     summary2: "",
     impactMetrics: "",
-    order: 14,
+    order: 1,
   },
   {
     slug: "solar-coast",
@@ -368,7 +255,7 @@ export const caseStudies: CaseStudy[] = [
     subtitle: "Clean-energy brand and growth design",
     tag: "Strategy + Content",
     tags: ["Strategy + Content"],
-    editorialTheme: "climate-resilience",
+    categorySlug: "climate-resilience",
     services: ["brand-strategy", "next-gen-innovations"],
     servicesLabel: "Strategy + Branding",
     client: "",
@@ -382,7 +269,7 @@ export const caseStudies: CaseStudy[] = [
     summary: "",
     summary2: "",
     impactMetrics: "",
-    order: 15,
+    order: 2,
   },
   {
     slug: "cocoon-malibu",
@@ -390,7 +277,7 @@ export const caseStudies: CaseStudy[] = [
     subtitle: "Sustainable hospitality brand design",
     tag: "Design + Research",
     tags: ["Design + Research"],
-    editorialTheme: "climate-resilience",
+    categorySlug: "climate-resilience",
     services: ["identity-systems", "brand-strategy"],
     servicesLabel: "Strategy + Branding",
     client: "",
@@ -404,29 +291,7 @@ export const caseStudies: CaseStudy[] = [
     summary: "",
     summary2: "",
     impactMetrics: "",
-    order: 16,
-  },
-  {
-    slug: "ai-digital-access",
-    title: "AI & Digital Access",
-    subtitle: "Social innovation, community wellbeing, and the stories worth telling",
-    tag: "Theme",
-    tags: [],
-    editorialTheme: "ai-digital-access",
-    services: ["next-gen-innovations"],
-    servicesLabel: "",
-    client: "",
-    industry: "",
-    scope: "",
-    teamLabel: "",
-    heroImage: "",
-    thumbnailImage: "",
-    gallery: [],
-    carouselImages: [],
-    summary: "",
-    summary2: "",
-    impactMetrics: "",
-    order: 17,
+    order: 3,
   },
   {
     slug: "access-oc",
@@ -434,7 +299,7 @@ export const caseStudies: CaseStudy[] = [
     subtitle: "Practical AI tools for local orgs",
     tag: "Design + Research",
     tags: ["Design + Research"],
-    editorialTheme: "ai-digital-access",
+    categorySlug: "ai-digital-access",
     services: ["next-gen-innovations", "digital-experiences"],
     servicesLabel: "Strategy + Branding",
     client: "",
@@ -448,31 +313,57 @@ export const caseStudies: CaseStudy[] = [
     summary: "",
     summary2: "",
     impactMetrics: "",
-    order: 18,
+    order: 1,
   },
 ];
 
 export const getCaseStudyBySlug = (slug: string): CaseStudy | undefined =>
   caseStudies.find((cs) => cs.slug === slug);
 
-export const getNextCaseStudy = (currentOrder: number): CaseStudy | undefined => {
-  if (caseStudies.length === 0) return undefined;
-  const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
-  const idx = sorted.findIndex((cs) => cs.order === currentOrder);
-  if (idx === -1) return undefined;
-  return sorted[(idx + 1) % sorted.length];
-};
-
-export const getPreviousCaseStudy = (currentOrder: number): CaseStudy | undefined => {
-  if (caseStudies.length === 0) return undefined;
-  const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
-  const idx = sorted.findIndex((cs) => cs.order === currentOrder);
-  if (idx === -1) return undefined;
-  return sorted[(idx - 1 + sorted.length) % sorted.length];
-};
-
 export const getCaseStudiesByService = (serviceId: ServiceId): CaseStudy[] =>
   caseStudies.filter((cs) => cs.services.includes(serviceId));
 
-export const getCaseStudiesByTheme = (theme: EditorialTheme): CaseStudy[] =>
-  caseStudies.filter((cs) => cs.editorialTheme === theme);
+export const getCaseStudiesByCategory = (categorySlug: string): CaseStudy[] =>
+  caseStudies
+    .filter((cs) => cs.categorySlug === categorySlug)
+    .sort((a, b) => a.order - b.order);
+
+// A flattened work-grid item: either a category card or a case study card.
+export type WorkGridItem =
+  | { kind: "category"; category: Category }
+  | { kind: "caseStudy"; caseStudy: CaseStudy };
+
+/**
+ * Build the ordered work-grid list: for each category (by order), emit the
+ * category card followed by its case studies (by their within-category order).
+ * This reproduces the Figma diagonal cascade without manual global ordering.
+ */
+export function buildWorkGrid(
+  cats: Category[],
+  studies: CaseStudy[]
+): WorkGridItem[] {
+  const sortedCats = [...cats].sort((a, b) => a.order - b.order);
+  const knownSlugs = new Set(sortedCats.map((c) => c.slug));
+  const items: WorkGridItem[] = [];
+  for (const category of sortedCats) {
+    items.push({ kind: "category", category });
+    const studiesInCat = studies
+      .filter((cs) => cs.categorySlug === category.slug)
+      .sort((a, b) => a.order - b.order);
+    for (const caseStudy of studiesInCat) {
+      items.push({ kind: "caseStudy", caseStudy });
+    }
+  }
+  // Never silently drop a study whose category is unset/typo'd — surface it at
+  // the end (without a category card) so it's visible and fixable.
+  const orphans = studies
+    .filter((cs) => !knownSlugs.has(cs.categorySlug))
+    .sort((a, b) => a.order - b.order);
+  for (const caseStudy of orphans) {
+    items.push({ kind: "caseStudy", caseStudy });
+  }
+  return items;
+}
+
+// Re-export so existing imports of category helpers keep working.
+export { categories, getCategoryBySlug, type Category };

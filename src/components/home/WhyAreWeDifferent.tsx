@@ -5,14 +5,18 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { socalThemes, type SoCalTheme } from "@/data/socal-themes";
+import type { Category } from "@/data/categories";
 import CaliforniaMap from "./CaliforniaMap";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function WhyAreWeDifferent() {
+export default function WhyAreWeDifferent({
+  categories,
+}: {
+  categories: Category[];
+}) {
   const root = useRef<HTMLElement | null>(null);
   const track = useRef<HTMLDivElement | null>(null);
 
@@ -33,7 +37,7 @@ export default function WhyAreWeDifferent() {
         const PAIR_WIDTH = 386 + 26 + 328;
         const OUTER_GAP = 50;
         const STEP_WIDTH = PAIR_WIDTH + OUTER_GAP;
-        const pairCount = socalThemes.length;
+        const pairCount = categories.length;
         const STEP_SCROLL = 320;
         const totalScroll = (pairCount - 1) * STEP_SCROLL;
 
@@ -107,8 +111,8 @@ export default function WhyAreWeDifferent() {
               ref={track}
               className="flex gap-[50px] items-center will-change-transform"
             >
-              {socalThemes.map((theme) => (
-                <CarouselPair key={theme.id} theme={theme} />
+              {categories.map((category) => (
+                <CarouselPair key={category.slug} category={category} />
               ))}
             </div>
           </div>
@@ -122,11 +126,11 @@ export default function WhyAreWeDifferent() {
   );
 }
 
-function CarouselPair({ theme }: { theme: SoCalTheme }) {
+function CarouselPair({ category }: { category: Category }) {
   return (
     <div className="flex gap-[26px] items-center shrink-0">
-      <PhotoCard src={theme.carouselImage} />
-      <ThemeCard theme={theme} />
+      <PhotoCard src={category.carouselImage} />
+      <ThemeCard category={category} />
     </div>
   );
 }
@@ -145,22 +149,17 @@ function PhotoCard({ src }: { src: string }) {
   );
 }
 
-function ThemeCard({ theme }: { theme: SoCalTheme }) {
+function ThemeCard({ category }: { category: Category }) {
   return (
     <article
       className="shrink-0 w-[328px] h-[328px] border border-[#b0b0b0] shadow-[0_5px_38px_rgba(0,0,0,0.18)] overflow-hidden p-8 flex flex-col justify-center gap-[10px]"
-      style={{ backgroundColor: theme.bgColor }}
+      style={{ backgroundColor: category.bgColor }}
     >
-      <div
-        className="relative w-[126px] h-[126px] rounded-full overflow-hidden flex items-center justify-center"
-        style={{ backgroundColor: theme.iconBgColor ?? "transparent" }}
-      >
+      <div className="relative w-[126px] h-[126px] rounded-full overflow-hidden flex items-center justify-center">
         <Image
-          src={theme.badgeImage}
+          src={category.badgeImage}
           alt=""
-          fill={!theme.iconBgColor}
-          width={theme.iconBgColor ? 60 : undefined}
-          height={theme.iconBgColor ? 60 : undefined}
+          fill
           sizes="126px"
           className="object-cover"
         />
@@ -170,11 +169,11 @@ function ThemeCard({ theme }: { theme: SoCalTheme }) {
         className="self-start font-acumin-condensed text-[#d7d7d7] text-[22px] leading-[1.4] px-[14px] py-1 uppercase"
         style={{ backgroundColor: "rgba(30,30,30,0.8)" }}
       >
-        {theme.name}
+        {category.name}
       </span>
 
       <p className="font-inter font-medium text-dark text-[20px] leading-[28px] tracking-[-0.48px] m-0">
-        {theme.description}
+        {category.description}
       </p>
     </article>
   );

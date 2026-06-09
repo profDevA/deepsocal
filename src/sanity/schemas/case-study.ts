@@ -1,14 +1,5 @@
 import { defineField, defineType } from "sanity";
 
-const editorialThemes = [
-  { title: "Ocean & Environment", value: "ocean-environment" },
-  { title: "Mental Health", value: "mental-health" },
-  { title: "Local Commerce", value: "local-commerce" },
-  { title: "Culture", value: "culture" },
-  { title: "Climate Resilience", value: "climate-resilience" },
-  { title: "AI & Digital Access", value: "ai-digital-access" },
-];
-
 const serviceOptions = [
   { title: "Brand Strategy", value: "brand-strategy" },
   { title: "Identity Systems", value: "identity-systems" },
@@ -63,10 +54,10 @@ export default defineType({
       group: "meta",
     }),
     defineField({
-      name: "editorialTheme",
-      title: "Editorial Theme",
-      type: "string",
-      options: { list: editorialThemes },
+      name: "category",
+      title: "Category",
+      type: "reference",
+      to: [{ type: "category" }],
       validation: (Rule) => Rule.required(),
       group: "meta",
     }),
@@ -134,9 +125,9 @@ export default defineType({
     }),
     defineField({
       name: "order",
-      title: "Display Order",
+      title: "Order within Category",
       type: "number",
-      description: "Controls card position in the work grid",
+      description: "Position within the parent category (ascending)",
       validation: (Rule) => Rule.required().integer().positive(),
       group: "meta",
     }),

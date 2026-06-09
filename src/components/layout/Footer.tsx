@@ -68,7 +68,7 @@ export default function Footer() {
             <div className="flex flex-col items-center text-center gap-[14px] w-full lg:w-[207px] lg:items-start lg:text-left">
               <h3 className={COL_TITLE}>Contact Us</h3>
               <div className="flex flex-col items-center lg:items-start gap-[6px]">
-                <a href="mailto:create@deepsocal.com" className={COL_BODY}>create@deepSoCol.com</a>
+                <a href="mailto:create@deepsocal.com" className={COL_BODY}>create@deepsocal.com</a>
                 <a href="mailto:careers@deepsocal.com" className={COL_BODY}>careers@deepsocal.com</a>
               </div>
             </div>

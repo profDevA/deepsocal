@@ -1,14 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import type { CaseStudy, ServiceId } from "@/data/case-studies";
+import {
+  buildWorkGrid,
+  type CaseStudy,
+  type ServiceId,
+  type WorkGridItem,
+} from "@/data/case-studies";
+import type { Category } from "@/data/categories";
 import { getServiceById } from "@/data/services";
 import CaseStudyCard from "@/components/work/CaseStudyCard";
+import CategoryCard from "@/components/work/CategoryCard";
 import WorkFilterDropdown from "@/components/work/WorkFilterDropdown";
 
 interface WorkGridProps {
+  categories: Category[];
   caseStudies: CaseStudy[];
 }
 
@@ -21,24 +29,28 @@ const STAGGER = 0.06;
 // to finish before they unmount.
 type Phase = "collapsed" | "expanded" | "closing";
 
-export default function WorkGrid({ caseStudies }: WorkGridProps) {
+export default function WorkGrid({ categories, caseStudies }: WorkGridProps) {
   const [activeService, setActiveService] = useState<ServiceId | null>(null);
   const [phase, setPhase] = useState<Phase>("collapsed");
   const phaseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const allCards = [...caseStudies].sort((a, b) => a.order - b.order);
+  // Default: category cards interleaved with their case studies (diagonal
+  // cascade). Filtered: only matching case studies, no category cards.
+  const fullGrid = buildWorkGrid(categories, caseStudies);
   const service = activeService ? getServiceById(activeService) : null;
-  const filteredCards = activeService
-    ? allCards.filter((cs) => cs.services.includes(activeService))
-    : allCards;
+  const items: WorkGridItem[] = activeService
+    ? fullGrid.filter(
+        (it) =>
+          it.kind === "caseStudy" &&
+          it.caseStudy.services.includes(activeService)
+      )
+    : fullGrid;
   const showingExtras = phase !== "collapsed";
-  const visibleCards = showingExtras
-    ? filteredCards
-    : filteredCards.slice(0, PREVIEW_LIMIT);
-  const canToggle = filteredCards.length > PREVIEW_LIMIT;
+  const visibleItems = showingExtras ? items : items.slice(0, PREVIEW_LIMIT);
+  const canToggle = items.length > PREVIEW_LIMIT;
   const expanded = phase === "expanded";
-  const extraCount = Math.max(0, filteredCards.length - PREVIEW_LIMIT);
+  const extraCount = Math.max(0, items.length - PREVIEW_LIMIT);
 
   useGSAP(
     () => {
@@ -125,16 +137,25 @@ export default function WorkGrid({ caseStudies }: WorkGridProps) {
           ref={gridRef}
           className="work-grid-hover grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[24px] gap-y-[50px] sm:gap-x-[36px] md:gap-x-[48px] md:gap-y-[36px] lg:gap-x-[57px] lg:gap-y-[40px] w-full mt-[60px] sm:mt-[90px] md:mt-[120px] lg:mt-[168px]"
         >
-          {visibleCards.map((cs, i) => {
+          {visibleItems.map((item, i) => {
             const isExtra = i >= PREVIEW_LIMIT;
-            if (!isExtra) {
-              return (
-                <CaseStudyCard key={cs.slug} caseStudy={cs} priority={i < 3} />
+            const key =
+              item.kind === "category"
+                ? `cat-${item.category.slug}`
+                : `cs-${item.caseStudy.slug}`;
+            const node =
+              item.kind === "category" ? (
+                <CategoryCard category={item.category} />
+              ) : (
+                <CaseStudyCard
+                  caseStudy={item.caseStudy}
+                  priority={!isExtra && i < 3}
+                />
               );
-            }
+            if (!isExtra) return <Fragment key={key}>{node}</Fragment>;
             return (
-              <div key={cs.slug} className="work-card-anim">
-                <CaseStudyCard caseStudy={cs} priority={false} />
+              <div key={key} className="work-card-anim">
+                {node}
               </div>
             );
           })}

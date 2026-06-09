@@ -1,21 +1,20 @@
 /**
- * Seed / sync the Sanity `caseStudy` documents so the homepage "All Works" grid
- * renders the diagonal category cascade from Figma (node 672:5322).
+ * Seed / sync the Sanity `caseStudy` documents. With the 2-layer hierarchy each
+ * case study references a `category` document (see seed-categories.mjs) and is
+ * ordered WITHIN that category. The work-grid diagonal cascade is derived on the
+ * frontend by buildWorkGrid() (category card, then its studies) — no global
+ * order numbers, and no "Theme" placeholder case studies anymore.
  *
- * Grid layout (3 columns) — category cards land on the diagonal at slots
- * 1, 5, 9, 11, 13, 17. Case studies per category block: 3 / 3 / 1 / 1 / 3 / 1.
+ * Run AFTER seed-categories.mjs (these docs reference the category docs).
  *
  * Usage (PowerShell):
+ *   node --env-file=.env.local scripts/seed-categories.mjs
  *   node --env-file=.env.local scripts/seed-case-studies.mjs
  *
- * Requires a write token in .env.local:
- *   SANITY_API_WRITE_TOKEN=sk...   (Editor / Write permission)
+ * Requires SANITY_API_WRITE_TOKEN (Editor) in .env.local.
  *
- * The script is idempotent:
- *   - Images are content-hash deduped by Sanity, so re-uploads are free.
- *   - Documents use deterministic _ids and createOrReplace.
- *   - Any pre-existing caseStudy docs NOT in this set are deleted, so the grid
- *     always matches exactly.
+ * Idempotent: deterministic _ids, createOrReplace, content-hash deduped assets,
+ * and stray caseStudy docs (including the old "Theme" cards) are deleted.
  */
 
 import { createClient } from "@sanity/client";
@@ -39,38 +38,22 @@ if (!token) {
   process.exit(1);
 }
 
-const client = createClient({
-  projectId,
-  dataset,
-  apiVersion,
-  token,
-  useCdn: false,
-});
+const client = createClient({ projectId, dataset, apiVersion, token, useCdn: false });
 
 const A = (id) => `https://www.figma.com/api/mcp/asset/${id}`;
 
 /**
- * Card data, in grid order. `image` is a Figma MCP asset URL (uploaded once).
- * Category cards have image=null (they render the grayscale theme badge).
+ * Real case studies only. `categorySlug` references the parent category doc;
+ * `order` is the position WITHIN that category (ascending).
  */
 const CARDS = [
-  // ── Block 1: Ocean & Environment (category + 3 case studies) ──
-  {
-    slug: "ocean-environment",
-    order: 1,
-    category: true,
-    title: "Ocean & Environment",
-    subtitle: "The landscape, coast, and environmental wellbeing we design within",
-    editorialTheme: "ocean-environment",
-    tag: "Theme",
-    services: ["brand-strategy", "identity-systems"],
-  },
+  // ── Ocean & Environment ──
   {
     slug: "oc-navigator",
-    order: 2,
+    categorySlug: "ocean-environment",
+    order: 1,
     title: "OC Resource Navigator",
     subtitle: "Public-interest systems design",
-    editorialTheme: "ocean-environment",
     tag: "Design + Research",
     tags: ["Design + Research", "Design + Research", "Design + Research"],
     services: ["brand-strategy", "digital-experiences"],
@@ -89,10 +72,10 @@ const CARDS = [
   },
   {
     slug: "surf-magazine",
-    order: 3,
+    categorySlug: "ocean-environment",
+    order: 2,
     title: "Surf Magazine",
     subtitle: "Editorial and growth storytelling",
-    editorialTheme: "ocean-environment",
     tag: "Strategy + Content",
     tags: ["Strategy + Content"],
     services: ["brand-strategy", "identity-systems"],
@@ -101,10 +84,10 @@ const CARDS = [
   },
   {
     slug: "concrete-dreams",
-    order: 4,
+    categorySlug: "ocean-environment",
+    order: 3,
     title: "Concrete Dreams",
     subtitle: "Issue card the landscape, coast, and environmental wellbeing",
-    editorialTheme: "ocean-environment",
     tag: "Brand + Content",
     tags: ["Brand + Content"],
     services: ["digital-experiences", "next-gen-innovations"],
@@ -112,23 +95,13 @@ const CARDS = [
     image: A("79cad216-7a6e-433f-ada0-be2fef11c42d"),
   },
 
-  // ── Block 2: Mental Health Access (category + 3 case studies) ──
-  {
-    slug: "mental-health-access",
-    order: 5,
-    category: true,
-    title: "Mental Health Access",
-    subtitle: "Research, care, and transformation designing better pathways to healing",
-    editorialTheme: "mental-health",
-    tag: "Theme",
-    services: ["digital-experiences"],
-  },
+  // ── Mental Health Access ──
   {
     slug: "coral-health",
-    order: 6,
+    categorySlug: "mental-health",
+    order: 1,
     title: "Coral Health",
     subtitle: "Human-centered growth design",
-    editorialTheme: "mental-health",
     tag: "Strategy + Influencers",
     tags: ["Strategy + Influencers"],
     services: ["brand-strategy", "digital-experiences"],
@@ -137,10 +110,10 @@ const CARDS = [
   },
   {
     slug: "salt-and-sand",
-    order: 7,
+    categorySlug: "mental-health",
+    order: 2,
     title: "Salt & Sand",
     subtitle: "Editorial and growth storytelling",
-    editorialTheme: "mental-health",
     tag: "Strategy + Influencers",
     tags: ["Strategy + Influencers"],
     services: ["identity-systems", "brand-strategy"],
@@ -149,10 +122,10 @@ const CARDS = [
   },
   {
     slug: "luku-watches",
-    order: 8,
+    categorySlug: "mental-health",
+    order: 3,
     title: "Luku Watches",
     subtitle: "Editorial and growth storytelling",
-    editorialTheme: "mental-health",
     tag: "Design + Research",
     tags: ["Design + Research"],
     services: ["identity-systems", "brand-strategy"],
@@ -160,23 +133,13 @@ const CARDS = [
     image: A("242a2e28-b1d2-42a2-b830-419ca33811fd"),
   },
 
-  // ── Block 3: Local Commerce (category + 1 case study) ──
-  {
-    slug: "local-commerce",
-    order: 9,
-    category: true,
-    title: "Local Commerce",
-    subtitle: "For entrepreneurs and community-rooted brands building something real",
-    editorialTheme: "local-commerce",
-    tag: "Theme",
-    services: ["brand-strategy"],
-  },
+  // ── Local Commerce ──
   {
     slug: "harbor-market",
-    order: 10,
+    categorySlug: "local-commerce",
+    order: 1,
     title: "Harbor Market",
     subtitle: "Brand and growth for a coastal marketplace",
-    editorialTheme: "local-commerce",
     tag: "Design + Research",
     tags: ["Design + Research"],
     services: ["brand-strategy", "identity-systems"],
@@ -184,23 +147,13 @@ const CARDS = [
     image: A("cb9b576c-4201-4383-a6e9-4b1b6a89cefc"),
   },
 
-  // ── Block 4: Creative Culture (category + 1 case study) ──
-  {
-    slug: "creative-culture",
-    order: 11,
-    category: true,
-    title: "Creative Culture",
-    subtitle: "Social innovation, community wellbeing, and the stories worth telling",
-    editorialTheme: "culture",
-    tag: "Theme",
-    services: ["brand-strategy", "identity-systems"],
-  },
+  // ── Creative Culture ──
   {
     slug: "press-play",
-    order: 12,
+    categorySlug: "culture",
+    order: 1,
     title: "Press Play",
     subtitle: "Editorial and growth storytelling",
-    editorialTheme: "culture",
     tag: "Brand + Content",
     tags: ["Brand + Content"],
     services: ["brand-strategy", "digital-experiences"],
@@ -208,23 +161,13 @@ const CARDS = [
     image: A("cb9b576c-4201-4383-a6e9-4b1b6a89cefc"),
   },
 
-  // ── Block 5: Climate Resilience (category + 3 case studies) ──
-  {
-    slug: "climate-resilience",
-    order: 13,
-    category: true,
-    title: "Climate Resilience",
-    subtitle: "Social innovation, community wellbeing, and the stories worth telling",
-    editorialTheme: "climate-resilience",
-    tag: "Theme",
-    services: ["next-gen-innovations"],
-  },
+  // ── Climate Resilience ──
   {
     slug: "tide-line",
-    order: 14,
+    categorySlug: "climate-resilience",
+    order: 1,
     title: "Tide Line",
     subtitle: "Resilience storytelling for coastal communities",
-    editorialTheme: "climate-resilience",
     tag: "Design + Research",
     tags: ["Design + Research"],
     services: ["brand-strategy", "digital-experiences"],
@@ -233,10 +176,10 @@ const CARDS = [
   },
   {
     slug: "solar-coast",
-    order: 15,
+    categorySlug: "climate-resilience",
+    order: 2,
     title: "Solar Coast",
     subtitle: "Clean-energy brand and growth design",
-    editorialTheme: "climate-resilience",
     tag: "Strategy + Content",
     tags: ["Strategy + Content"],
     services: ["brand-strategy", "next-gen-innovations"],
@@ -245,10 +188,10 @@ const CARDS = [
   },
   {
     slug: "cocoon-malibu",
-    order: 16,
+    categorySlug: "climate-resilience",
+    order: 3,
     title: "Cocoon Malibu",
     subtitle: "Sustainable hospitality brand design",
-    editorialTheme: "climate-resilience",
     tag: "Design + Research",
     tags: ["Design + Research"],
     services: ["identity-systems", "brand-strategy"],
@@ -256,23 +199,13 @@ const CARDS = [
     image: A("80138665-3146-4538-8587-14663bb6a8ee"),
   },
 
-  // ── Block 6: AI & Digital Access (category + 1 case study) ──
-  {
-    slug: "ai-digital-access",
-    order: 17,
-    category: true,
-    title: "AI & Digital Access",
-    subtitle: "Social innovation, community wellbeing, and the stories worth telling",
-    editorialTheme: "ai-digital-access",
-    tag: "Theme",
-    services: ["next-gen-innovations"],
-  },
+  // ── AI & Digital Access ──
   {
     slug: "access-oc",
-    order: 18,
+    categorySlug: "ai-digital-access",
+    order: 1,
     title: "Access OC",
     subtitle: "Practical AI tools for local orgs",
-    editorialTheme: "ai-digital-access",
     tag: "Design + Research",
     tags: ["Design + Research"],
     services: ["next-gen-innovations", "digital-experiences"],
@@ -282,6 +215,7 @@ const CARDS = [
 ];
 
 const docId = (slug) => `caseStudy-${slug}`;
+const categoryRef = (slug) => ({ _type: "reference", _ref: `category-${slug}` });
 const assetCache = new Map();
 
 async function uploadImage(url, label) {
@@ -296,9 +230,7 @@ async function uploadImage(url, label) {
       assetCache.set(url, null);
       return null;
     }
-    const asset = await client.assets.upload("image", buf, {
-      filename: `${label}.png`,
-    });
+    const asset = await client.assets.upload("image", buf, { filename: `${label}.png` });
     console.log(`  ↑ ${label}: uploaded (${(buf.byteLength / 1024).toFixed(0)}KB) → ${asset._id}`);
     assetCache.set(url, asset._id);
     return asset._id;
@@ -317,15 +249,28 @@ function imageField(assetId) {
 async function run() {
   console.log(`Seeding ${CARDS.length} case studies → project ${projectId}/${dataset}\n`);
 
-  // Snapshot existing docs so we can (a) detect strays and (b) preserve an
-  // already-set image if a fresh Figma upload fails (never wipe good data).
+  // Verify the category docs exist (case studies reference them).
+  const cats = await client.fetch(`*[_type == "category"]{ "slug": slug.current }`);
+  const catSlugs = new Set(cats.map((c) => c.slug));
+  const missing = [...new Set(CARDS.map((c) => c.categorySlug))].filter(
+    (s) => !catSlugs.has(s)
+  );
+  if (missing.length) {
+    console.error(
+      `Missing category docs: ${missing.join(", ")}.\n` +
+        "Run seed-categories.mjs first."
+    );
+    process.exit(1);
+  }
+
+  // Snapshot existing docs so we can detect strays and preserve good images.
   const keepIds = CARDS.map((c) => docId(c.slug));
   const existingDocs = await client.fetch(
     `*[_type == "caseStudy"]{ _id, "thumbRef": thumbnailImage.asset._ref, "heroRef": heroImage.asset._ref }`
   );
   const existingById = new Map(existingDocs.map((d) => [d._id, d]));
 
-  // 1) Remove any stray caseStudy docs not in our set so the grid matches exactly.
+  // Remove strays (includes the old "Theme" category-as-caseStudy docs).
   const stray = existingDocs
     .map((d) => d._id)
     .filter((id) => !keepIds.includes(id) && !id.startsWith("drafts."));
@@ -336,12 +281,10 @@ async function run() {
     await delTx.commit();
   }
 
-  // 2) Upload images + build documents.
   const tx = client.transaction();
   for (const card of CARDS) {
     const assetId = await uploadImage(card.image, card.slug);
     const prev = existingById.get(docId(card.slug));
-    // Prefer the freshly-uploaded asset; otherwise keep whatever was already set.
     const thumbRef = assetId ?? prev?.thumbRef ?? null;
     const heroRef = assetId ?? prev?.heroRef ?? prev?.thumbRef ?? null;
     const thumb = imageField(thumbRef);
@@ -354,7 +297,7 @@ async function run() {
       subtitle: card.subtitle ?? "",
       tag: card.tag ?? "",
       tags: card.tags ?? [],
-      editorialTheme: card.editorialTheme,
+      category: categoryRef(card.categorySlug),
       services: card.services ?? [],
       servicesLabel: card.servicesLabel ?? "",
       client: card.client ?? "",
@@ -369,7 +312,7 @@ async function run() {
       ...(hero ? { heroImage: hero } : {}),
     };
     tx.createOrReplace(doc);
-    console.log(`  • #${String(card.order).padStart(2, "0")} ${card.title}${card.category ? "  [category]" : ""}`);
+    console.log(`  • ${card.categorySlug} #${card.order}  ${card.title}`);
   }
 
   await tx.commit();

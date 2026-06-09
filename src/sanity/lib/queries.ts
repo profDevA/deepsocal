@@ -1,5 +1,20 @@
 import { groq } from "next-sanity";
 
+export const ALL_CATEGORIES_QUERY = groq`
+  *[_type == "category"] | order(order asc) {
+    _id,
+    name,
+    "slug": slug.current,
+    subtitle,
+    description,
+    steepc,
+    bgColor,
+    badge,
+    carouselImage,
+    order,
+  }
+`;
+
 export const ALL_CASE_STUDIES_QUERY = groq`
   *[_type == "caseStudy"] | order(order asc) {
     _id,
@@ -8,7 +23,7 @@ export const ALL_CASE_STUDIES_QUERY = groq`
     subtitle,
     tag,
     tags,
-    editorialTheme,
+    "categorySlug": category->slug.current,
     services,
     servicesLabel,
     client,
@@ -34,7 +49,7 @@ export const CASE_STUDY_BY_SLUG_QUERY = groq`
     subtitle,
     tag,
     tags,
-    editorialTheme,
+    "categorySlug": category->slug.current,
     services,
     servicesLabel,
     client,
@@ -76,7 +91,7 @@ export const CASE_STUDIES_BY_SERVICE_QUERY = groq`
     subtitle,
     tag,
     tags,
-    editorialTheme,
+    "categorySlug": category->slug.current,
     services,
     servicesLabel,
     order,
