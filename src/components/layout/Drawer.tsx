@@ -1,5 +1,6 @@
 "use client";
 
+import type { RefObject } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import Link from "next/link";
 import { FaXmark } from "react-icons/fa6";
@@ -14,19 +15,22 @@ interface DrawerProps {
   open: boolean;
   onClose: () => void;
   onBookCall: () => void;
+  // The hamburger that opened the drawer: focus goes back there when the
+  // contact form opened from the drawer closes.
+  menuButtonRef: RefObject<HTMLButtonElement | null>;
 }
 
 const LINK_CLASS =
   "font-acumin-condensed font-bold text-black text-[26px] sm:text-[32px] leading-[1.4] uppercase whitespace-nowrap px-[24px] py-[6px] no-underline inline-block transition-opacity hover:opacity-60";
  
-export default function Drawer({ open, onClose, onBookCall }: DrawerProps) {
+export default function Drawer({ open, onClose, onBookCall, menuButtonRef }: DrawerProps) {
   const { openModal } = useModal();
 
   // The desktop "Contact us" rail (PageFrame) is hidden below md, so this is
   // the contact form's entry point on phones.
   const handleContact = () => {
     onClose();
-    openModal("contact");
+    openModal("contact", menuButtonRef.current);
   };
 
   return (
@@ -35,7 +39,7 @@ export default function Drawer({ open, onClose, onBookCall }: DrawerProps) {
         <Dialog.Overlay className="fixed inset-0 z-999998 bg-black/40 data-[state=open]:animate-[overlayFadeIn_0.4s_ease] data-[state=closed]:animate-[overlayFadeOut_0.3s_ease]" />
         <Dialog.Content
           aria-describedby={undefined}
-          className="fixed inset-y-0 right-0 z-999999 w-[72%] max-w-[340px] bg-white shadow-[-8px_0_24px_rgba(0,0,0,0.12)] data-[state=open]:animate-[drawerSlideIn_0.4s_ease] data-[state=closed]:animate-[drawerSlideOut_0.3s_ease]"
+          className="fixed inset-y-0 right-0 z-999999 w-[72%] max-w-[340px] bg-white overflow-y-auto overscroll-contain shadow-[-8px_0_24px_rgba(0,0,0,0.12)] data-[state=open]:animate-[drawerSlideIn_0.4s_ease] data-[state=closed]:animate-[drawerSlideOut_0.3s_ease]"
         >
           <Dialog.Title className="sr-only">Navigation menu</Dialog.Title>
 
@@ -47,8 +51,9 @@ export default function Drawer({ open, onClose, onBookCall }: DrawerProps) {
             <FaXmark />
           </Dialog.Close>
 
-          {/* Nav links — left-aligned, starting 160px from top */}
-          <nav className="pt-[160px] pl-[27px]">
+          {/* Nav links — left-aligned, starting 160px from top (80px on short
+              screens, e.g. landscape phones, so all five items fit) */}
+          <nav className="pt-[160px] [@media(max-height:560px)]:pt-[80px] pl-[27px] pb-[40px]">
             <ul className="flex flex-col gap-[20px] list-none m-0 p-0 items-start">
               <li>
                 <Link href="/#work" onClick={onClose} className={LINK_CLASS}>

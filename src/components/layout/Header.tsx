@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -45,6 +45,7 @@ function getMobilePageLabel(pathname: string): string {
 
 export default function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -146,6 +147,7 @@ export default function Header() {
             )}
 
             <button
+              ref={menuButtonRef}
               type="button"
               className="flex p-2 items-center justify-center cursor-pointer"
               onClick={() => setDrawerOpen(true)}
@@ -162,6 +164,7 @@ export default function Header() {
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         onBookCall={handleBookCall}
+        menuButtonRef={menuButtonRef}
       />
     </>
   );

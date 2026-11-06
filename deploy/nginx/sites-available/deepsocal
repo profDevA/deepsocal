@@ -1,0 +1,80 @@
+# DeepSoCal — nginx site config. Installed as /etc/nginx/sites-available/deepsocal
+# (symlinked from sites-enabled/). Canonical host: https://deepsocal.com
+# Cert: /etc/letsencrypt/live/deepsocal.com (deepsocal.com + www), renewed via
+# the ACME webroot below. Related: conf.d/deepsocal.conf, snippets/deepsocal-*.conf
+
+# HTTP, real hostnames → ACME webroot (renewals) + redirect to HTTPS apex
+server {
+    listen 80;
+    listen [::]:80;
+    server_name deepsocal.com www.deepsocal.com;
+    location /.well-known/acme-challenge/ { root /var/www/certbot; }
+    location / { return 301 https://deepsocal.com$request_uri; }
+}
+
+# HTTP, bare IP / unknown host → canonical site
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    location /.well-known/acme-challenge/ { root /var/www/certbot; }
+    location / { return 301 https://deepsocal.com$request_uri; }
+}
+
+# HTTPS, unknown SNI (e.g. https://<ip>) → refuse the handshake
+server {
+    listen 443 ssl http2 default_server;
+    listen [::]:443 ssl http2 default_server;
+    ssl_reject_handshake on;
+}
+
+# HTTPS www → apex
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name www.deepsocal.com;
+    ssl_certificate     /etc/letsencrypt/live/deepsocal.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/deepsocal.com/privkey.pem;
+    add_header Strict-Transport-Security "max-age=63072000" always;
+    return 301 https://deepsocal.com$request_uri;
+}
+
+# HTTPS apex → app
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name deepsocal.com;
+    ssl_certificate     /etc/letsencrypt/live/deepsocal.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/deepsocal.com/privkey.pem;
+    include snippets/deepsocal-headers.conf;
+    include snippets/deepsocal-frame.conf;
+
+    location / {
+        include snippets/deepsocal-proxy-pass.conf;
+    }
+
+    # Contact + scoping forms: per-IP rate limit, small bodies only.
+    location /api/ {
+        limit_req zone=deepsocal_api burst=5 nodelay;
+        client_max_body_size 32k;
+        include snippets/deepsocal-proxy-pass.conf;
+    }
+
+    # public/ images + video: replace Next's max-age=0 with a week's browser
+    # cache (successful responses only — see the map in conf.d/deepsocal.conf).
+    location ~ ^/(images|videos)/ {
+        include snippets/deepsocal-proxy-pass.conf;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control $deepsocal_asset_cache always;
+        include snippets/deepsocal-headers.conf;
+        include snippets/deepsocal-frame.conf;
+    }
+
+    # Sanity Studio: same headers minus the SAMEORIGIN lock, because Sanity's
+    # dashboard (sanity.io) may embed registered studios in an iframe.
+    location /studio {
+        include snippets/deepsocal-proxy-pass.conf;
+        include snippets/deepsocal-headers.conf;
+        add_header Content-Security-Policy "frame-ancestors 'self' https://*.sanity.io" always;
+    }
+}

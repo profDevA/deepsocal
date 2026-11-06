@@ -19,7 +19,7 @@ export const DEFAULT_SHARE_IMAGE: ShareImage = {
 // so each page sets the full set here instead of inheriting the home page's.
 export function pageMetadata({
   title,
-  description = SITE_DESCRIPTION,
+  description: rawDescription,
   path,
   image = DEFAULT_SHARE_IMAGE,
 }: {
@@ -29,6 +29,8 @@ export function pageMetadata({
   image?: ShareImage;
 }): Metadata {
   const shareTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+  // Empty strings too (e.g. a case study with no summary yet).
+  const description = rawDescription || SITE_DESCRIPTION;
   return {
     ...(title ? { title } : {}),
     description,

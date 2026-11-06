@@ -3,10 +3,11 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import Link from "next/link";
 import { FaXmark } from "react-icons/fa6";
-import { useModal } from "./ModalProvider";
+import { useModal, useReturnFocusOnClose } from "./ModalProvider";
 
 export default function ThankYouModal() {
   const { activeModal, closeModal } = useModal();
+  const onCloseAutoFocus = useReturnFocusOnClose();
   const open = activeModal === "thankyou";
 
   return (
@@ -18,6 +19,7 @@ export default function ThankYouModal() {
             `CenterModal` / `SideModal`. */}
         <Dialog.Overlay className="fixed inset-0 z-999998 bg-black/50" />
         <Dialog.Content
+          onCloseAutoFocus={onCloseAutoFocus}
           aria-describedby="thankyou-modal-description"
           className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-999999 bg-[#e6e6e6] w-[1134px] h-[829px] max-w-[calc(100vw-80px)] max-h-[calc(100vh-80px)] flex items-center justify-center overflow-y-auto"
         >

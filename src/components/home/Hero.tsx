@@ -100,9 +100,12 @@ export default function Hero() {
         </div>
 
         <div className="hero-video relative w-full max-w-[535px] aspect-535/271 overflow-hidden bg-dark">
-          {/* Decorative, muted background reel: hidden from assistive tech. */}
+          {/* Decorative, muted background reel: hidden from assistive tech.
+              The clip fades in from black, so playback starts at 1s (#t=1),
+              the same frame as the poster, to avoid a bright→black→bright
+              flash. Loops still restart from 0. */}
           <video
-            src="/videos/california.mp4"
+            src="/videos/california.mp4#t=1"
             poster="/videos/california-poster.jpg"
             autoPlay
             muted

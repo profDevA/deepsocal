@@ -1,15 +1,17 @@
 "use client";
 
+import { useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { FaXmark } from "react-icons/fa6";
-import { useModal } from "./ModalProvider";
+import { useModal, useReturnFocusOnClose } from "./ModalProvider";
 import { useFormSubmit } from "@/hooks/useFormSubmit";
-import { HONEYPOT_FIELD } from "@/lib/form-validation";
+import { HONEYPOT_FIELD, MAX_EMAIL, MAX_MESSAGE, MAX_NAME } from "@/lib/form-validation";
 import HoneypotField from "./HoneypotField";
 
 export default function ContactModal() {
   const { activeModal, closeModal, switchModal } = useModal();
-  const { submit, isSubmitting, error } = useFormSubmit("/api/contact");
+  const { submit, isSubmitting, error, reset } = useFormSubmit("/api/contact");
+  const onCloseAutoFocus = useReturnFocusOnClose();
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,11 +31,17 @@ export default function ContactModal() {
 
   const open = activeModal === "contact";
 
+  // Don't show a previous attempt's error when the form is opened again.
+  useEffect(() => {
+    if (!open) reset();
+  }, [open, reset]);
+
   return (
     <Dialog.Root open={open} onOpenChange={(v) => !v && closeModal()}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-999998 bg-black/50 data-[state=open]:animate-[overlayFadeIn_0.4s_ease] data-[state=closed]:animate-[overlayFadeOut_0.3s_ease]" />
         <Dialog.Content
+          onCloseAutoFocus={onCloseAutoFocus}
           aria-describedby="contact-modal-description"
           className="fixed inset-y-0 right-0 z-999999 h-full w-[453px] max-w-[90vw] bg-white overflow-y-auto shadow-[0_5px_15px_rgba(0,0,0,0.25)] data-[state=open]:animate-[drawerSlideIn_0.4s_ease] data-[state=closed]:animate-[drawerSlideOut_0.3s_ease] flex flex-col"
         >
@@ -67,6 +75,7 @@ export default function ContactModal() {
                   name="name"
                   type="text"
                   required
+                  maxLength={MAX_NAME}
                   placeholder="Enter your name"
                   className="font-inter text-sm px-3 py-3 bg-[#f3f3f3] border border-[#e6e6e6] rounded-none text-black h-[46px] placeholder:text-[#a9a9a9] focus:outline-none focus:border-black/60"
                 />
@@ -81,6 +90,7 @@ export default function ContactModal() {
                   name="email"
                   type="email"
                   required
+                  maxLength={MAX_EMAIL}
                   placeholder="Enter your email"
                   className="font-inter text-sm px-3 py-3 bg-[#f3f3f3] border border-[#e6e6e6] rounded-none text-black h-[46px] placeholder:text-[#a9a9a9] focus:outline-none focus:border-black/60"
                 />
@@ -95,6 +105,7 @@ export default function ContactModal() {
                   name="message"
                   rows={4}
                   required
+                  maxLength={MAX_MESSAGE}
                   placeholder="Enter your message"
                   className="font-inter text-sm px-3 py-3 bg-[#f3f3f3] border border-[#e6e6e6] rounded-none text-black h-[85px] resize-none placeholder:text-[#a9a9a9] focus:outline-none focus:border-black/60"
                 />

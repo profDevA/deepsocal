@@ -35,10 +35,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **Page metadata:** every page builds its metadata with `pageMetadata({ title, description, path, image? })` from `src/lib/metadata.ts`. It sets the canonical URL, `og:url`, share title and image per page. Next replaces (doesn't merge) a parent's `openGraph`, so don't hand-write partial `openGraph` objects. Case studies use their Sanity hero via `sanityShareImage()`. The default share image is `public/images/og/deepsocal-share.jpg` (1200×630).
 - **Icons:** file conventions in `src/app`: `favicon.ico` (16/32/48/256), `icon.svg` (DeepSoCal mark, white in dark mode), `apple-icon.png`. A copy also lives at `public/apple-touch-icon.png`. The mobile header uses the vector `public/images/deepsocal-mark.svg`.
-- **Forms (`/api/contact`, `/api/scoping`):** validated by `parseFormBody()` in `src/lib/form-validation.ts` (lengths, email format, control characters). The `<HoneypotField />` input in each form makes bots get a silent fake success. Email templates `escapeHtml()` every field. nginx rate-limits `/api/` to 5/min per IP; the forms show "Too many messages…" on a 429.
-- **nginx:** sets the security headers (nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options SAMEORIGIN + `frame-ancestors`; `/studio` allows `*.sanity.io` framing). It also sets `server_tokens off` and a 7-day browser cache for `/images/*` and `/videos/*`. Files: `/etc/nginx/sites-available/deepsocal`, `conf.d/deepsocal.conf`, `snippets/deepsocal-{headers,proxy-pass}.conf`. Next has `poweredByHeader: false`.
+- **Forms (`/api/contact`, `/api/scoping`):**
+  - Validated by `parseFormBody()` in `src/lib/form-validation.ts` (lengths, email format, control characters). The limits `MAX_NAME/EMAIL/MESSAGE` are also the inputs' `maxLength`.
+  - The `<HoneypotField />` input in each form makes bots get a silent fake success.
+  - Email templates `escapeHtml()` every field and build mailto links with `mailtoHref()`.
+  - **Resend doesn't throw on failure; it returns `{ error }`.** The routes check it, log the lead (`[contact]` / `[scoping]` in the pm2 error log) and return 502, so visitors never see "Thank you" for an email that wasn't sent.
+  - nginx rate-limits `/api/` to 5/min per IP; the forms show "Too many messages…" on a 429 and "too long" on a 413.
+- **nginx:** config is versioned in `deploy/nginx/` (see its README for paths and the apply steps).
+  - Security headers: nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options SAMEORIGIN + `frame-ancestors`. `/studio` allows `*.sanity.io` framing.
+  - `server_tokens off`.
+  - 7-day browser cache for `/images/*` and `/videos/*`, on 2xx/304 only.
+  - Next has `poweredByHeader: false`.
+- **Category badges live in Sanity** (each `category` doc's Badge Icon). `public/images/badges/*.svg` are only the offline fallback and the seed source. Replacing a file there changes nothing live until the Sanity doc is updated in `/studio` or via `scripts/seed-categories.mjs`.
 - **Images in `public/` are served at full size.** The custom loader only resizes Sanity URLs, so compress before committing: photos as JPEG ≤ ~2048 px wide (~100–500 KB), no multi-MB PNG photos. Because of the 7-day cache, **rename** a changed asset instead of overwriting it.
-- **Old-site URLs** (`/works`, `/services/{ai-strategy,design,research,marketing-branding,training-education}`) 301 to current pages via `redirects()` in `next.config.ts`.
+- **Old-site URLs** (`/works`, `/works/forever-a-surfer`, `/services/{ai-strategy,design,research,marketing-branding,training-education}`) permanently redirect (Next sends **308** for `permanent: true`) to current pages via `redirects()` in `next.config.ts`.
 - **404:** branded page in `src/app/not-found.tsx`.
 
 ## Brand direction (5/27 PM pivot) — typography + corner refactor

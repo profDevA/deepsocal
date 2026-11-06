@@ -1,9 +1,10 @@
-import { escapeHtml } from "@/lib/form-validation";
+import { escapeHtml, mailtoHref } from "@/lib/form-validation";
 
 // All fields are visitor input: escape them before they reach the HTML.
 export function scopingTemplate(fields: { name: string; email: string }) {
   const name = escapeHtml(fields.name);
   const email = escapeHtml(fields.email);
+  const mailHref = mailtoHref(fields.email);
   const date = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
@@ -36,7 +37,7 @@ export function scopingTemplate(fields: { name: string; email: string }) {
               <tr>
                 <td style="padding:16px 0;border-bottom:1px solid #e8e8e8;">
                   <span style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888;">Email</span><br>
-                  <a href="mailto:${email}" style="font-size:16px;color:#000;text-decoration:none;margin-top:4px;display:inline-block;">${email}</a>
+                  <a href="${mailHref}" style="font-size:16px;color:#000;text-decoration:none;margin-top:4px;display:inline-block;">${email}</a>
                 </td>
               </tr>
               <tr>
@@ -46,7 +47,7 @@ export function scopingTemplate(fields: { name: string; email: string }) {
                 </td>
               </tr>
             </table>
-            <a href="mailto:${email}" style="display:inline-block;background:#000;color:#fff;padding:14px 28px;text-decoration:none;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:400;">Reply to ${name}</a>
+            <a href="${mailHref}" style="display:inline-block;background:#000;color:#fff;padding:14px 28px;text-decoration:none;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:400;">Reply to ${name}</a>
           </td>
         </tr>
         <tr>
