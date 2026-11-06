@@ -1,12 +1,17 @@
-export function contactTemplate({
-  name,
-  email,
-  message,
-}: {
+import { escapeHtml } from "@/lib/form-validation";
+
+// All fields are visitor input: escape them before they reach the HTML.
+export function contactTemplate(fields: {
   name: string;
   email: string;
   message?: string;
 }) {
+  const name = escapeHtml(fields.name);
+  const email = escapeHtml(fields.email);
+  // Keep the sender's line breaks.
+  const message = fields.message
+    ? escapeHtml(fields.message).replace(/\r?\n/g, "<br>")
+    : "";
   const date = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",

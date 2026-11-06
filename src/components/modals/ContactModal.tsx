@@ -4,10 +4,12 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { FaXmark } from "react-icons/fa6";
 import { useModal } from "./ModalProvider";
 import { useFormSubmit } from "@/hooks/useFormSubmit";
+import { HONEYPOT_FIELD } from "@/lib/form-validation";
+import HoneypotField from "./HoneypotField";
 
 export default function ContactModal() {
   const { activeModal, closeModal, switchModal } = useModal();
-  const { submit, isSubmitting } = useFormSubmit("/api/contact");
+  const { submit, isSubmitting, error } = useFormSubmit("/api/contact");
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,6 +19,7 @@ export default function ContactModal() {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       message: formData.get("message") as string,
+      [HONEYPOT_FIELD]: (formData.get(HONEYPOT_FIELD) as string) ?? "",
     });
     if (success) {
       form.reset();
@@ -96,6 +99,14 @@ export default function ContactModal() {
                   className="font-inter text-sm px-3 py-3 bg-[#f3f3f3] border border-[#e6e6e6] rounded-none text-black h-[85px] resize-none placeholder:text-[#a9a9a9] focus:outline-none focus:border-black/60"
                 />
               </div>
+
+              <HoneypotField />
+
+              {error && (
+                <p role="alert" className="font-inter text-[14px] leading-[1.4] text-[#b42318] m-0">
+                  {error}
+                </p>
+              )}
 
               <div className="mt-2">
                 <button

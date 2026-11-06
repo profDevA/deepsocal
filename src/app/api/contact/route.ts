@@ -1,16 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { resend } from "@/lib/resend";
 import { contactTemplate } from "@/lib/email-templates/contact";
+import { parseFormBody } from "@/lib/form-validation";
 
 export async function POST(request: NextRequest) {
-  const { name, email, message } = await request.json();
-
-  if (!name || !email) {
-    return NextResponse.json(
-      { error: "Name and email are required" },
-      { status: 400 }
-    );
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
+
+  const parsed = parseFormBody(body);
+  if (!parsed.ok) {
+    return NextResponse.json({ error: parsed.error }, { status: 400 });
+  }
+  // Honeypot filled: almost certainly a bot. Report success so it moves on.
+  if (parsed.isBot) {
+    return NextResponse.json({ success: true });
+  }
+  const { name, email, message } = parsed.fields;
 
   try {
     await resend.emails.send({

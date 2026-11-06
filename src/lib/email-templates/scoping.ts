@@ -1,10 +1,9 @@
-export function scopingTemplate({
-  name,
-  email,
-}: {
-  name: string;
-  email: string;
-}) {
+import { escapeHtml } from "@/lib/form-validation";
+
+// All fields are visitor input: escape them before they reach the HTML.
+export function scopingTemplate(fields: { name: string; email: string }) {
+  const name = escapeHtml(fields.name);
+  const email = escapeHtml(fields.email);
   const date = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
