@@ -2,6 +2,45 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Current status (Oct 2026) — launch prep
+
+- **LIVE on AWS since Nov 2, 2026:** https://deepsocal.com serves the v2 build (`deepsocal-v2` branch) from EC2. `www` and `http` 301 to `https://deepsocal.com`.
+  - The Vercel preview https://deepsocal-git-deepsocal-v2-deepsocals-projects.vercel.app/ still builds from the same branch.
+  - The old site is no longer served on the domain.
+- **Restart:** development paused after the Jun 9, 2026 commit. Fas restarted DeepSoCal on Sep 29, 2026. See the "Sep 29 – Oct 1" entry in `.cursor/meeting-notes/meeting_notes.md`.
+- **Launch plan:** put v2 on deepsocal.com, hosted on a **new, dedicated EC2 instance** in the DeepSoCal AWS account. That's the same account as faslebbie.com, but **not** faslebbie.com's instance. Not Vercel.
+- **Server (created Oct 30, 2026):** `deepsocal-web` (`i-0ad606404fdf78660`, t3.small, us-east-2), Elastic IP **`3.143.107.20`**.
+  - SSH: `ssh -i ~/.ssh/deepsocal-ec2.pem ubuntu@3.143.107.20`
+  - AWS CLI calls must use `--profile deepsocal` (account `602151118632`). The default profile on this machine is a different (Routr) account.
+  - Step-by-step runbook: `.cursor/deploy-aws-plan.md` (gitignored).
+  - **App deployed Oct 30:** pm2 app `deepsocal` runs in `~/deepsocal` (Node 24 via nvm) on `127.0.0.1:3000`. Redeploy with `ssh … ./deploy.sh`.
+  - **HTTPS:** Let's Encrypt cert (deepsocal.com + www), auto-renewing via webroot `/var/www/certbot`. nginx site config is at `/etc/nginx/sites-available/deepsocal`.
+- **DNS:** at GoDaddy (`ns05/ns06.domaincontrol.com`): `A @` → `3.143.107.20`, `CNAME www` → `@`. Never touch `resend._domainkey` (DKIM), `send.*` (Resend bounce MX / SPF) or `_dmarc`, or the contact and scoping forms stop sending from `hello@deepsocal.com`.
+- **Still open after launch:**
+  - Remove the domain from Vercel after a stable week.
+  - (Done Nov 2: `https://deepsocal.com` is in Sanity CORS with credentials, so `/studio` works on the live domain.)
+- **Don't merge `deepsocal-v2` → `main` casually.** The old live site is most likely Vercel's production deploy of `main`, so a merge could replace deepsocal.com before AWS is ready. Check the Vercel project's production branch first.
+- **Production env:**
+  - `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION`, `RESEND_API_KEY`
+  - Optional `TO_EMAIL`; form emails default to `deepsocalagency@gmail.com`.
+  - Add `https://deepsocal.com` and `https://www.deepsocal.com` to Sanity CORS origins, with credentials allowed so `/studio` works.
+- **Content gaps (need Fas):** full list in `.cursor/qa-2026-11-05.md`.
+  - `src/data/testimonials.ts` has 5 placeholder testimonials: fake names and stats, and only 1 avatar.
+  - Footer social URLs are empty (icons hidden until provided); `create@` / `careers@deepsocal.com` have no mailbox (no MX record).
+  - Shop: T-shirt copy says "notebook"; Tote, Crewneck and Cap have empty descriptions.
+  - Same photo on Harbor Market + Press Play, and on the Identity Systems + Next-Gen Innovations service heroes.
+  - Israel's final QA pass is still pending.
+
+## Production conventions (Nov 2026 hardening)
+
+- **Page metadata:** every page builds its metadata with `pageMetadata({ title, description, path, image? })` from `src/lib/metadata.ts`. It sets the canonical URL, `og:url`, share title and image per page. Next replaces (doesn't merge) a parent's `openGraph`, so don't hand-write partial `openGraph` objects. Case studies use their Sanity hero via `sanityShareImage()`. The default share image is `public/images/og/deepsocal-share.jpg` (1200×630).
+- **Icons:** file conventions in `src/app`: `favicon.ico` (16/32/48/256), `icon.svg` (DeepSoCal mark, white in dark mode), `apple-icon.png`. A copy also lives at `public/apple-touch-icon.png`. The mobile header uses the vector `public/images/deepsocal-mark.svg`.
+- **Forms (`/api/contact`, `/api/scoping`):** validated by `parseFormBody()` in `src/lib/form-validation.ts` (lengths, email format, control characters). The `<HoneypotField />` input in each form makes bots get a silent fake success. Email templates `escapeHtml()` every field. nginx rate-limits `/api/` to 5/min per IP; the forms show "Too many messages…" on a 429.
+- **nginx:** sets the security headers (nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options SAMEORIGIN + `frame-ancestors`; `/studio` allows `*.sanity.io` framing). It also sets `server_tokens off` and a 7-day browser cache for `/images/*` and `/videos/*`. Files: `/etc/nginx/sites-available/deepsocal`, `conf.d/deepsocal.conf`, `snippets/deepsocal-{headers,proxy-pass}.conf`. Next has `poweredByHeader: false`.
+- **Images in `public/` are served at full size.** The custom loader only resizes Sanity URLs, so compress before committing: photos as JPEG ≤ ~2048 px wide (~100–500 KB), no multi-MB PNG photos. Because of the 7-day cache, **rename** a changed asset instead of overwriting it.
+- **Old-site URLs** (`/works`, `/services/{ai-strategy,design,research,marketing-branding,training-education}`) 301 to current pages via `redirects()` in `next.config.ts`.
+- **404:** branded page in `src/app/not-found.tsx`.
+
 ## Brand direction (5/27 PM pivot) — typography + corner refactor
 
 Fas pivoted the visual direction on **May 27, 2026** (evening Figma walkthrough with brand specialist — see `.cursor/meeting-notes/transcript_2026-05-27.md` + the 230-frame capture in `frames-2026-05-27/`). The pivot replaces the typographic and rounded-corner system. Layout / sections / colour palette / images / animations / GSAP choreography all **stay** — this is a typographic + corner + logo refactor, not a redesign.
@@ -12,16 +51,16 @@ Reference brand Fas is modeling: **[Buck Mason](https://www.buckmason.com/)** �
 
 | Area | Status | Notes |
 |---|---|---|
-| Headline / title / wordmark font | ✅ Acumin Pro Condensed token live | Sourced from **Barlow Condensed** (Google Fonts) as stand-in until Israel ships licensed Acumin WOFFs. See `src/app/fonts.ts` for swap procedure — the Tailwind utility `font-acumin-condensed` and CSS variable `--nf-acumin-condensed` are intentionally **brand-named** so the font source can swap in one line without touching any component. |
-| Body font | ✅ `font-acumin` aliased to Inter | Inter is the closest free match for Acumin Pro Regular. Same swap procedure when real Acumin lands. |
-| `font-bangers` → `font-acumin-condensed` | ✅ Done across 22 files, 53 occurrences | Mechanical one-pass swap. `bangers` is still loaded as a fallback but **deprecated** — don't add new references. Remove after Fas signs off on the new font. |
-| Default headline weight | `font-acumin-condensed { font-weight: 500 }` via base layer | Barlow Condensed at Regular 400 reads dramatically lighter than Bangers (single-weight display face); Medium 500 lands closest to Bangers' visual mass. Components needing extra heft (Hero / BigWordmark) can override with `font-semibold` / `font-bold`. |
+| Headline / title / wordmark font | ✅ Real Acumin Pro Condensed live | Loaded with `localFont` from `src/fonts/AcuminProCondensed.woff2`. It's a single file from Israel that looks Bold, declared as weight range `400 700`. It replaced the earlier Barlow Condensed stand-in. The Tailwind utility `font-acumin-condensed` and CSS variable `--nf-acumin-condensed` are **brand-named**, so swapping in the full licensed family later changes one block in `src/app/fonts.ts` and no components. |
+| Body font | ✅ Real Acumin Pro live | `font-acumin` → `--nf-acumin`. Regular / Italic / Bold / Bold Italic OTFs from Israel in `src/fonts/`, with Inter as the CSS fallback. |
+| `font-bangers` → `font-acumin-condensed` | ✅ Done across 22 files, 53 occurrences | Mechanical one-pass swap. Bangers itself was removed from the build in Nov 2026 (no remaining usages). |
+| Default headline weight | `font-acumin-condensed { font-weight: 700; letter-spacing: 0.01em }` via base layer | Matches the Figma spec (`Acumin Pro Condensed: Bold`). It was 500 while the Barlow stand-in was in use. |
 | Rounded corners → square | ✅ Done | All `rounded-[Xpx]` removed from cards, hero containers, badges, side drawers (`rounded-l-[62px]`), case-study hero (`rounded-t-[30px]`), shop hero (`rounded-[30.593px]`), about hero (`rounded-[27px]`), etc. **Kept rounded**: `rounded-full` circles (close buttons, social icons, dots, badge circles), small `rounded-sm` tactile arrow buttons, and dropdown menus (`WorkFilterDropdown` at `rounded-[23px]`, `WorksFilter` at `rounded-[10px]`, `ServicePageLayout` selector at `rounded-[15px]` / `rounded-lg`) — dropdowns are UI primitives, not cards. |
 | Testimonials placement | ✅ Already correct | Per transcript: "move testimonial down… centered here… then the footer." Code already has `Testimonials` at the bottom of the home-page sections (above the globally-rendered `BigWordmark` + `Footer`). No change needed. |
 | Testimonials redesign | ✅ Done | Per Fas (5/28, Figma node `545:3909`): replaces the 3-card white-card carousel with a dark editorial 2-column layout (`bg-[#1e1e1e]`, white top/bottom borders). Left column = title (`Trusted by SoCal Brands`, Acumin Pro Condensed Bold 42px / leading 50px / tracking 1.26px / uppercase, white) + ghost nav buttons (`35×38px`, `bg-[#1e1e1e]` so same as section, distinguished only by the `drop-shadow-[0_0_8.15px_rgba(0,0,0,0.25)]` halo; `hover:bg-[#2a2a2a]` for affordance). Right column = inline quote glyph + italic quote text (Acumin/Inter italic 26px) + 62px circular avatar + author name italic. No card backgrounds, no rounded corners (avatar circles excepted), no dots indicator. Single-quote-at-a-time pattern with 180ms opacity fade on `prev` / `next`. The earlier 533:1277 Figma node is an OrthoFX reference screenshot — intentionally **not** the implementation target. |
 | CompaniesMarquee → bottom | ✅ Done | Per transcript (para 32): "*this is very noisy. Let's make this simple… we also move this down*" — and para 46: "*[Testimonials] moving it down and then **this** goes next*". The client-logo strip moves from after `Hero` to be the **last** home section (after `Testimonials`, before the globally-rendered `BigWordmark`). Order is now: `Hero` → `WhyAreWeDifferent` → `WorkGrid` → `Testimonials` → `CompaniesMarquee`. |
-| WorkGrid card colors → simplified | ✅ Done | Per Fas (5/28, Figma node `566:1642`): "*our works, we don't use many colors, just simple color, clean*" — then clarified: editorial cards use `#EDECE1` bg + `1px solid #B0B0B0` border; image-card bottom panels stay **white**. Replaces the previous 6-color STEEPC palette (ocean/mental/commerce/culture/climate/ai). Editorial card title also drops from `text-[60px]` / `leading-[60px]` → `text-[40px] / leading-[42px]` to match Figma. **`socal-themes.ts` `bgColor` field is preserved** — still consumed by `WhyAreWeDifferent`'s horizontal carousel theme cards. Only the work-grid stopped reading it. The `.group:hover .card-bottom-panel { --hover-bg }` rule was removed from `globals.css` — replaced with an explanatory comment so the absence is intentional, not a regression. |
-| WorkGrid section subtitle font | ✅ Done | `How We work with SoCal Builders` swapped from `font-quintessential` (decorative serif/cursive) → `font-acumin` (Inter stand-in for Acumin Pro Regular). Tracking relaxed from `-1.4px` → `-0.7px` — tight kerning suited the serif display face but reads as squashed on Inter. |
+| WorkGrid card colors → simplified | ✅ Done | Per Fas (5/28, Figma node `566:1642`): "*our works, we don't use many colors, just simple color, clean*" — then clarified: editorial cards use `#EDECE1` bg + `1px solid #B0B0B0` border; image-card bottom panels stay **white**. Replaces the previous 6-color STEEPC palette (ocean/mental/commerce/culture/climate/ai). Editorial card title also drops from `text-[60px]` / `leading-[60px]` → `text-[40px] / leading-[42px]` to match Figma. **The `bgColor` field in `categories.ts` (formerly `socal-themes.ts`) is preserved** — still consumed by `WhyAreWeDifferent`'s horizontal carousel theme cards. Only the work-grid stopped reading it. The `.group:hover .card-bottom-panel { --hover-bg }` rule was removed from `globals.css` — replaced with an explanatory comment so the absence is intentional, not a regression. |
+| WorkGrid section subtitle font | ✅ Done | `How We work with SoCal Builders` swapped from `font-quintessential` (decorative serif/cursive) → `font-acumin` (Acumin Pro Regular). Tracking relaxed from `-1.4px` → `-0.7px` — tight kerning suited the serif display face but reads as squashed on Inter. |
 
 ### What's still open
 
@@ -30,10 +69,10 @@ Reference brand Fas is modeling: **[Buck Mason](https://www.buckmason.com/)** �
   - `deepsocal-wordmark-large.svg` — BigWordmark use. viewBox 1379×393, fill `#1E1E1E`, **no `(*)` mark** (would look misplaced at this scale). Higher-resolution source geometry for sharp rendering at full-viewport width.
   - `DeepSoCal-banner.svg` — Footer use. White-fill variant of the older artwork for the dark footer background. Will eventually need a white-fill version of the new artwork if footer is meant to match exactly.
 
-  All three are font-independent vectors — the wordmark surfaces don't care which font ships in the Acumin/Barlow stand-in.
-- **Real Acumin Pro WOFFs** — Israel said he has them; Fas to forward. When they arrive, drop them in `src/fonts/` and flip the `acuminCondensed` export in `fonts.ts` from `Barlow_Condensed({...})` to `localFont({ src: [...] })`. The CSS variable and Tailwind class don't change.
-- **Per-element weight tuning** — `font-weight: 500` is a safe default. After Fas reviews, some elements may want `600`/`700` (Hero, BigWordmark) or `400` (small editorial labels).
-- **Mobile pass** — Israel is producing mobile mocks in Figma. Hold the desktop implementation until those frames land.
+  All three are font-independent vectors, so the wordmark surfaces don't depend on which font file ships.
+- **Licensed Acumin family** — the current Acumin Pro Condensed is one `.woff2` that Israel got from onlinewebfonts.com (see the comment in `fonts.ts`). Swap in the full licensed family when it's available. It's one `localFont` block, and the CSS variable and Tailwind class stay the same.
+- **Per-element weight tuning** — the default is now `700`, per the Figma spec. Only tune individual elements if Fas asks.
+- **Mobile** — home, header/menu and About were built from Israel's mobile Figma frames (May 29 – Jun 1). Check every page on a **real phone** before launch: Chrome's device emulation missed spacing bugs on faslebbie.com.
 
 ### Type-system reference (Figma inspector spec)
 
@@ -71,7 +110,7 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - UI primitives: Radix UI (accordion, dialog, dropdown)
 - Carousel: Embla Carousel
 - Icons: `react-icons` (Fa6)
-- CMS: Sanity (case studies) — embedded studio at `/studio`
+- CMS: Sanity (categories, case studies, look book images) — embedded studio at `/studio`
 - Payments: Stripe (checkout)
 - Email: Resend
 
@@ -90,7 +129,8 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - `home/WorkGrid.tsx` — Client component; in-place service filtering via dropdown + `view all` / `view less` expand toggle (default shows 12 cards, click to reveal the rest with GSAP fade-up animation, staggered)
 - `home/CompaniesMarquee.tsx` — Infinite-scroll client logo marquee
 - `home/Testimonials.tsx` — Dark editorial 2-column section (Figma node `545:3909`). Title + ghost nav buttons on the left, single italic quote + 62px avatar + author on the right. `prev` / `next` swap testimonials in place with a 180ms opacity fade. Replaces the older 3-card white-card carousel.
-- `work/CaseStudyCard.tsx` — Dual-variant card (image vs editorial/category); hover shows category color
+- `work/CaseStudyCard.tsx` — Image card for a case study (photo + white bottom panel)
+- `work/CategoryCard.tsx` — Editorial category card (cream `#EDECE1`, badge, title) that heads each category's run of case studies in the work grid
 - `work/WorkFilterDropdown.tsx` — Service filter dropdown; emits `onChange(serviceId | null)` for in-place content swap
 - `layout/Header.tsx` / `Footer.tsx` / `PageFrame.tsx` — Shared shell
 - `layout/PageFrame.tsx` — Fixed-position decorative rails (15px from each edge) + rotated `CONTACT US` button on the right rail. Used on `/` and `/about`. `pointer-events-none` except for the button.
@@ -101,8 +141,9 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - `animation/RevealOnScroll.tsx` — Generic IntersectionObserver reveal wrapper
 
 **Data layer (`src/data/` + `src/sanity/`):**
-- `case-studies.ts` — Static fallback case studies + TypeScript types. Still used when Sanity is not configured.
-- `socal-themes.ts` — SoCal editorial themes (id, bgColor, carouselImage, badgeImage). Also exports the `STEEPC` type.
+- `case-studies.ts` — Offline fallback case studies + the `CaseStudy` type. Also has `buildWorkGrid(categories, caseStudies)`: it orders categories by `order` and puts each category card before its case studies, which are matched by `categorySlug` and sorted by `order` within the category. Case studies with an unknown `categorySlug` are appended at the end instead of being dropped.
+- `categories.ts` — Offline fallback categories (formerly `socal-themes.ts`). The `Category` type has slug, name, subtitle, description, steepc, bgColor, carouselImage, badgeImage and order. Also exports the `STEEPC` type. Keep it in sync with `scripts/seed-categories.mjs`.
+- `look-book.ts` — Offline fallback images for the About page community grid
 - `services.ts` — 4 service definitions
 - `products.ts` — Shop products (explicit objects, no factory function)
 - `team.ts` — Discipline groups for the About page (Design team, Marketing, Development, Research, Branding). No `leadership` array — featured-leader cards were removed from the About page in the latest Figma. `TeamMember` type also removed; only `TeamGroup` remains.
@@ -114,10 +155,12 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - `env.ts` — Reads `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION` from env
 - `lib/client.ts` — Sanity client (createClient)
 - `lib/image.ts` — Image URL builder
-- `lib/queries.ts` — GROQ queries for case studies
-- `lib/fetch.ts` — Data-fetching functions (always queries Sanity — no silent fallback)
-- `schemas/case-study.ts` — Sanity document schema for case studies
-- `schemas/index.ts` — Schema registry
+- `lib/queries.ts` — GROQ queries for categories, case studies and look book images
+- `lib/fetch.ts` — Data fetching with `revalidate: 30`:
+  - `fetchCategories`, `fetchAllCaseStudies`, `fetchCaseStudyBySlug`, `fetchCaseStudySlugs`, `fetchCaseStudiesByService`, `fetchLookBookImages`
+  - If Sanity is unreachable, or returns nothing for categories / look book, these **fall back to the local `src/data/` files** and log `[sanity] … using local data`.
+- `schemas/category.ts`, `schemas/case-study.ts`, `schemas/look-book.ts` (`lookBookImage`) — document schemas, registered in `schemas/index.ts`
+- `structure.ts` — custom Studio sidebar: Categories → each Category → Category Details / its Case Studies, plus Look Book Image
 - `sanity.config.ts` (root) — Studio configuration (basePath `/studio`)
 
 ## Data Conventions
@@ -129,10 +172,11 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 ## CSS Conventions
 
 - Global tokens live in `src/app/globals.css` under `@theme { ... }`
-- Fonts (post 5/27 brand pivot — in-flight refactor):
-  - **Active going forward:** `font-acumin-condensed` (headlines/titles/wordmark), `font-acumin` (body)
-  - **Deprecated, do not add new references:** `font-bangers` (was: headlines/titles — being replaced)
-  - **Still in use:** `font-inter` (body fallback), `font-quintessential` (section subtitles), `font-druk`, `font-zilla`
+- Fonts (post 5/27 brand pivot). Only these five are loaded (`src/app/fonts.ts`), and every one is preloaded on every page, so don't add a font without using it:
+  - `font-acumin-condensed` (headlines/titles/wordmark) and `font-acumin` (body copy): the real Acumin files in `src/fonts/`
+  - **ES Allianz**: the **default** font (`--default-font-family` in `globals.css`) for any text without a font class
+  - `font-inter` (fallback) and `font-druk` (Partner / Scoping modals)
+  - Removed Nov 2026 as unused: Bangers, Zilla Slab, Overpass Mono, Instrument Serif, Quintessential. Dead files `BannerCarousel.tsx` and `services/ServicePageLayout.tsx` still reference the last two, so re-add them if those components return.
   - See the "Brand direction (5/27 PM)" notice at the top of this file for the full pivot context.
 - **Rounded corners removed** (5/27 pivot) on cards / modals / hero containers / badges / side drawers. New components default to square corners — do not add `rounded-[Xpx]` unless the Figma frame explicitly draws rounding. **Exceptions kept rounded**: `rounded-full` circles (avatars / close buttons / dots / social icons), dropdown menu panels (`WorkFilterDropdown`, `WorksFilter`, `ServicePageLayout` selectors), and explicit Figma-rounded buttons.
 - Base background: `#e6e6e6` (matches section backgrounds — earlier value `#e3dfdc` caused a visible seam when GSAP pinned a section shorter than the viewport)
@@ -143,11 +187,11 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 
 ## Work Grid Structure
 
-Cards are ordered by the `order` field in `case-studies.ts`. The grid follows a pattern:
+Card order comes from `buildWorkGrid()` in `case-studies.ts`: categories sorted by `order`, each followed by its case studies sorted by their within-category `order`. Category order and assignment are managed in Sanity. The grid follows a pattern:
 - **Category card** (editorial variant, no `thumbnailImage`) — `#EDECE1` cream background, `1px solid #B0B0B0` border, SVG badge icon, title (Acumin Condensed 40px / 42px)
 - **Content items** (image variant, has `thumbnailImage`) — photo top, **white** bottom panel (no border-top — sits flush against the image)
 
-**Card backgrounds simplified (5/27 brand pivot, 5/28 Figma node `566:1642` confirmation).** Editorial cards use the same cream `#EDECE1` (no per-category colors); image-card bottom panels stay white. No hover color change — the only hover affordance is a 1px vertical lift on the card link. Per Fas: "*we don't use many colors, just simple color, clean*". The per-theme `bgColor` field in `socal-themes.ts` is preserved but no longer consumed by the work grid — it still drives the colored theme cards in `WhyAreWeDifferent`'s horizontal carousel.
+**Card backgrounds simplified (5/27 brand pivot, 5/28 Figma node `566:1642` confirmation).** Editorial cards use the same cream `#EDECE1` (no per-category colors); image-card bottom panels stay white. No hover color change — the only hover affordance is a 1px vertical lift on the card link. Per Fas: "*we don't use many colors, just simple color, clean*". The per-category `bgColor` field (`categories.ts` / the Sanity `category` doc) is preserved but no longer consumed by the work grid — it still drives the colored theme cards in `WhyAreWeDifferent`'s horizontal carousel.
 
 ## GSAP Notes
 
@@ -244,11 +288,13 @@ Pattern used on both home (`WhyAreWeDifferent`, `CompaniesMarquee`) and about (`
 
 `mx-[25px]` puts the divider endpoints 25px from the viewport edge — leaving a **10px gap** to the vertical rails at 15px. Do not put `border-t` directly on the `<section>` (extends to viewport edge and crosses the rails).
 
-### Social icons (BigWordmark)
+### Social links (Footer)
 
-`BigWordmark` renders the four social platform icons (Instagram, Dribbble, Threads, X / Twitter) as 36px black circles in the bottom-right corner of the wordmark section. Icons come from `react-icons/fa6` (`FaInstagram`, `FaDribbble`, `FaThreads`, `FaXTwitter`).
+The footer (`src/components/layout/Footer.tsx`) has two link lists:
+- **Follow Us:** `socialLinks` (Instagram, LinkedIn, Facebook, X)
+- **Visit Us:** `visitLinks` (Behance, Dribbble)
 
-**TODO**: replace placeholder `href="#"` values in `socialLinks` with real account URLs when provided.
+An entry renders only when its `href` is non-empty, and a column disappears when it has no links. To publish an account, set its URL; nothing else changes. As of Nov 2026, only Behance (`https://www.behance.net/deepSoCal`) has one. `dribbble.com/deepSoCal` returned 404. `BigWordmark` no longer renders social icons.
 
 ## Header Navigation Links
 
@@ -283,7 +329,7 @@ The shop page uses a server component (`src/app/shop/page.tsx`) for metadata + t
    ```
 
    Where `trackContentBottom = TOP_GAP + N*CARD_HEIGHT + (N-1)*CARD_GAP` (last card's bottom edge in track-local coordinates) and `BOTTOM_GAP = 120`. So at progress=1, the last card's bottom always sits exactly 120px above the section's bottom edge — symmetric with the top gap (`pt-[120px]` on the track) on every viewport. Both `y` and `end` in the ScrollTrigger config are passed as functions so `invalidateOnRefresh: true` re-evaluates them on resize.
-   - **Hero background** — `Image fill` covers the entire card behind the products. Uses `shop-main-bg.png` (woman with DeepSoCal bottle). `-z-10` so it sits behind the product column.
+   - **Hero background** — `Image fill` covers the entire card behind the products. Uses `shop-main-bg.jpg` (woman with DeepSoCal bottle). `-z-10` so it sits behind the product column.
    - **Product cards column** — absolutely positioned at `right-[91px] top-0 bottom-0 w-[399px]`, floating over the hero image. The column has **no background**, so anything behind it (the hero `Image fill`, z=-10) shows through wherever the column's contents don't paint. The TRACK inside the column has `pt-[120px]` — that's the visible gap. At rest, the track's top 120px is just empty padding (no children there to paint), and the hero shows through it cleanly.
 
      **Behaviour during scroll (matches OrthoFX):** GSAP scrub translates the track upward. The padding moves with the track; once it scrolls past the column's top edge, `overflow-hidden` on the column clips it and the first card naturally takes its place — fulfilling Fas 5/27: "the gap should be shown at first, if I scroll, scrolling items take the place, [the gap] should not be shown." No mask needed; the gap is a real layout space (track padding) that simply gets scrolled away.
@@ -331,10 +377,10 @@ Each product card is `445px` tall, rounded `30.593px`, `bg-[#dadada]`:
 
 ### Shop image assets (`public/images/shop/`)
 
-- `shop-main-bg.png` — hero card background (woman with DeepSoCal bottle)
-- `the-t-shirt.png` — folded t-shirt product photo
+- `shop-main-bg.jpg` — hero card background (woman with DeepSoCal bottle)
+- `the-t-shirt.jpg` — folded t-shirt product photo
 - `the-hoodie.png` — black hoodie with DeepSoCal logo
-- `the-bottle.png` — DeepSoCal water bottle
+- `the-bottle.jpg` — DeepSoCal water bottle
 
 ## Case Study Detail Layout (Figma node `12:1263`)
 
@@ -368,22 +414,26 @@ Some Figma MCP image assets fail to serve through `figma.com/api/mcp/asset/<id>`
 2. If it still fails, use an existing asset from `public/images/` as a fallback. Document the swap in the data file with a comment so the real asset can be swapped in later.
 
 Successfully downloaded for this build:
-- `public/images/shop/the-t-shirt.png`, `the-bottle.png`, `the-hoodie.png`, `shop-main-bg.png`
+- `public/images/shop/the-t-shirt.jpg`, `the-bottle.jpg`, `the-hoodie.png`, `shop-main-bg.jpg` (JPEGs re-encoded from the original PNGs, Nov 2026)
 - `public/images/case-studies/detail-hero-family.png`, `detail-gallery-2.png`
 
 Pending re-download (CDN returned blanks): case study `detail-gallery-1.png` and `detail-video-poster.png` (uses surf/family fallbacks).
 
 ## Sanity CMS Setup
 
-Case studies are managed via Sanity. `NEXT_PUBLIC_SANITY_PROJECT_ID` must be set in `.env.local` for the site to work.
+Categories, case studies and look book images are managed in Sanity. `NEXT_PUBLIC_SANITY_PROJECT_ID` must be set in `.env.local`. Without Sanity, the site renders the offline fallback data in `src/data/`.
 
 ### First-time setup
 
 1. Create a Sanity project at https://www.sanity.io/manage
 2. Copy `.env.local.example` → `.env.local` and fill in `NEXT_PUBLIC_SANITY_PROJECT_ID`
-3. Add `http://localhost:3000` as a CORS origin in Sanity project settings (API → CORS origins)
+3. Add `http://localhost:3000` as a CORS origin in Sanity project settings (API → CORS origins). For production, also add `https://deepsocal.com` and `https://www.deepsocal.com`.
 4. Run `npm run dev` and visit `http://localhost:3000/studio` — the embedded Sanity Studio appears
-5. Seed existing case studies: `SANITY_PROJECT_ID=xxx SANITY_TOKEN=yyy node scripts/seed-sanity.mjs`
+5. Seed content. All seed scripts need `SANITY_API_WRITE_TOKEN` in `.env.local`:
+   - `npm run seed:sanity` — case studies (`scripts/seed-case-studies.mjs`)
+   - `node --env-file=.env.local scripts/seed-categories.mjs` — categories (run before case studies, which reference them)
+   - `node --env-file=.env.local scripts/seed-look-book.mjs` — About page look book images
+   - Helpers: `scripts/list-case-studies.mjs`, `scripts/find-unused-images.mjs`
 
 ### Adding a new case study
 
@@ -394,7 +444,7 @@ Case studies are managed via Sanity. `NEXT_PUBLIC_SANITY_PROJECT_ID` must be set
 ### Architecture
 
 - Server components (`works/[slug]`, home page, services, sitemap) call `src/sanity/lib/fetch.ts`
-- `fetch.ts` checks for `NEXT_PUBLIC_SANITY_PROJECT_ID` — if missing, imports static data instead
+- `fetch.ts` falls back to the static `src/data/` files when a Sanity query fails (and for categories / look book, when it returns nothing). Pages revalidate every 30s.
 - The `WorkGrid` client component receives case studies as props from the home page server component
 - Images in Sanity are uploaded as assets and served via Sanity's CDN; image URLs are resolved in GROQ queries
 
