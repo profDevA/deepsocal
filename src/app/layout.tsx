@@ -1,64 +1,40 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import {
-  druk,
-  esAllianz,
-  zillaSlab,
-  instrumentSerif,
-  inter,
-  quintessential,
-  bangers,
-  acuminCondensed,
-  acuminPro,
-  overpassMono,
-} from "./fonts";
+import { druk, esAllianz, inter, acuminCondensed, acuminPro } from "./fonts";
 import { ModalProvider } from "@/components/modals/ModalProvider";
 import Modals from "@/components/modals/Modals";
 import SiteChrome from "./SiteChrome";
+import { DEFAULT_SHARE_IMAGE, SITE_DESCRIPTION, SITE_NAME } from "@/lib/metadata";
 
-const fontVars = [
-  druk,
-  esAllianz,
-  zillaSlab,
-  instrumentSerif,
-  inter,
-  quintessential,
-  bangers,
-  acuminCondensed,
-  acuminPro,
-  overpassMono,
-]
+const fontVars = [druk, esAllianz, inter, acuminCondensed, acuminPro]
   .map((f) => f.variable)
   .join(" ");
 
+// Site-wide defaults. Pages override these via `pageMetadata()` in
+// src/lib/metadata.ts, which also sets each page's canonical URL and og:url.
 export const metadata: Metadata = {
   metadataBase: new URL("https://deepsocal.com"),
   title: {
-    default: "DeepSoCal",
-    template: "%s | DeepSoCal",
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "DeepSoCal is a regional strategic design agency building transformative experiences for Southern California's brands.",
-  icons: {
-    icon: "/images/DeepSoCal-Favicon.png",
-  },
-  // TODO: add a dedicated 1200×630 share image (openGraph.images / twitter.images)
-  // once brand provides one.
+  description: SITE_DESCRIPTION,
+  // Icons come from file conventions in src/app: favicon.ico, icon.svg
+  // (DeepSoCal mark, white in dark mode) and apple-icon.png.
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://deepsocal.com",
-    siteName: "DeepSoCal",
-    title: "DeepSoCal",
-    description:
-      "DeepSoCal is a regional strategic design agency building transformative experiences for Southern California's brands.",
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [DEFAULT_SHARE_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DeepSoCal",
-    description:
-      "DeepSoCal is a regional strategic design agency building transformative experiences for Southern California's brands.",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [DEFAULT_SHARE_IMAGE.url],
   },
 };
 

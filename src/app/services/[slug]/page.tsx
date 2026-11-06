@@ -7,6 +7,7 @@ import { fetchCaseStudiesByService } from "@/sanity/lib/fetch";
 import CaseStudyCard from "@/components/work/CaseStudyCard";
 import WorkFilterDropdown from "@/components/work/WorkFilterDropdown";
 import ContactCTAButton from "@/components/modals/ContactCTAButton";
+import { pageMetadata } from "@/lib/metadata";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -22,10 +23,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = getServiceById(slug as ServiceId);
   if (!service) return { title: "Service not found" };
-  return {
+  return pageMetadata({
     title: service.name,
     description: service.description,
-  };
+    path: `/services/${service.slug}`,
+  });
 }
 
 export default async function ServiceDetailPage({ params }: { params: Params }) {
@@ -39,7 +41,8 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
     <div className="bg-white w-full">
       <section className="w-full px-[20px] sm:px-[40px] md:px-[60px] lg:px-[80px] pt-[40px] sm:pt-[56px] md:pt-[68px] lg:pt-[80px] pb-[20px] sm:pb-[28px] md:pb-[34px] lg:pb-[40px]">
         <div className="max-w-[1380px] mx-auto flex flex-col items-center gap-[10px] text-center">
-          <h2 className="font-quintessential text-dark text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] leading-[1.4] tracking-[-1.4px] m-0">
+          {/* Same treatment as the home WorkGrid subtitle (Acumin, post 5/27 pivot) */}
+          <h2 className="font-acumin font-normal text-[#1e1e1e] text-[28px] leading-[49.546px] tracking-[-1.441px] text-center m-0">
             How We work with SoCal Builders
           </h2>
           <WorkFilterDropdown current={service.id} />

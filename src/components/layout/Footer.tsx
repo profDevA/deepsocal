@@ -6,16 +6,25 @@ import { FaInstagram, FaLinkedinIn, FaFacebook, FaXTwitter } from "react-icons/f
 const COL_TITLE = "font-acumin-condensed text-[#d7d7d7] text-[24px] leading-[32px] lg:text-[18px] lg:leading-[28px] uppercase m-0";
 const COL_BODY = "font-acumin font-normal text-[#d7d7d7] text-[14px] lg:text-[16px] leading-[20px] tracking-[0.48px] no-underline hover:opacity-70 transition-opacity";
 
+// Links render only once they have a real URL ("" = not provided yet), so the
+// footer never shows dead icons. "Follow Us" stays hidden while all are empty.
 const socialLinks = [
   // FaInstagram's viewBox is 448x512 (taller than wide) vs the square 512x512
   // of Facebook/X, so "meet" scaling letterboxes its glyph — at size 18 the
   // drawn path only reaches ~15.7px. Bump to 21 (18 * 512/448) so the visible
   // glyph renders ~18px square, matching the other icons.
-  { icon: FaInstagram, href: "#", label: "Instagram", bg: false, size: 21 },
-  { icon: FaLinkedinIn, href: "#", label: "LinkedIn", bg: true },
-  { icon: FaFacebook, href: "#", label: "Facebook", bg: false },
-  { icon: FaXTwitter, href: "#", label: "X / Twitter", bg: false },
-];
+  { icon: FaInstagram, href: "", label: "Instagram", bg: false, size: 21 },
+  { icon: FaLinkedinIn, href: "", label: "LinkedIn", bg: true },
+  { icon: FaFacebook, href: "", label: "Facebook", bg: false },
+  { icon: FaXTwitter, href: "", label: "X / Twitter", bg: false },
+].filter((link) => link.href);
+
+const visitLinks = [
+  { label: "Behance.com/deepSoCal/", href: "https://www.behance.net/deepSoCal" },
+  // dribbble.com/deepSoCal returned 404 (checked Nov 5, 2026). Add the URL
+  // once the account exists.
+  { label: "Dribbble.com/deepSoCal/", href: "" },
+].filter((link) => link.href);
 
 export default function Footer() {
   return (
@@ -74,38 +83,45 @@ export default function Footer() {
             </div>
 
             {/* Visit Us */}
-            <div className="flex flex-col items-center text-center gap-[14px] w-full lg:w-[206px] lg:items-start lg:text-left">
-              <h3 className={COL_TITLE}>Visit Us</h3>
-              <div className="flex flex-col items-center lg:items-start gap-[6px]">
-                <a href="https://behance.com/deepSoCal" target="_blank" rel="noopener noreferrer" className={COL_BODY}>Behance.com/deepSoCal/</a>
-                <a href="https://dribbble.com/deepSoCal" target="_blank" rel="noopener noreferrer" className={COL_BODY}>Dribble.com/deepSoCal/</a>
+            {visitLinks.length > 0 && (
+              <div className="flex flex-col items-center text-center gap-[14px] w-full lg:w-[206px] lg:items-start lg:text-left">
+                <h3 className={COL_TITLE}>Visit Us</h3>
+                <div className="flex flex-col items-center lg:items-start gap-[6px]">
+                  {visitLinks.map(({ label, href }) => (
+                    <a key={label} href={href} target="_blank" rel="noopener noreferrer" className={COL_BODY}>
+                      {label}
+                    </a>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Follow Us */}
-            <div className="flex flex-col items-center text-center gap-[14px] w-full lg:w-[179px] lg:items-start lg:text-left">
-              <h3 className={COL_TITLE}>Follow Us</h3>
-              <div className="flex items-center gap-[10px]">
-                {socialLinks.map(({ icon: Icon, href, label, bg, size }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center hover:opacity-70 transition-opacity"
-                  >
-                    {bg ? (
-                      <span className="bg-white rounded-[4px] w-[18px] h-[18px] flex items-center justify-center">
-                        <Icon size={14} color="#000" />
-                      </span>
-                    ) : (
-                      <Icon size={size ?? 18} color="#ffffff" />
-                    )}
-                  </a>
-                ))}
+            {socialLinks.length > 0 && (
+              <div className="flex flex-col items-center text-center gap-[14px] w-full lg:w-[179px] lg:items-start lg:text-left">
+                <h3 className={COL_TITLE}>Follow Us</h3>
+                <div className="flex items-center gap-[10px]">
+                  {socialLinks.map(({ icon: Icon, href, label, bg, size }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      aria-label={label}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center hover:opacity-70 transition-opacity"
+                    >
+                      {bg ? (
+                        <span className="bg-white rounded-[4px] w-[18px] h-[18px] flex items-center justify-center">
+                          <Icon size={14} color="#000" />
+                        </span>
+                      ) : (
+                        <Icon size={size ?? 18} color="#ffffff" />
+                      )}
+                    </a>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
           </div>
         </div>

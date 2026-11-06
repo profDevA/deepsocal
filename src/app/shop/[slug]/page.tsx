@@ -9,6 +9,7 @@ import {
   getRelatedProducts,
   type Product,
 } from "@/data/products";
+import { pageMetadata } from "@/lib/metadata";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -24,10 +25,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getProductBySlug(slug);
   if (!product) return { title: "Product not found" };
-  return {
+  return pageMetadata({
     title: product.name,
-    description: product.description,
-  };
+    // Some products have no description yet — fall back to the shop blurb.
+    description:
+      product.description ||
+      "DeepSoCal's design-led merch — small-batch goods inspired by Southern California.",
+    path: `/shop/${product.slug}`,
+  });
 }
 
 export default async function ProductDetailPage({ params }: { params: Params }) {

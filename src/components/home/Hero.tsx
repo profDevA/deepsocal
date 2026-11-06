@@ -100,15 +100,17 @@ export default function Hero() {
         </div>
 
         <div className="hero-video relative w-full max-w-[535px] aspect-535/271 overflow-hidden bg-dark">
+          {/* Decorative, muted background reel: hidden from assistive tech. */}
           <video
             src="/videos/california.mp4"
+            poster="/videos/california-poster.jpg"
             autoPlay
             muted
             loop
             playsInline
             preload="metadata"
+            aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover"
-            aria-label="DeepSoCal hero reel"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/35 via-transparent to-transparent pointer-events-none" />
         </div>

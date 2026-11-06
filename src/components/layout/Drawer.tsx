@@ -3,6 +3,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import Link from "next/link";
 import { FaXmark } from "react-icons/fa6";
+import { useModal } from "@/components/modals/ModalProvider";
 
 export type DrawerNavItem = {
   label: string;
@@ -12,14 +13,22 @@ export type DrawerNavItem = {
 interface DrawerProps {
   open: boolean;
   onClose: () => void;
-  navItems: DrawerNavItem[];
   onBookCall: () => void;
 }
 
 const LINK_CLASS =
   "font-acumin-condensed font-bold text-black text-[26px] sm:text-[32px] leading-[1.4] uppercase whitespace-nowrap px-[24px] py-[6px] no-underline inline-block transition-opacity hover:opacity-60";
  
-export default function Drawer({ open, onClose, navItems, onBookCall }: DrawerProps) {
+export default function Drawer({ open, onClose, onBookCall }: DrawerProps) {
+  const { openModal } = useModal();
+
+  // The desktop "Contact us" rail (PageFrame) is hidden below md, so this is
+  // the contact form's entry point on phones.
+  const handleContact = () => {
+    onClose();
+    openModal("contact");
+  };
+
   return (
     <Dialog.Root open={open} onOpenChange={(v) => !v && onClose()}>
       <Dialog.Portal>
@@ -64,6 +73,15 @@ export default function Drawer({ open, onClose, navItems, onBookCall }: DrawerPr
                 <Link href="/shop" onClick={onClose} className={LINK_CLASS}>
                   The Shop
                 </Link>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={handleContact}
+                  className={`${LINK_CLASS} border-none cursor-pointer p-0 px-[24px] py-[6px]`}
+                >
+                  Contact us
+                </button>
               </li>
             </ul>
           </nav>

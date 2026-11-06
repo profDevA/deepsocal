@@ -8,6 +8,7 @@ import {
   fetchCaseStudyBySlug,
   fetchCaseStudySlugs,
 } from "@/sanity/lib/fetch";
+import { pageMetadata, sanityShareImage } from "@/lib/metadata";
 
 export async function generateStaticParams() {
   const slugs = await fetchCaseStudySlugs();
@@ -24,10 +25,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const cs = await fetchCaseStudyBySlug(slug);
   if (!cs) return { title: "Case study not found" };
-  return {
+  return pageMetadata({
     title: cs.title,
     description: cs.summary || cs.subtitle,
-  };
+    path: `/works/${slug}`,
+    image: sanityShareImage(cs.heroImage, cs.title),
+  });
 }
 
 export default async function CaseStudyPage({ params }: { params: Params }) {

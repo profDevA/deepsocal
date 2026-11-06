@@ -6,14 +6,9 @@
   --font-druk: var(--nf-druk), sans-serif;
   --font-esallianz: var(--nf-esallianz), sans-serif;
   --font-inter: var(--nf-inter), sans-serif;
-  --font-instrument: var(--nf-instrument), serif;
-  --font-quintessential: var(--nf-quintessential), cursive;
-  --font-zilla: var(--nf-zilla), serif;
-  --font-bangers: var(--nf-bangers), cursive;
 
   --font-acumin-condensed: var(--nf-acumin-condensed), "Acumin Pro Condensed", sans-serif;
   --font-acumin: var(--nf-acumin), var(--nf-inter), sans-serif;
-  --font-overpass-mono: var(--nf-overpass-mono), "Overpass Mono", ui-monospace, monospace;
 
   --color-brand: #e3dfdc;
   --color-dark: #111;

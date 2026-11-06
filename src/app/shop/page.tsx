@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import PageFrame from "@/components/layout/PageFrame";
 import ShopHeroCard from "@/components/shop/ShopHeroCard";
 import { products } from "@/data/products";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Shop the Look",
+  path: "/shop",
   description:
     "DeepSoCal's design-led merch — small-batch goods inspired by Southern California.",
-};
+});
 
-const HERO_IMAGE = "/images/shop/shop-main-bg.png";
+const HERO_IMAGE = "/images/shop/shop-main-bg.jpg";
 
 export default function ShopPage() {
   return (

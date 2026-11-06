@@ -5,6 +5,7 @@ import FAQAccordion from "@/components/about/FAQAccordion";
 import ContactCTAButton from "@/components/modals/ContactCTAButton";
 import PageFrame from "@/components/layout/PageFrame";
 import { fetchLookBookImages } from "@/sanity/lib/fetch";
+import { pageMetadata } from "@/lib/metadata";
 
 const communityValueTags = [
   "Connection",
@@ -17,11 +18,12 @@ const communityValueTags = [
   "Creative Expression",
 ];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About",
+  path: "/about",
   description:
     "DeepSoCal is a multidisciplinary team of researchers, designers, engineers, and systems thinkers based in Southern California.",
-};
+});
 
 export default async function AboutPage() {
   // Sanity-managed look book images (with static fallback). Replaces the old
@@ -48,7 +50,7 @@ export default async function AboutPage() {
 
         <div className="w-full max-w-[1358px] mt-[46px] lg:mt-[49px] aspect-357/290 lg:aspect-1358/725 overflow-hidden relative bg-[#1f1f1f]">
           <Image
-            src="/images/about/hero-socal-local.png"
+            src="/images/about/hero-socal-local.jpg"
             alt="Southern California coastline"
             fill
             priority

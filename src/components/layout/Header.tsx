@@ -127,10 +127,12 @@ export default function Header() {
               aria-label="deepSoCal home"
               className="inline-flex items-center no-underline shrink-0"
             >
+              {/* Vector mark (first path of deepsocal-wordmark.svg) so it stays
+                  sharp on 3x phone screens; the old 37×35 PNG looked soft. */}
               <Image
-                src="/images/deepsocal-mark.png"
+                src="/images/deepsocal-mark.svg"
                 alt="deepSoCal"
-                width={37}
+                width={38}
                 height={35}
                 priority
                 className="h-[35px] w-auto select-none"
@@ -159,7 +161,6 @@ export default function Header() {
       <Drawer
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        navItems={navItems}
         onBookCall={handleBookCall}
       />
     </>

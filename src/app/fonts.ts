@@ -1,11 +1,5 @@
 import localFont from "next/font/local";
-import {
-  Zilla_Slab,
-  Instrument_Serif,
-  Inter,
-  Quintessential,
-  Bangers,
-} from "next/font/google";
+import { Inter } from "next/font/google";
 
 export const druk = localFont({
   src: "../fonts/Druk-Medium-Web.woff2",
@@ -26,41 +20,11 @@ export const esAllianz = localFont({
   display: "swap",
 });
 
-export const zillaSlab = Zilla_Slab({
-  subsets: ["latin"],
-  weight: "700",
-  style: ["normal", "italic"],
-  variable: "--nf-zilla",
-  display: "swap",
-});
-
-export const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--nf-instrument",
-  display: "swap",
-});
-
 export const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   style: ["normal"],
   variable: "--nf-inter",
-  display: "swap",
-});
-
-export const quintessential = Quintessential({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--nf-quintessential",
-  display: "swap",
-});
-
-export const bangers = Bangers({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--nf-bangers",
   display: "swap",
 });
 
@@ -87,15 +51,5 @@ export const acuminPro = localFont({
     { path: "../fonts/AcuminPro-BoldItalic.otf", weight: "700", style: "italic" },
   ],
   variable: "--nf-acumin",
-  display: "swap",
-});
-
-// Overpass Mono — accent / numeric / mono text. Variable font (single
-// file, full 300-700 weight range).
-export const overpassMono = localFont({
-  src: "../fonts/OverpassMono.ttf",
-  weight: "300 700",
-  style: "normal",
-  variable: "--nf-overpass-mono",
   display: "swap",
 });
