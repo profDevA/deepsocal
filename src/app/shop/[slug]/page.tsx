@@ -15,6 +15,10 @@ export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
 }
 
+// All products come from local data, so any other slug is a 404 (served as
+// the prebuilt not-found page rather than rendered on demand).
+export const dynamicParams = false;
+
 type Params = Promise<{ slug: string }>;
 
 export async function generateMetadata({

@@ -1,2 +1,3 @@
 # nginx parses these on Linux; keep LF line endings.
 deploy/nginx/** text eol=lf
+deploy/*.sh text eol=lf

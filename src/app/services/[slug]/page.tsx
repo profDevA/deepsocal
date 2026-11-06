@@ -13,6 +13,10 @@ export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
 }
 
+// All services come from local data, so any other slug is a 404 (served as
+// the prebuilt not-found page rather than rendered on demand).
+export const dynamicParams = false;
+
 type Params = Promise<{ slug: string }>;
 
 export async function generateMetadata({

@@ -24,7 +24,7 @@ const LINK_CLASS =
   "font-acumin-condensed font-bold text-black text-[26px] sm:text-[32px] leading-[1.4] uppercase whitespace-nowrap px-[24px] py-[6px] no-underline inline-block transition-opacity hover:opacity-60";
  
 export default function Drawer({ open, onClose, onBookCall, menuButtonRef }: DrawerProps) {
-  const { openModal } = useModal();
+  const { openModal, activeModal } = useModal();
 
   // The desktop "Contact us" rail (PageFrame) is hidden below md, so this is
   // the contact form's entry point on phones.
@@ -39,6 +39,13 @@ export default function Drawer({ open, onClose, onBookCall, menuButtonRef }: Dra
         <Dialog.Overlay className="fixed inset-0 z-999998 bg-black/40 data-[state=open]:animate-[overlayFadeIn_0.4s_ease] data-[state=closed]:animate-[overlayFadeOut_0.3s_ease]" />
         <Dialog.Content
           aria-describedby={undefined}
+          // No Radix Trigger here, so return focus to the menu button ourselves,
+          // unless the menu closed to open a modal (Contact us), which then
+          // owns focus and returns it to the menu button when it closes.
+          onCloseAutoFocus={(e) => {
+            e.preventDefault();
+            if (!activeModal) menuButtonRef.current?.focus();
+          }}
           className="fixed inset-y-0 right-0 z-999999 w-[72%] max-w-[340px] bg-white overflow-y-auto overscroll-contain shadow-[-8px_0_24px_rgba(0,0,0,0.12)] data-[state=open]:animate-[drawerSlideIn_0.4s_ease] data-[state=closed]:animate-[drawerSlideOut_0.3s_ease]"
         >
           <Dialog.Title className="sr-only">Navigation menu</Dialog.Title>

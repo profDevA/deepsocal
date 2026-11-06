@@ -14,9 +14,11 @@ export type ModalName = "partner" | "contact" | "scoping" | "allset" | "thankyou
 
 interface ModalContextType {
   activeModal: ModalName;
-  // `returnFocusTo`: where focus goes when this modal flow closes. Pass it when
-  // the opener disappears (e.g. the mobile menu's "Contact us" button);
-  // otherwise Radix returns focus to the opener as usual.
+  // `returnFocusTo`: where focus goes when this modal flow closes. Defaults to
+  // the element focused when the modal opened (the button that opened it).
+  // Pass it when that element disappears, e.g. the mobile menu's "Contact us"
+  // → the menu button. (These dialogs have no Radix Trigger, so Radix itself
+  // has nothing to return focus to.)
   openModal: (name: ModalName, returnFocusTo?: HTMLElement | null) => void;
   closeModal: () => void;
   switchModal: (to: ModalName) => void;
@@ -30,7 +32,9 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const returnFocusRef = useRef<HTMLElement | null>(null);
 
   const openModal = useCallback((name: ModalName, returnFocusTo?: HTMLElement | null) => {
-    returnFocusRef.current = returnFocusTo ?? null;
+    const focused = document.activeElement;
+    returnFocusRef.current =
+      returnFocusTo ?? (focused instanceof HTMLElement && focused !== document.body ? focused : null);
     setActiveModal(name);
   }, []);
 

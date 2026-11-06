@@ -20,6 +20,10 @@ export default function SmoothScroll() {
       wheelMultiplier: 1.2,
       touchMultiplier: 2,
       infinite: false,
+      // Let dialogs (contact form, mobile menu, …) scroll natively. Otherwise
+      // Lenis takes the wheel and scrolls the page behind an open dialog, so a
+      // tall form can't be scrolled to its Send button on a short laptop screen.
+      prevent: (node) => node.closest('[role="dialog"]') !== null,
     });
 
     lenisRef.current = lenis;

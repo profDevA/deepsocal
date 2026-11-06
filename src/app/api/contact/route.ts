@@ -6,6 +6,12 @@ import { parseFormBody } from "@/lib/form-validation";
 const SEND_FAILED = "We couldn't send your message right now. Please try again later.";
 
 export async function POST(request: NextRequest) {
+  // JSON only. Another site can't send application/json cross-origin without
+  // a CORS preflight (which fails), so this stops drive-by posts from other pages.
+  if (!request.headers.get("content-type")?.toLowerCase().startsWith("application/json")) {
+    return NextResponse.json({ error: "Invalid request" }, { status: 415 });
+  }
+
   let body: unknown;
   try {
     body = await request.json();

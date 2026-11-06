@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -82,13 +82,16 @@ export default function Hero() {
             ref={headlineRef}
             className="font-acumin-condensed tracking-[1px] sm:tracking-[2px] md:tracking-[3px] leading-[0.94] text-[36px] uppercase sm:text-[56px] md:text-[82px] m-0 wrap-break-word hyphens-auto"
           >
+            {/* Real spaces between the word spans so the heading's text reads
+                as words for crawlers / copy-paste. The space renders 0.182em in
+                this font, so margin 0.068em keeps the visual gap at 0.25em. */}
             {HEADLINE.split(" ").map((w, i) => (
-              <span
-                key={`${w}-${i}`}
-                className="hero-word inline-block mr-[0.25em] will-change-[color]"
-              >
-                {w}
-              </span>
+              <Fragment key={`${w}-${i}`}>
+                {i > 0 && " "}
+                <span className="hero-word inline-block mr-[0.068em] will-change-[color]">
+                  {w}
+                </span>
+              </Fragment>
             ))}
           </h1>
 

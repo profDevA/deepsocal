@@ -1,8 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DEFAULT_SHARE_IMAGE, SITE_DESCRIPTION, SITE_NAME } from "@/lib/metadata";
 
+// No canonical / og:url (Next adds noindex for 404s). Share titles are set
+// explicitly because Next replaces, not merges, the root openGraph/twitter.
 export const metadata: Metadata = {
   title: "Page not found",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: SITE_NAME,
+    title: `Page not found | ${SITE_NAME}`,
+    description: SITE_DESCRIPTION,
+    images: [DEFAULT_SHARE_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Page not found | ${SITE_NAME}`,
+    description: SITE_DESCRIPTION,
+    images: [DEFAULT_SHARE_IMAGE.url],
+  },
 };
 
 const BUTTON =

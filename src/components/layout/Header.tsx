@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaBars } from "react-icons/fa6";
 import Drawer, { type DrawerNavItem } from "./Drawer";
+import { services } from "@/data/services";
 
 const navItems: DrawerNavItem[] = [
   { label: "Our Work", href: "/#work" },
@@ -17,10 +18,10 @@ const navItems: DrawerNavItem[] = [
 const NAV_PILL_CLASS =
   "font-acumin-condensed text-black text-[16px] uppercase leading-[1.4] px-4 py-1 no-underline whitespace-nowrap inline-flex items-center justify-center transition-colors hover:bg-black hover:text-white";
 
-function titleizeSlug(slug: string): string {
-  return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
+// Mobile header title. Only known sections / services get a label. Text from
+// the URL is never shown: a crafted link like /works/this-site-was-hacked must
+// not put its slug in our header. 404s (served as /_not-found) get none, which
+// also keeps the server and client render identical.
 function getMobilePageLabel(pathname: string): string {
   const segments = pathname.split("/").filter(Boolean);
 
@@ -28,19 +29,11 @@ function getMobilePageLabel(pathname: string): string {
   if (pathname.startsWith("/about")) return "Our Difference";
   if (pathname.startsWith("/shop")) return "The Shop";
   if (pathname.startsWith("/studio")) return "Studio";
-
-  // Case study / service single pages show the item's own name (from the
-  // slug); the listing routes fall back to "Our Work".
-  if (pathname.startsWith("/works") || pathname.startsWith("/services")) {
-    if (segments.length > 1) return titleizeSlug(segments[1]);
-    return "Our Work";
+  if (pathname.startsWith("/works")) return "Our Work";
+  if (pathname.startsWith("/services")) {
+    return services.find((s) => s.slug === segments[1])?.name ?? "Our Work";
   }
-
-  // Fallback: derive a readable label from the first path segment so every
-  // mobile view shows a centered page title.
-  const segment = segments[0] ?? "";
-  if (!segment) return "";
-  return titleizeSlug(segment);
+  return "";
 }
 
 export default function Header() {
@@ -141,7 +134,7 @@ export default function Header() {
             </Link>
 
             {getMobilePageLabel(pathname) && (
-              <span className="absolute left-1/2 -translate-x-1/2 font-acumin-condensed font-bold text-dark text-[24px] uppercase leading-[1.4] whitespace-nowrap pointer-events-none">
+              <span className="absolute left-1/2 -translate-x-1/2 max-w-[calc(100%-120px)] truncate font-acumin-condensed font-bold text-dark text-[24px] uppercase leading-[1.4] whitespace-nowrap pointer-events-none">
                 {getMobilePageLabel(pathname)}
               </span>
             )}
