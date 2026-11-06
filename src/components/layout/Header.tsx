@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { FaBars } from "react-icons/fa6";
 import Drawer, { type DrawerNavItem } from "./Drawer";
 import { services } from "@/data/services";
+import { products } from "@/data/products";
 
 const navItems: DrawerNavItem[] = [
   { label: "Our Work", href: "/#work" },
@@ -18,22 +19,31 @@ const navItems: DrawerNavItem[] = [
 const NAV_PILL_CLASS =
   "font-acumin-condensed text-black text-[16px] uppercase leading-[1.4] px-4 py-1 no-underline whitespace-nowrap inline-flex items-center justify-center transition-colors hover:bg-black hover:text-white";
 
-// Mobile header title. Only known sections / services get a label. Text from
-// the URL is never shown: a crafted link like /works/this-site-was-hacked must
-// not put its slug in our header. 404s (served as /_not-found) get none, which
-// also keeps the server and client render identical.
+// Mobile header title, for routes that really exist only. Text from the URL is
+// never shown (a crafted link like /works/this-site-was-hacked must not put its
+// slug in our header). Any other URL is a 404 served from the prebuilt
+// /_not-found page, whose server HTML has no label, so returning "" here also
+// keeps the client render identical (no hydration error).
 function getMobilePageLabel(pathname: string): string {
-  const segments = pathname.split("/").filter(Boolean);
+  const [section, slug, ...rest] = pathname.split("/").filter(Boolean);
 
-  if (pathname === "/") return "Home";
-  if (pathname.startsWith("/about")) return "Our Difference";
-  if (pathname.startsWith("/shop")) return "The Shop";
-  if (pathname.startsWith("/studio")) return "Studio";
-  if (pathname.startsWith("/works")) return "Our Work";
-  if (pathname.startsWith("/services")) {
-    return services.find((s) => s.slug === segments[1])?.name ?? "Our Work";
+  if (!section) return "Home";
+  if (section === "studio") return "Studio"; // catch-all route
+  if (rest.length) return "";
+  switch (section) {
+    case "about":
+      return slug ? "" : "Our Difference";
+    case "shop":
+      return !slug || products.some((p) => p.slug === slug) ? "The Shop" : "";
+    case "services":
+      return services.find((s) => s.slug === slug)?.name ?? "";
+    case "works":
+      // Case studies come from Sanity and render on demand (unknown slugs
+      // included, as a dynamic 404), so any single slug here gets the label.
+      return slug ? "Our Work" : "";
+    default:
+      return "";
   }
-  return "";
 }
 
 export default function Header() {

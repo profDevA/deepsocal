@@ -82,13 +82,14 @@ export default function Hero() {
             ref={headlineRef}
             className="font-acumin-condensed tracking-[1px] sm:tracking-[2px] md:tracking-[3px] leading-[0.94] text-[36px] uppercase sm:text-[56px] md:text-[82px] m-0 wrap-break-word hyphens-auto"
           >
-            {/* Real spaces between the word spans so the heading's text reads
-                as words for crawlers / copy-paste. The space renders 0.182em in
-                this font, so margin 0.068em keeps the visual gap at 0.25em. */}
+            {/* A visually hidden space between the word spans: the heading's
+                text reads as words (crawlers, copy-paste) while the layout and
+                line breaks stay exactly as before (gap = the 0.25em margin; a
+                real space would also change where the lines wrap). */}
             {HEADLINE.split(" ").map((w, i) => (
               <Fragment key={`${w}-${i}`}>
-                {i > 0 && " "}
-                <span className="hero-word inline-block mr-[0.068em] will-change-[color]">
+                {i > 0 && <span className="sr-only"> </span>}
+                <span className="hero-word inline-block mr-[0.25em] will-change-[color]">
                   {w}
                 </span>
               </Fragment>
