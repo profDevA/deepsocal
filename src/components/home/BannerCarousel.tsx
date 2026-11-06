@@ -76,6 +76,9 @@ export default function BannerCarousel() {
   useEffect(() => {
     if (!emblaApi) return
     emblaApi.on('select', onSelect)
+    // Embla's documented init pattern (sync state with the initial slide).
+    // This component isn't imported anywhere (kept as dead code, see CLAUDE.md).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     onSelect()
   }, [emblaApi, onSelect])
 
