@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import PageFrame from "@/components/layout/PageFrame";
 import ShopHeroCard from "@/components/shop/ShopHeroCard";
 import { products } from "@/data/products";
+import { SHOP_ENABLED } from "@/lib/features";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -14,6 +16,9 @@ export const metadata: Metadata = pageMetadata({
 const HERO_IMAGE = "/images/shop/shop-main-bg.jpg";
 
 export default function ShopPage() {
+  // Shop hidden for now: send visitors home (temporary 307, see features.ts).
+  if (!SHOP_ENABLED) redirect("/");
+
   return (
     <div className="bg-white w-full">
       <PageFrame />

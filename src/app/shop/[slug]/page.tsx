@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { FaArrowLeft, FaArrowRight, FaCircleCheck } from "react-icons/fa6";
 import {
   products,
@@ -9,6 +9,7 @@ import {
   getRelatedProducts,
   type Product,
 } from "@/data/products";
+import { SHOP_ENABLED } from "@/lib/features";
 import { pageMetadata } from "@/lib/metadata";
 
 export function generateStaticParams() {
@@ -40,6 +41,9 @@ export async function generateMetadata({
 }
 
 export default async function ProductDetailPage({ params }: { params: Params }) {
+  // Shop hidden for now: send visitors home (temporary 307, see features.ts).
+  if (!SHOP_ENABLED) redirect("/");
+
   const { slug } = await params;
   const product = getProductBySlug(slug);
   if (!product) notFound();

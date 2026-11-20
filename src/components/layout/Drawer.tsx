@@ -5,6 +5,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import Link from "next/link";
 import { FaXmark } from "react-icons/fa6";
 import { useModal } from "@/components/modals/ModalProvider";
+import { SHOP_ENABLED } from "@/lib/features";
 
 export type DrawerNavItem = {
   label: string;
@@ -59,7 +60,7 @@ export default function Drawer({ open, onClose, onBookCall, menuButtonRef }: Dra
           </Dialog.Close>
 
           {/* Nav links — left-aligned, starting 160px from top (80px on short
-              screens, e.g. landscape phones, so all five items fit) */}
+              screens, e.g. landscape phones, so every item fits) */}
           <nav className="pt-[160px] [@media(max-height:560px)]:pt-[80px] pl-[27px] pb-[40px]">
             <ul className="flex flex-col gap-[20px] list-none m-0 p-0 items-start">
               <li>
@@ -81,11 +82,13 @@ export default function Drawer({ open, onClose, onBookCall, menuButtonRef }: Dra
                   Book a call
                 </button>
               </li>
-              <li>
-                <Link href="/shop" onClick={onClose} className={LINK_CLASS}>
-                  The Shop
-                </Link>
-              </li>
+              {SHOP_ENABLED && (
+                <li>
+                  <Link href="/shop" onClick={onClose} className={LINK_CLASS}>
+                    The Shop
+                  </Link>
+                </li>
+              )}
               <li>
                 <button
                   type="button"

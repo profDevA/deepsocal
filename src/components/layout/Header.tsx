@@ -8,11 +8,12 @@ import { FaBars } from "react-icons/fa6";
 import Drawer, { type DrawerNavItem } from "./Drawer";
 import { services } from "@/data/services";
 import { products } from "@/data/products";
+import { SHOP_ENABLED } from "@/lib/features";
 
 const navItems: DrawerNavItem[] = [
   { label: "Our Work", href: "/#work" },
   { label: "Our Difference", href: "/about" },
-  { label: "The Shop", href: "/shop" },
+  ...(SHOP_ENABLED ? [{ label: "The Shop", href: "/shop" }] : []),
 ];
 
 // Hover = black background with white text (Figma prototype).
@@ -34,6 +35,7 @@ function getMobilePageLabel(pathname: string): string {
     case "about":
       return slug ? "" : "Our Difference";
     case "shop":
+      if (!SHOP_ENABLED) return "";
       return !slug || products.some((p) => p.slug === slug) ? "The Shop" : "";
     case "services":
       return services.find((s) => s.slug === slug)?.name ?? "";
@@ -93,8 +95,8 @@ export default function Header() {
               />
             </Link>
 
-            {/* Per Figma node 632:5209 — Book a call sits between
-                Our Difference and The Shop (3rd of 4), not at the end. */}
+            {/* Per Figma node 632:5209 — Book a call sits after Our
+                Difference and before The Shop (when the shop is on). */}
             <ul className="flex items-center gap-[16px] list-none m-0 p-0">
               {navItems.slice(0, 2).map((item) => (
                 <li key={item.href}>

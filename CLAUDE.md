@@ -129,8 +129,8 @@ Next.js 16 (App Router) + React 19 + TypeScript 5 + Tailwind CSS 4.
 - `/about` — About page (hero, mission, team grid, "WE'RE SOCAL-LOCAL" community grid, FAQ accordion)
 - `/works/[slug]` — Case study detail (dynamic, `generateStaticParams`)
 - `/services/[slug]` — Service detail (4 services, `generateStaticParams`)
-- `/shop` — Product listing (re-enabled in nav 5/26 — client needs to see the shop page)
-- `/shop/[slug]` — Product detail
+- `/shop` — Product listing. **Hidden since Nov 2026:** `SHOP_ENABLED = false` in `src/lib/features.ts` takes it out of the nav, mobile menu and sitemap, and `/shop` + `/shop/*` 307 to `/`. Flip the flag to bring it back.
+- `/shop/[slug]` — Product detail (hidden the same way)
 - `/studio` — Embedded Sanity Studio (content management)
 
 **Key components (`src/components/`):**
@@ -311,7 +311,7 @@ An entry renders only when its `href` is non-empty, and a column disappears when
 `src/components/layout/Header.tsx` — `navItems`:
 - **Our Work** → `/#work` (works section on homepage)
 - **Our Difference** → `/about` (NOT `/#difference` — Fas directed in 5/21 review that "Our Difference" should route to the About page since that's where the "WE'RE SOCAL-LOCAL why the community chooses us as embedded allies" content lives)
-- **The Shop** → `/shop` (re-enabled 5/26 — client wants to see the shop page; was hidden 5/22 → 5/26)
+- **The Shop** → `/shop`. Hidden from Nov 2026 while `SHOP_ENABLED` is false (Fas, Nov 19: "a distraction for now… let's just hide it because we will need it"). Earlier history: hidden 5/22 → 5/26, then re-enabled.
 - **Book a call** → opens `https://cal.com/deepsocal/discovery` in a new tab via `window.open` (5/25 fix — both desktop nav and mobile drawer route there; the contact modal stays bound to "Contact Us" / open-contact-form buttons, not Book a call)
 
 ## Services Dropdown (In-Place Content Swap)
